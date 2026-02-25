@@ -1,0 +1,13 @@
+{
+  "name": "driver-management-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Driver Management team web service",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
