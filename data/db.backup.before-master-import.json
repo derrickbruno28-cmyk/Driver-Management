@@ -6,11 +6,7 @@
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences:\n-\n\nDedicated Partner:  Jimmy Lankin is partner\nis scheduled for RT 02.05",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_2",
@@ -18,11 +14,7 @@
       "homeBase": "Memphis",
       "position": "Solo OTR",
       "notes": "RTG date:\nReturn Date:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_3",
@@ -30,11 +22,7 @@
       "homeBase": "SATX",
       "position": "Solo OTR",
       "notes": "Return Date: \nRTG Date: 02/24\n\nAvailable to start from Either Dallas or SA (Prefers SA)",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_4",
@@ -42,11 +30,7 @@
       "homeBase": "SATX",
       "position": "Solo OTR",
       "notes": "RTG date: 2/24\nReturn Date: NTC\n\nNO SNOW ❌",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_5",
@@ -54,11 +38,7 @@
       "homeBase": "SATX",
       "position": "Solo OTR",
       "notes": "RTG date: 4/01/2026\nReturn Date:\n\nOut of the country for a family emergency",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_6",
@@ -66,11 +46,7 @@
       "homeBase": "SATX",
       "position": "Solo OTR",
       "notes": "RTG date: NTC\nReturn Date: NTC\nHis CDL is now GTG per Admin. He is able to start running routes as of 2/24 -Anna",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_7",
@@ -78,11 +54,7 @@
       "homeBase": "SATX",
       "position": "Solo OTR",
       "notes": "RTG date: NTC\nReturn Date: NTC \n\nNot qualified for mail\nNO SNOW ❌",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_8",
@@ -90,35 +62,23 @@
       "homeBase": "Austin",
       "position": "Team OTR",
       "notes": "RTG date: 03/05 after 6am\nReturn Date: 03/02 (Dr apt on 03/03)\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_9",
       "name": "Aerial King",
       "homeBase": "Dallas",
       "position": "Team OTR",
-      "notes": "RTG date: 02/23\nReturn date: 03/01 2300\nRTG date: 03/03 2300\nReturn date: 03/09 2300\nReturn Date: 04/02 - 34 reset at home\nRTG date: 04/06\n\nPrefers to be paired w/ Female drivers",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "notes": "RTG date: 02/23\nReturn Date: 04/02 - 34 reset at home\nRTG date: 04/06\n\nPrefers to be paired w/ Female drivers",
+      "twic": ""
     },
     {
       "id": "sep_10",
       "name": "Alexander Brenes",
       "homeBase": "Dallas",
       "position": "Team OTR",
-      "notes": "Return Date: 02/27\nRTG date: 02/28 2300 or 03/01 early AM\n\nWill renew medical card on 02/19\n\nPersonal Driver Preferences: Wants to mirror Stephen Ward's schedule \n\nDedicated Partner: Stephen Ward",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "notes": "RTG date: 02/22\nReturn Date: NTC\n\nWill renew medical card on 02/19\n\nPersonal Driver Preferences: \n\nDedicated Partner: Stephen Ward",
+      "twic": ""
     },
     {
       "id": "sep_11",
@@ -126,11 +86,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: NTC\nReturn Date: Sat 02/28\n\nPersonal Driver Preferences: \n- No NE/NW routes\n\nDedicated Partner: Ida Jones",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_12",
@@ -138,11 +94,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: NTC\nReturn Date: NTC",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_13",
@@ -150,11 +102,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: NTC\nReturn Date: 2/25\n\nNeeds Inverter\nDedicated Partner: Kavoskey Sudds",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_14",
@@ -162,11 +110,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: NTC\nReturn Date: Sat 02/28\n\nPersonal Driver Preferences:\n- No NE/NW routes\n\nDedicated Partner: Carlos Ramirez",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_15",
@@ -174,11 +118,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: NTC\nReturn Date: 02/26\n\nPersonal Driver Preferences:\n- Needs Inverter\n\nDedicated Partner: Fabian Hogan",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_16",
@@ -186,11 +126,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: Run wild for 3 months. Check again Feb 28. \n\nPersonal Driver Preferences:\n- No female drivers or new drivers\n- Does not want to run with Ashley Anderson / Elpidio Ledesma / Todd Moland\n- Wants to run with someone out for weeks\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_17",
@@ -198,11 +134,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "Ready To Go: \nReturn Date: 02/27\n\nPersonal Driver Preferences:\n\nDedicated Partner: Alexander Brenes",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_18",
@@ -210,11 +142,7 @@
       "homeBase": "El Paso",
       "position": "Team OTR",
       "notes": "RTG date: 03/02 0100\nReturn Date: \nDedicated Partner: Javier Villamueva",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_19",
@@ -222,11 +150,7 @@
       "homeBase": "Houston",
       "position": "Team OTR",
       "notes": "RTG date:  RTG 02/05\nReturn Date: \n\nNo Palmetto, GA loads\nDO NOT PAIR w/ Jarvis Demar",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_20",
@@ -234,11 +158,7 @@
       "homeBase": "Houston",
       "position": "Team OTR",
       "notes": "Home date: 02/25\nRTG Date: 03/16\n- will be on vacation by 03/23 - 03/29",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_21",
@@ -246,11 +166,7 @@
       "homeBase": "Houston",
       "position": "Team OTR",
       "notes": "RTG date: 02/09 | 02/16\nReturn Date: 02/13 | 02/27\n\nPersonal Driver Preferences:\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_22",
@@ -258,11 +174,7 @@
       "homeBase": "Laredo",
       "position": "Team OTR",
       "notes": "Return Date: 02/18\nRTG Date: 03/02\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Joseph Barraza",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_23",
@@ -270,11 +182,7 @@
       "homeBase": "Memphis",
       "position": "Team OTR",
       "notes": "RTG date: \nWeekly Sun to Fri\nReturn Date: 02/13\nWeekly off Sat\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: James Eckford",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_24",
@@ -282,11 +190,7 @@
       "homeBase": "Memphis",
       "position": "Team OTR",
       "notes": "RTG date: 02/02\nReturn Date: 02/06\n\nPersonal Driver Preferences:\n\n \nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_25",
@@ -294,11 +198,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Weekly Mon 2100 - Fri\n\nReturn Date: OFF SAT and SUN\n\nDriver Preference:\n- Prefer's CO routes but open to other options that fit their availabilty\n- Least downtime as possible\n- Mail loads (no misc loads)\n\nDedicated Partner: Dario Portillo",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_26",
@@ -306,11 +206,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Every Sunday Early AM | Sun 2/8\nReturn Date : Every Thurs Anytime Back Thur 2/12\n\nNo Snow ❌\nDedicated Partner: Monica Guerra",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_27",
@@ -318,11 +214,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 2/15\nReturn Date:  2/12 \n\nDedicated Partner: Bruce Woodrum",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_28",
@@ -330,11 +222,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG Date: 02/28 1700\nWeekly: Thurs PM - Mon AM\nReturn Date: \n\n2 CO Routes weekly - No MACKS❌\nDedicated Partner: Donna Langston",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_29",
@@ -342,11 +230,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: RTG 02/15\nReturn Date: 02/12\nRTG Date: \n\nDedicated Partner: Anthony Gonzales",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_30",
@@ -354,11 +238,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Tuesdays 0500\nReturn Date: Weekly off Sat - Mon\n\n\nDedicated Partner: Desiree Torres",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_31",
@@ -366,11 +246,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 03/01 AM\nReturn Date: 03/05 AM\n\nRTG date: 03/08 AM\nReturn Date: 03/12 AM\n\nRTG date: 03/19 AM\nReturn Date: 03/26 AM\n\nRTG date: 03/29 AM\nReturn Date: \n\nDedicated Partner: Erin del Bosque",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_32",
@@ -378,11 +254,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/05\nReturn Date: Run wild until March\n\nNo Snow ❌",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_33",
@@ -390,11 +262,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Weekly Mon 2100 - Fri\n\nReturn Date: OFF SAT and SUN\n\nPersonal Driver Preference:\n- Prefer's CO routes but open to other options that fit their availabilty\n- Least downtime as possible\n- Mail loads (no misc loads)\n\nDedicated Partner: Ahmed Abdulwahhab",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_34",
@@ -402,11 +270,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date: Sun 02/22 PM\n\nRTG date: NTC\nNO longer wants to be paired w/Juan Lopez wants to run longer than a week at a time",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_35",
@@ -414,11 +278,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/09\nReturn Date: 02/13\n\nNo east coast ❌\nDedicated Partner: Travis Johnson",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_36",
@@ -426,11 +286,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/19\nReturn Date: 03/25\nRTG Date: 04/01\n\nDedicated Partner: Justin Moody",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_37",
@@ -438,11 +294,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Tuesdays 0500\nReturn Date: Weekly off Sat - Mon\n\nNO ALTMANS, NO MALE TRUCK DRIVER\nCAN RUN SOLO/LOCAL IF CELESTE IS NOT AVAILABLE",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_38",
@@ -450,11 +302,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG Date: 02/28 at 1700\nWeekly: Thurs PM - Mon AM\nReturn Date: \n\n2 CO Routes weekly - No MACKS❌\nDedicated Partner: Brian Langston",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_39",
@@ -462,23 +310,15 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Weekly Sun - Thurs | 03/02\nReturn Date: Weekly Fri - Sat | 02/13 PM\n\nOff: 02/14 - 02/22\n\nDedicated Partner: Saul Arias",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_40",
       "name": "Erick Ryan Gonzales",
       "homeBase": "SATX",
       "position": "Team OTR",
-      "notes": "RTG Date: 02/08 PM\nReturn Date: 02/27\n\nNo female partners ❌\nDedicated Partner: Isaac Robles",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "notes": "Return Date: 02/13 5 pm\nRTG Date: 02/08 PM\n\nNo female partners ❌\nDedicated Partner: Isaac Robles",
+      "twic": ""
     },
     {
       "id": "sep_41",
@@ -486,11 +326,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 03/01 AM\nReturn Date: 03/05 AM\n\nRTG date: 03/08 AM\nReturn Date: 03/12 AM\n\nRTG date: 03/19 AM\nReturn Date: 03/26 AM\n\nRTG date: 03/29 AM\n\n\nDedicated Partner: Christohper Rinehart",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_42",
@@ -498,11 +334,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/02 | 03/09\nReturn Date: Stay out until 02/27\n\nNo Colorado until winter is over\nDedicated Partner: Thomas Sapp",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_43",
@@ -510,11 +342,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/17\nReturn Date: 02/23\nRTG date: 02/24 - night\nReturn Date: 03/01\n34h resets at SATX",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_44",
@@ -522,11 +350,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/24\nWeekly Tue Early AM - Sat PM\nReturn Date: 02/28 before 9am\n\nPersonal Driver Preference:\n- REQUIRED INVERTER FOR CPAP\n\nDedicated Partner: Manuel Arredondo",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_45",
@@ -534,11 +358,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/17\nReturn Date: 02/23\nRTG date: 02/24 - night\nReturn Date: 03/01\nPersonal Driver Preference:\n\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_46",
@@ -546,11 +366,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/15\nReturn Date: 04/08 Renewing medical card",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_47",
@@ -558,23 +374,15 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date: 02/27\nOFF : 02/28 - 03/03\nRTG Date: 03/04\n\nDO NOT PAIR w/ Harvey Robinson\nNO FEMALE PARTNER",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_48",
       "name": "Isaac Robles",
       "homeBase": "SATX",
       "position": "Team OTR",
-      "notes": "RTG Date: \nReturn Date: 02/27\n\nPersonal Driver Preferences:\n- No female partners\n- Do not pair w/ Joseph Jezzard, Stephen Ward, Aarron Walton\n\nDedicated Partner: Erick Gonzales",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "notes": "Return Date: 02/13 5pm\nRTG Date: 02/08 PM\nPersonal Driver Preferences:\n- No female partners\n- Do not pair w/ Joseph Jezzard, Stephen Ward, Aarron Walton\n\nDedicated Partner: Erick Gonzales",
+      "twic": ""
     },
     {
       "id": "sep_49",
@@ -582,11 +390,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date:\nReturn Date: \n\nPersonal Driver Preferences: \n- \n\nDedicated Partner: Miles Murphy",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_50",
@@ -594,11 +398,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date: 03/02 or 03/03 - funeral to attend\nRTG date: 03/08 or 03/09\nReturn Date: Mid March - wants to stay out\n\nPersonal Driver Preferences:\n- DO NOT PAIR WITH DAVID GARZA\n- Driver still requires training with operating tandems and backing per onboarding\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_51",
@@ -606,11 +406,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/03\nReturn Date: 02/08 | 02/22\nRTG date: 02/09 2300 | 02/24\n\nPersonal Driver Preferences:\n- Will stay out two weeks start on Tue and end following Sat\n\nDedicated Partner: Oscar Flores",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_52",
@@ -618,11 +414,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date: \nRTG date: **Extended leave due to family situation**\nReturn Date: \n\nPersonal Driver Preferences:\n- No Midwest\n- Wants CA / FL / GA\n\nDedicated Partner: Richard Jack",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_53",
@@ -630,11 +422,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: NTC\nReturn Date: NTC\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_54",
@@ -642,11 +430,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/01 AM\nReturn Date: 02/27\nOFF dates: 02/28 - 03/08\nRTG date: 03/09 \n\nPersonal Driver Preferences: \n- \n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_55",
@@ -654,11 +438,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Weekly Mon PM - Weekly Sat\nRTG date: 02/23 23:00\nReturn Date: 02/28\n\nPersonal Driver Preferences:\n- Find him a teammate that can drive Tue-Sat uninterrupted\n\nDedicated Partner: Raul Rubio",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_56",
@@ -666,11 +446,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Weekly Tue - OFF\nReturn Date: Weekly off Fri-Sun Off \n\nPersonal Driver Preferences:\n- SAP (AJG Only)\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_57",
@@ -678,11 +454,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/19\nReturn Date: 03/25\nRTG Date: 04/01\n\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Derek Brewer",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_58",
@@ -690,11 +462,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date: NTC -Update on 1/17 - Still recovering from accident and personal vehicle is not repairs. Next follow up set for 2/15\nRTG date: NTC\n\nPersonal Driver Preferences:\n- Do not pair w/ Mario Vela\n\nDedicated Partner: Uri Montano",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_59",
@@ -702,11 +470,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/10\nReturn date: 03/08\n\nOff 03/09 - 04/19 (Travel to Senegal, West Africa)\n\n34 HR resets done in SATX\n\nDedicated Partner: Kwamena Arkoh",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_60",
@@ -714,11 +478,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: NTC \nReturn date: Off 01/28 (Travel to Ghana) Needs to be back by Sat - need to confirm reason\nRTG date: 03/14\n\nPersonal Driver Preferences:\n- 34 HR resets done in SATX\n\n\nDedicated Partner: Khalifa Fall",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_61",
@@ -726,11 +486,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 01/16 / NTC, had a family death (reported via phone call by 01/13)\nReturn Date: Driver sent message in 1/22 stating he would no longer be able to continue working here \n\nPersonal Driver Preferences: \n- \n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_62",
@@ -738,11 +494,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: 02/20 EARLY\n\nHis partner, Mario, will renew his Medical Card on Monday 02/02\n\nPersonal Driver Preferences:\n- Source One every other week\n\nDedicated Partner: Mario Vela",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_63",
@@ -750,11 +502,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/24 - 02/28\nOFF Date: 03/01 - 03/02\nRTG date: 03/03 - 03/07\nOFF Date: 03/08 - 03/09\nRTG date: 03/10 - 03/14\nOFF Date: 03/15 - 03/16\nRTG date: 03/17 - 03/21\nOFF Date: 03/22 - 03/23\nRTG date: 03/24 - 03/28\nOFF Date: 03/29 - 03/30\nRTG date: 03/31 - 04/04\n\nPersonal Driver Preferences: \n- \n\nDedicated Partner: Leah May",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_64",
@@ -762,11 +510,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Ready to Go Date: \nReturn Date: 03/24 morning\nRTG date: 03/30 evening\n\nPersonal Driver Preferences:\n- Dates on tentative, will advise 1 week prior if his availability changes\n- Wants to run with Rafael Gama until March\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_65",
@@ -774,11 +518,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: RTG 2/26 AM\nReturn Date: Run Wild for Month of March\n\nPersonal Driver Preferences: \n- \n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_66",
@@ -786,11 +526,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Weekly Tue Early AM - Sat AM/ Sat 02/28\nReturn Date: (Tue - Fri for this week)\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Franco Santos",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_67",
@@ -798,11 +534,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Run wild for 2-3 weeks\nReturn Date: Pending, need to reconfirm - wants to be paired with Maurice\n\nOff: 04/25 - 04/28 (Family birthdays)\nRTG date: 04/29 at midnight\nPlans to renew medical card in March\n\nPersonal Driver Preferences:\n- Runs for 5 weeks, needs a partner who does the same\n- Do not pair w/ Kenneth Wogan or Uri Montano\n\nDedicated Partner: Maurice Williams, Aarron Walton, Gerzayn Miranda, Hector Nava",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_68",
@@ -810,11 +542,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: 02/20 EARLY AM\n\nPersonal Driver Preferences:\n- Source One every other week\n- Prefers Mack trucks\n- Do not pair w/ Kenneth Wogan\n\nDedicated Partner: Lloyd Perez",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_69",
@@ -822,11 +550,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: (RTG Monday - Friday)\nReturn Date: 03/03\n\nPersonal Driver Preferences:\n- Do not pair w/ Raul Rubio or Uri Montano\n- Do not pair w/ smoker or Isaac Robles\n\nDedicated Partner: Fausto Mandujano",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_70",
@@ -834,11 +558,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "OFF dates: 02/23 - 03/01\nRTG date: 03/02\nMon - Sun (Source One); Tue -Thur PM (Mail)\nReturn Date:\n Sun (After Source One); Thur PM (After Mail)\n\nPersonal Driver Preferences:\n- No Colorado\n\nDedicated Partner: Richard Whatley",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_71",
@@ -846,11 +566,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/29 @ 6AM\nReturn Date: 02/27 @ 8AM\n\nPersonal Driver Preferences: \n- \n\nDedicated Partner: Jay Harts",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_72",
@@ -858,11 +574,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Every Sunday Early AM | Sun 2/8\nReturn Date : Every Thurs Anytime Back Thur 2/12\n\nNo Snow ❌\nDiabetic need fridge\nDedicated Partner: Amador Martinez",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_73",
@@ -870,11 +582,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: Weekly Mon-Fri | Back 2/12 before noon\nReturn Date: 02/26 AM - has noon Dr Apt\nWeekly off Sat-Sun\n\nPersonal Driver Preferences:\n- SAP (AJG Only)\n\nDedicated Partner: Rosendo Venegas",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_74",
@@ -882,11 +590,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/03\nReturn Date: 02/08 | 02/22\nRTG date: 02/09 2300 | 02/24\n\nPersonal Driver Preferences:\n- Will stay out two weeks start on Tue and end following Sat\n\nDedicated Partner: Jennifer Flores",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_75",
@@ -894,11 +598,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date: RUNNING WILD til further notice\nRTG date: \n\nPersonal Driver Preferences:\n- Can not run with a female \n \nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_76",
@@ -906,11 +606,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/23\nReturn Date: 02/ 26 \nOff: 02/27\n\nPersonal Driver Preferences:\n- Needs Inverter\n\nDedicated Partner: Wants to run with Raul Rubio",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_77",
@@ -918,11 +614,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/23\nWeekly Mon PM - Sat\nReturn Date: 03/02\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Jose Q Rivera",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_78",
@@ -930,11 +622,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: 02/28\n\nPersonal Driver Preferences:\n- Partner with Jose Guajardo",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_79",
@@ -942,11 +630,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: \n\n\nNo Snow ❌\nNo Midwest ❌\nWants CA / FL / GA\nDedicated Partner: Jimmy Perez",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_80",
@@ -954,11 +638,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/04\nReturn Date: 02/13 (02/14 Last day)\n\nPersonal Driver Preferences:\n- Do not pair w/ Rafael Gama\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_81",
@@ -966,11 +646,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Daniel Williams",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_82",
@@ -978,11 +654,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: RTG 2/26 AM\nReturn Date: Run Wild for Month of March\n\nPersonal Driver Preferences: \n- \n\nDedicated Partner: Luis Trinidad",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_83",
@@ -990,11 +662,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG: 03/17\nReturn: 03/13\n\nPersonal Driver Preferences:\n- 34 HR resets done in SATX\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_84",
@@ -1002,11 +670,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/23 Mon (12PM) or Early Tue 02/24\nReturn Date: \n\nPersonal Driver Preferences: \n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_85",
@@ -1014,11 +678,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/02\nReturn Date: Stay out until 02/27\nRTG date: 03/09\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Ernest Thalmann",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_86",
@@ -1026,11 +686,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: 02/24 after 22:00 - in San Antonio\nReturn Date: 03/19\nRTG date: 03/23\n\nPersonal Driver Preferences:\n- No Snow ❌\n- Prefers Southeast region\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_87",
@@ -1038,11 +694,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/24\nReturn Date: \n\nPersonal Driver Preferences:\n- No east coast, CA, or CO routes\n\nDedicated Partner: Deon Nickens",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_88",
@@ -1050,23 +702,15 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: NTC\nReturn Date: \n\nPersonal Driver Preferences:\n- SAP (AJG Only)\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_89",
       "name": "Uri Montano",
       "homeBase": "SATX",
       "position": "Team OTR",
-      "notes": "RTG date: M-F\nReturn Date: 2/27\n\nRTG Date: \n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "notes": "RTG date: M-F\nReturn Date: 2/26\nOFF Dates: 02/27 - 03/13\nRTG Date: \n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner:",
+      "twic": ""
     },
     {
       "id": "sep_90",
@@ -1074,11 +718,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date: 1/17\nRTG date: 1/21\n\nPersonal Driver Preferences:\n- Runs 10-11 Days, then off for 3 Days\n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_91",
@@ -1086,11 +726,7 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "RTG date: 02/24 - 02/28\nOFF Date: 03/01 - 03/02\nRTG date: 03/03 - 03/07\nOFF Date: 03/08 - 03/09\nRTG date: 03/10 - 03/14\nOFF Date: 03/15 - 03/16\nRTG date: 03/17 - 03/21\nOFF Date: 03/22 - 03/23\nRTG date: 03/24 - 03/28\nOFF Date: 03/29 - 03/30\nRTG date: 03/31 - 04/04\nPersonal Driver Preferences:\n\n\nDedicated Partner: Loriann Lozzi",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_92",
@@ -1098,11 +734,7 @@
       "homeBase": "Houston",
       "position": "Weekly Team",
       "notes": "RTG date: 02/16 PM/02/17 AM \nWeekly Mon-Fri\nReturn Date: 02/26 AM - has noon Dr Apt\n Weekly off Sat-Sun\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Nathaniel Fernandez",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_93",
@@ -1110,11 +742,7 @@
       "homeBase": "Memphis",
       "position": "Weekly Team",
       "notes": "RTG date: \nWeekly Sun to Fri\nReturn Date: 02/27\nWeekly off Sat\n\nPersonal Driver Preferences:\n- None\n\nDedicated Partner: Jamarrio Loggin",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_94",
@@ -1122,11 +750,7 @@
       "homeBase": "SATX",
       "position": "Weekly Team",
       "notes": "RTG date: Weekly Mon - Fri PM \nReturn Date: Weekly off Sat - Sun \n\nPersonal Driver Preferences: - No West / East Coast (NJ & PA) - \nWants to run Cali or OMNI \nDedicated Partner: Timothy Brown\"",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_95",
@@ -1134,11 +758,7 @@
       "homeBase": "SATX",
       "position": "Weekly Team",
       "notes": "OFF dates: 02/23 - 03/01\nRTG date: 03/02\nMon-Sun (Source One); Tue-Thu PM (Mail)\nReturn Date: \nSun (After Source One); Thur PM (After Mail)\n\nPersonal Driver Preferences:\n- No Colorado\n\nDedicated Partner: Michelle Whatley",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_96",
@@ -1146,11 +766,7 @@
       "homeBase": "SATX",
       "position": "Weekly Team",
       "notes": "RTG date: Weekly Tue - Sat Noon\nReturn Date: Weekly off Sat-Sun\n\nPersonal Driver Preferences:\n- DO NOT PAIR with Terrence\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_97",
@@ -1158,11 +774,7 @@
       "homeBase": "SATX",
       "position": "Weekly Team",
       "notes": "RTG date: Weekly Mon - Fri PM\nReturn Date: Weekly Fri PM\n\nPersonal Driver Preferences:\n- No West / East Coast (NJ & PA)\n- Wants to run Cali or OMNI\n\nDedicated Partner: Ibrahima Fall",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_98",
@@ -1170,11 +782,7 @@
       "homeBase": "SATX",
       "position": "Weekly Team",
       "notes": "Return Date: 03/09\nRTG date: 03/15\nPersonal Driver Preferences:\n-\n\nDedicated Partner: Daniel Williams",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_99",
@@ -1182,11 +790,7 @@
       "homeBase": "Dallas",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: SD Feb 4th\n\nPersonal Driver Preferences:\n-\n\nDedicated Partner: N/A",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_100",
@@ -1194,11 +798,7 @@
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: MONDAY - FRIDAY\nReturn Date: SD ASAP\n\nPersonal Driver Preferences:\n-\n\nDedicated Partner: N/A",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_101",
@@ -1206,11 +806,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: SD ASAP\n\nPersonal Driver Preferences:\n- MALE PARTNERS ONLY / No Female codrivers\n\nDedicated Partner: N/A",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_102",
@@ -1218,11 +814,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: SD ASAP\n\nPersonal Driver Preferences:\n-\n\nDedicated Partner: Demariye Mathis Grant (Brother)",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_103",
@@ -1230,11 +822,7 @@
       "homeBase": "Memphis",
       "position": "Team OTR",
       "notes": "RTG date: Thu PM 02/26\nReturn Date: \n\nPersonal Driver Preferences:\n-\n\nDedicated Partner: Madison Milton",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_104",
@@ -1242,11 +830,7 @@
       "homeBase": "Memphis",
       "position": "Team OTR",
       "notes": "RTG date: Thu PM 02/26\nReturn Date: SD ASAP\n\nPersonal Driver Preferences:\n-\n\nDedicated Partner: Jason Edwards",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_105",
@@ -1254,11 +838,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: SD ASAP\n\nPersonal Driver Preferences:\n-\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_106",
@@ -1266,11 +846,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: No return date as f 2/13, run wild for several months\n\nPersonal Driver Preferences:\n- PREFERS ALTMANS\n\nDedicated Partner: Jermaine Thomas",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_107",
@@ -1278,11 +854,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: No return date as f 2/13, run wild for several months\n\nPersonal Driver Preferences:\n- PREFERS ALTMANS\n\nDedicated Partner: Jessica Hudson",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_108",
@@ -1290,23 +862,15 @@
       "homeBase": "Dallas",
       "position": "Solo OTR",
       "notes": "OFF Dates: 02/25 - 03/01 - funeral\nRTG date: 03/02 noon\nReturn Date: SD 02.09\n\nPersonal Driver Preferences:\n-NO ALTMAN allergic to plants\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_109",
       "name": "Krystal Thrasher",
       "homeBase": "Dallas",
       "position": "Team OTR",
-      "notes": "RTG date: 02/23\nReturn Date: 03/01 2300\nRTG date: 03/03 2300\nReturn date: 03/09 2300\n\nPersonal Driver Preferences:\nDriver needs to be back 02.23 because she has an appointment with the SSA office. needds appointment to confirm I9 nonconfirmation \n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "notes": "RTG date: \nReturn Date: SD 02.09\n\nPersonal Driver Preferences:\nDriver needs to be back 02.23 because she has an appointment with the SSA office. needds appointment to confirm I9 nonconfirmation \n\nDedicated Partner:",
+      "twic": ""
     },
     {
       "id": "sep_110",
@@ -1314,11 +878,7 @@
       "homeBase": "Houston",
       "position": "Team OTR",
       "notes": "RTG date: 02/22\nReturn Date: Mid March, TBA\n\nPersonal Driver Preferences:\n-\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_111",
@@ -1326,11 +886,7 @@
       "homeBase": "Memphis",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences:\nneeds partner \nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_112",
@@ -1338,11 +894,7 @@
       "homeBase": "Memphis",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences:\nneeds partner\n \nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_113",
@@ -1350,11 +902,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences:\nneeds partner\n \nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_114",
@@ -1362,11 +910,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences:\n\n \nDedicated Partner: Joshuwa Mccain",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_115",
@@ -1374,11 +918,7 @@
       "homeBase": "Dallas",
       "position": "Team OTR",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences:\n\n \nDedicated Partner: Davonte Galbert",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_116",
@@ -1386,3066 +926,2895 @@
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Ready to go date: 03/01\nReturn Date:\nPersonal Driver Preferences:\n\n\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
       "id": "sep_117",
       "name": "Eric Stacker",
       "homeBase": "Dallas",
       "position": "Local",
-      "notes": "Ready to go date: 03/02\nReturn Date:\nPersonal Driver Preferences:\n\n\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
-    },
-    {
-      "id": "sep_118",
-      "name": "Devonte Cunningham",
-      "homeBase": "SATX",
-      "position": "Team OTR",
-      "notes": "Ready to go date: 03/02\nReturn Date:\nPersonal Driver Preferences:\n\n\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "notes": "Ready to go date: ASking Sara \nReturn Date:\nPersonal Driver Preferences:\n\n\n\nDedicated Partner:",
+      "twic": ""
     },
     {
       "id": "sep_119",
-      "name": "Claude Whisenhunt",
-      "homeBase": "Dallas",
-      "position": "Team OTR",
-      "notes": "Ready to go date: ASAP\nReturn Date:\nPersonal Driver Preferences:\n\n\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
-    },
-    {
-      "id": "sep_120",
       "name": "Amir Osornio Ponce De Leon\nNEW DRIVER",
       "homeBase": "SATX",
       "position": "Team OTR",
       "notes": "Return Date:\nReady to go date:\nPersonal Driver Preferences:\nLikes THS loads\nPrefers to start from afternoon and be back in the morning\n\n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_121",
+      "id": "sep_120",
       "name": "Aarron Walton",
       "homeBase": "Dallas",
       "position": "Unresponsive over 2 weeks",
       "notes": "RTG date:NTC\nReturn Date: NTC\nDriving back from CA, unresponsive",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_122",
+      "id": "sep_121",
       "name": "Robert Spangler Jr.",
       "homeBase": "SATX",
       "position": "Unresponsive over 2 weeks",
       "notes": "Ready to go date: NTC - On Hold Lost CDL, At the hospital due to health issues\nReturn Date: NTC\n\nPersonal Driver Preferences:\n\n\nDedicated Partner: Robert Spangler Sr.",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_123",
+      "id": "sep_122",
       "name": "Elvis Chavez",
       "homeBase": "Dallas",
       "position": "Unresponsive over 2 weeks",
       "notes": "RTG date: ASAP\nReturn Date: NTC\n\nPersonal Driver Preferences: \n- Will run local till Krystal gets onboarded\n\nDedicated Partner: Krystal Thrasher",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_124",
+      "id": "sep_123",
       "name": "LOCAL DRIVERS",
       "homeBase": "",
       "position": "",
       "notes": "",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_125",
+      "id": "sep_124",
       "name": "Abdelrahman A Ahmed",
       "homeBase": "Dallas",
       "position": "Local",
       "notes": "RTG date: Weekly Mon \nReturn Date: Weekly Fri\n\nOff Sat & Sun due to health conditions",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_126",
+      "id": "sep_125",
       "name": "Alex Nelson",
       "homeBase": "Dallas",
       "position": "Local",
       "notes": "RTG date: Weekly Tue - Sat\nReturn Date: Weekly off Sun - Mon",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_127",
+      "id": "sep_126",
       "name": "Daniel Herrera",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: Weekly Mon - Fri\nReturn Date: Weekly Sat - Sun\nOFF 02/27 Court Date",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_128",
+      "id": "sep_127",
       "name": "Derek Ramirez",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: \n\nOKC runs",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_129",
+      "id": "sep_128",
       "name": "Gerson Perez Ramirez",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: Weekly Mon - Fri 0300to 1500\nReturn Date: Weekly off Sat - Sun",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_130",
+      "id": "sep_129",
       "name": "Joan Jose Morales (JJ)",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: Check back at the start of March",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_131",
+      "id": "sep_130",
       "name": "Johnny Dominguez",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: 02/10\nOFF: 02/11 - 02/14\n\nPrefers Night time driving",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_132",
+      "id": "sep_131",
       "name": "Jose Morales",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: \n\nPrefers Night time driving",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_133",
+      "id": "sep_132",
       "name": "Kimala Brown",
       "homeBase": "",
       "position": "Local",
       "notes": "RTG date: 02/1p\nReturn Date: 02/13\nOff dates: 02/24 - 02/25 // 03/03 // 03/14 - 03/15",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_134",
+      "id": "sep_133",
       "name": "Leo Avila",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: \n\nNo driver assist\nCan occasionally run weekends",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_135",
+      "id": "sep_134",
       "name": "Raymond Nunn",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: Weekly Mon - Fri Until 1800 only\nReturn Date: Weekly Sat-Sun\n\nMust be off by 1800 everyday\nNO Dallas, NO Layover",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_136",
+      "id": "sep_135",
       "name": "Richard Perez",
       "homeBase": "Dallas",
       "position": "Local",
       "notes": "RTG date: Weekly Mon - Fri (0400-1700) \nReturn Date: Weekly off Sat-Sun\n\nPermanent road examiner\nDallas yard dog",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_137",
+      "id": "sep_136",
       "name": "Rocio Grano",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: RTG 2/28 afternoon\nReturn Date: OFF 2/27 to attend dad's surgery",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_138",
+      "id": "sep_137",
       "name": "Roger Mccracken",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: Sun - Fri\nReturn Date: Weekly off Sat-Sun\nOff every Saturday for Son's football game\nOff 02/13 - 02/16",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_139",
+      "id": "sep_138",
       "name": "Rubin Cantu",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: \n\nOFF 03/13-03/15 ON VACATION\nOFF 04/03-04/5 ON VACATION",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_140",
+      "id": "sep_139",
       "name": "Salvador Garcia",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_141",
+      "id": "sep_140",
       "name": "Saul Arias",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: Weekly Sun - Thurs\nReturn Date: \n\nPersonal Driver Preferences:\n- Pair with Elpidio Ledesma \n\nDedicated Partner: None",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_142",
+      "id": "sep_141",
       "name": "Steven Howell",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: Weekly Sat Only\nReturn Date:\n\nPersonal Driver Preferences:\n- Can run McAllen",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_143",
+      "id": "sep_142",
       "name": "Susana Hernandez",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: Weekly Mon - Fri\nReturn Date: Off 02/13 Dr Apt\n\nPersonal Driver Preferences:\n- Docks trailers at Perrin Beitel",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_144",
+      "id": "sep_143",
       "name": "Tyanna Eason",
       "homeBase": "Dallas",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: \n\nPersonal Driver Preferences: \n- \n\nDedicated Partner:",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_145",
+      "id": "sep_144",
       "name": "Leroy Van Drury",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: \nReturn Date: OFF Wed and Thu 2/25-2/26",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_146",
+      "id": "sep_145",
       "name": "Miles Murphy",
       "homeBase": "SATX",
       "position": "Local",
       "notes": "RTG date: 02/15\nReturn Date: 02/12 PM",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     },
     {
-      "id": "sep_147",
+      "id": "sep_146",
       "name": "Eric Stacker",
       "homeBase": "Dallas",
       "position": "Local",
       "notes": "RTG date: \n03/02/2026",
-      "twic": "",
-      "hiredCity": "",
-      "currentCity": "",
-      "preferredPartner": "",
-      "routeRestrictions": ""
+      "twic": ""
     }
   ],
   "leads": [
     {
       "id": "lead_1",
-      "name": "Anthony Stroggins",
       "dateAccepted": "2025-11-13",
       "dateSentPhase2": "2025-11-14",
+      "name": "Anthony Stroggins",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "Hired on 11/18- Starting Saturday morning 11/22"
     },
     {
       "id": "lead_2",
-      "name": "Sheltavin Crawford",
       "dateAccepted": "2025-11-13",
       "dateSentPhase2": "2025-11-14",
+      "name": "Sheltavin Crawford",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "Hired on 11/18- Starting Saturday morning 11/22"
     },
     {
       "id": "lead_3",
-      "name": "Carlos Ramirez",
       "dateAccepted": "2025-11-14",
       "dateSentPhase2": "2025-11-21",
+      "name": "Carlos Ramirez",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "Hired 11/25- Starting Friday 11/27 at 1000 am"
     },
     {
       "id": "lead_4",
-      "name": "Johnnie Howard",
       "dateAccepted": "2025-11-14",
       "dateSentPhase2": "2025-11-21",
+      "name": "Johnnie Howard",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "Hired 11/25- Starting Friday 11/27 at 1000 am"
     },
     {
       "id": "lead_5",
-      "name": "Donavan Williams",
       "dateAccepted": "2025-11-17",
       "dateSentPhase2": "2025-11-18",
+      "name": "Donavan Williams",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "No Show for RT"
     },
     {
       "id": "lead_6",
-      "name": "Eric Hodo",
       "dateAccepted": "2025-11-17",
       "dateSentPhase2": "2025-11-18",
+      "name": "Eric Hodo",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "DTX Team Rescheduled RT Monday 12/08 at 11:30 am"
     },
     {
       "id": "lead_7",
-      "name": "Wunya Wright",
       "dateAccepted": "2025-11-18",
       "dateSentPhase2": "2025-11-18",
+      "name": "Wunya Wright",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "Hired on 11/20- Memphis Team- Started Monday 11/24"
     },
     {
       "id": "lead_8",
-      "name": "Sidney Brisco",
       "dateAccepted": "2025-11-18",
       "dateSentPhase2": "2025-11-18",
+      "name": "Sidney Brisco",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "Hired on 11/20- Memphis Team- Started Monday 11/24"
     },
     {
       "id": "lead_9",
-      "name": "Saladine Obie",
       "dateAccepted": "2025-11-18",
       "dateSentPhase2": "",
+      "name": "Saladine Obie",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 11/26 at 2:00 PM / Pending docs to enter phase 2"
     },
     {
       "id": "lead_10",
-      "name": "Christopher Jones-",
       "dateAccepted": "2025-11-18",
       "dateSentPhase2": "2025-11-18",
+      "name": "Christopher Jones-",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 11/20 at 12:00 PM / canceling due to not truthful in the claim of exp"
     },
     {
       "id": "lead_11",
-      "name": "Yon Kevin soto",
       "dateAccepted": "2025-11-18",
       "dateSentPhase2": "2025-11-19",
+      "name": "Yon Kevin soto",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 11/20 at 3:30 PM / Driver found another Job updated 11/24"
     },
     {
       "id": "lead_12",
-      "name": "Saul Aries",
       "dateAccepted": "2025-11-18",
       "dateSentPhase2": "2025-11-18",
+      "name": "Saul Aries",
       "position": "Weekly Team",
       "recruiter": "Ghassan",
       "notes": "Hired on 11/19/25  Pending Dispatch to place him in a unit"
     },
     {
       "id": "lead_13",
-      "name": "Dustin  Alexander",
       "dateAccepted": "2025-11-19",
       "dateSentPhase2": "2025-11-19",
+      "name": "Dustin  Alexander",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 11/20 at 9:30 AM / RTG"
     },
     {
       "id": "lead_14",
-      "name": "Jesse Romo",
       "dateAccepted": "2025-11-19",
       "dateSentPhase2": "2025-11-19",
+      "name": "Jesse Romo",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Started pending NHPW"
     },
     {
       "id": "lead_15",
-      "name": "Ricardo Cortez",
       "dateAccepted": "2025-11-19",
       "dateSentPhase2": "2025-11-24",
+      "name": "Ricardo Cortez",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "PTA to start Saturday 12/6 at 10 am. Dispatch and Ops advised"
     },
     {
       "id": "lead_16",
-      "name": "John Givens",
       "dateAccepted": "2025-11-19",
       "dateSentPhase2": "2025-11-20",
+      "name": "John Givens",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "PTA to start Monday 12/8 at 0800 am. Dispatch and Ops advised"
     },
     {
       "id": "lead_17",
-      "name": "George Rios",
       "dateAccepted": "2025-11-13",
       "dateSentPhase2": "2025-11-13",
+      "name": "George Rios",
       "position": "Team Mail",
       "recruiter": "Kailin",
       "notes": "will need partner, looking to start asap"
     },
     {
       "id": "lead_18",
-      "name": "Aurturo Aberto",
       "dateAccepted": "2025-11-13",
       "dateSentPhase2": "",
+      "name": "Aurturo Aberto",
       "position": "local SA",
       "recruiter": "Kailin",
       "notes": "needs long medical form, told him how to obtain it. passed RT but pending dispatch to DT but waiting on long med form"
     },
     {
       "id": "lead_19",
-      "name": "Christopher Terry",
       "dateAccepted": "2025-11-20",
       "dateSentPhase2": "",
+      "name": "Christopher Terry",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "updating application and waiting on driver to send a copy of his CDL & Med Card"
     },
     {
       "id": "lead_20",
-      "name": "Ladedrick Buchanan",
       "dateAccepted": "2025-11-20",
       "dateSentPhase2": "2025-11-20",
+      "name": "Ladedrick Buchanan",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "Hired 11/21- DTX Team Driver started 11/25"
     },
     {
       "id": "lead_21",
-      "name": "Mark Westbrook",
       "dateAccepted": "2025-11-20",
       "dateSentPhase2": "2025-11-20",
+      "name": "Mark Westbrook",
       "position": "Team Mail/Dallas",
       "recruiter": "Ghassan",
       "notes": "Docs received application sent / pending RT at the beginning of the year"
     },
     {
       "id": "lead_22",
-      "name": "Raymond Howard",
       "dateAccepted": "2025-11-20",
       "dateSentPhase2": "",
+      "name": "Raymond Howard",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Rejected position after 30 minutes from the call"
     },
     {
       "id": "lead_23",
-      "name": "Mario Vasquez",
       "dateAccepted": "2025-11-20",
       "dateSentPhase2": "",
+      "name": "Mario Vasquez",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "12/1/25 Monday   3:30 PM RT / pending Docs"
     },
     {
       "id": "lead_24",
-      "name": "John Guerrero",
       "dateAccepted": "2025-11-20",
       "dateSentPhase2": "2025-11-21",
+      "name": "John Guerrero",
       "position": "local SA",
       "recruiter": "Ghassan",
       "notes": "RT 11/21/25 at 10:30 Am / Pending NHPW and after RTG update 11/24"
     },
     {
       "id": "lead_25",
-      "name": "Faustin Njilayi",
       "dateAccepted": "2025-11-21",
       "dateSentPhase2": "",
+      "name": "Faustin Njilayi",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "App completed. Waiting on CDL & Med Card info to proceed w/ process...Followup to see if driving still working on everything"
     },
     {
       "id": "lead_26",
-      "name": "Perry Reed",
       "dateAccepted": "2025-11-21",
       "dateSentPhase2": "2025-11-25",
+      "name": "Perry Reed",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "Getting drug test done now and will be ready thereafter"
     },
     {
       "id": "lead_27",
-      "name": "Briana Gatson",
       "dateAccepted": "2025-11-21",
       "dateSentPhase2": "2025-11-21",
+      "name": "Briana Gatson",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "S.A. Teams Drive Scheduled for RT Tuesday 12/02 at 11:30 AM - NO SHOW"
     },
     {
       "id": "lead_28",
-      "name": "Larry Ardila",
       "dateAccepted": "2025-11-21",
       "dateSentPhase2": "2025-11-21",
+      "name": "Larry Ardila",
       "position": "Weekly Team",
       "recruiter": "Ghassan",
       "notes": "Docs available /RT Monday 11/24/25 at 1 Pm will need thorough testing will update McCracken"
     },
     {
       "id": "lead_29",
-      "name": "Luis Lomeli",
       "dateAccepted": "2025-11-21",
       "dateSentPhase2": "2025-11-21",
+      "name": "Luis Lomeli",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Docs in posession  RT Wednesday 11/26/25 at 3:30 PM"
     },
     {
       "id": "lead_30",
-      "name": "Gabriel Jimenez",
       "dateAccepted": "2025-11-21",
       "dateSentPhase2": "",
+      "name": "Gabriel Jimenez",
       "position": "Team Mail",
       "recruiter": "Ghassan",
       "notes": "-(2 weeks) Thorough Testing - GK"
     },
     {
       "id": "lead_31",
-      "name": "Marlon William",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "",
+      "name": "Marlon William",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Pending Docs /RT Wednesday 10:30 AM 12/3/25"
     },
     {
       "id": "lead_32",
-      "name": "Shaquille Wiggins",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "",
+      "name": "Shaquille Wiggins",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "Interested. Pending application, cdl & med card. Followup to see if driving still working on everything"
     },
     {
       "id": "lead_33",
-      "name": "Ruben Fuentes",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "",
+      "name": "Ruben Fuentes",
       "position": "local SA",
       "recruiter": "Ghassan",
       "notes": "Pending Docs /RT Wednesday 11/26/25 9:30 AM\nUnresponsive per Ghassan 11.26"
     },
     {
       "id": "lead_34",
-      "name": "Carver Randle",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "",
+      "name": "Carver Randle",
       "position": "Weekly Team",
       "recruiter": "Jason",
       "notes": "Interested. Pending application, cdl & med card....Followup to see if driving still working on everything"
     },
     {
       "id": "lead_35",
-      "name": "Jose Moctezuma",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "2025-11-24",
+      "name": "Jose Moctezuma",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Pending Docs /RT Tuesday 11/25/25 3:30 PM"
     },
     {
       "id": "lead_36",
-      "name": "Terrence Minor",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "",
+      "name": "Terrence Minor",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "pending docs and RT after Thanksgivings / Driver refered a friend also"
     },
     {
       "id": "lead_37",
-      "name": "Oscar Reymond",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "2025-11-24",
+      "name": "Oscar Reymond",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Pending call to setup RT"
     },
     {
       "id": "lead_38",
-      "name": "Charles T. Holmes",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "2025-11-26",
+      "name": "Charles T. Holmes",
       "position": "Team Mail",
       "recruiter": "Jason",
       "notes": "Cancelled due to being a solo driver- not taking solos at this time"
     },
     {
       "id": "lead_39",
-      "name": "Joshua Howard",
       "dateAccepted": "2025-11-25",
       "dateSentPhase2": "",
+      "name": "Joshua Howard",
       "position": "local SA",
       "recruiter": "Ghassan",
       "notes": "Pending Docs / RT Wednesday 12/04/25 at 9:30 AM"
     },
     {
       "id": "lead_40",
-      "name": "William McPherson",
       "dateAccepted": "2025-11-25",
       "dateSentPhase2": "",
+      "name": "William McPherson",
       "position": "S.A. Solo OTR",
       "recruiter": "Jason",
       "notes": "Application completed and review completed. Waiting on driver to schedule his RT next week (currently doing 2 week notice)"
     },
     {
       "id": "lead_41",
-      "name": "Tylee Martin",
       "dateAccepted": "2025-11-25",
       "dateSentPhase2": "",
+      "name": "Tylee Martin",
       "position": "local SA",
       "recruiter": "Ghassan",
       "notes": "RT Tomorrow at 11:30 AM Wednesday 11/26/25"
     },
     {
       "id": "lead_42",
-      "name": "Jeanette Cruz",
       "dateAccepted": "2025-11-25",
       "dateSentPhase2": "2025-12-03",
+      "name": "Jeanette Cruz",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "12/3 Jeanette completed training and has been cleared to dispatch"
     },
     {
       "id": "lead_43",
-      "name": "Juan Aguallo",
       "dateAccepted": "2025-11-26",
       "dateSentPhase2": "",
+      "name": "Juan Aguallo",
       "position": "Solo OTR",
       "recruiter": "Jason",
       "notes": "updating application and waiting on driver to send a copy of his CDL & Med Card. Followup with driver"
     },
     {
       "id": "lead_44",
-      "name": "Kevin Carr",
       "dateAccepted": "2025-11-26",
       "dateSentPhase2": "2025-11-28",
+      "name": "Kevin Carr",
       "position": "Solo OTR",
       "recruiter": "Sara",
       "notes": ""
     },
     {
       "id": "lead_45",
-      "name": "Izaiah Garza",
       "dateAccepted": "2025-11-26",
       "dateSentPhase2": "2025-11-28",
+      "name": "Izaiah Garza",
       "position": "SA Solo OTR",
       "recruiter": "Jason",
       "notes": "Passed RT- Working on docs and Drug Test (teaming with Peyton Cole)"
     },
     {
       "id": "lead_46",
-      "name": "Ditrik Lee",
       "dateAccepted": "2025-12-01",
       "dateSentPhase2": "",
+      "name": "Ditrik Lee",
       "position": "Memphis Team",
       "recruiter": "Jason",
       "notes": "Driver interested and wants to look further into the details and think it over"
     },
     {
       "id": "lead_47",
-      "name": "Franco Santos",
       "dateAccepted": "2025-11-24",
       "dateSentPhase2": "",
+      "name": "Franco Santos",
       "position": "SA Teams",
       "recruiter": "Kailin",
       "notes": "passed RT on 11/24. will take DT closer to end of december. is going to be team driving with current driver manny arredondo. \napproved by andrew since he is under 10 months driving experience"
     },
     {
       "id": "lead_48",
-      "name": "Kevin Ellis",
       "dateAccepted": "2025-12-01",
       "dateSentPhase2": "",
+      "name": "Kevin Ellis",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/8/25 at 9:30 AM / pending docs"
     },
     {
       "id": "lead_49",
-      "name": "Jose Tamez",
       "dateAccepted": "2025-12-01",
       "dateSentPhase2": "2025-12-01",
+      "name": "Jose Tamez",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday at 9:30 AM 12/2/25/ docs recived"
     },
     {
       "id": "lead_50",
-      "name": "Alexander Padilla",
       "dateAccepted": "2025-12-01",
       "dateSentPhase2": "",
+      "name": "Alexander Padilla",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 12/2/25 at 2:30 PM"
     },
     {
       "id": "lead_51",
-      "name": "Tasha Smith",
       "dateAccepted": "2025-12-01",
       "dateSentPhase2": "2025-12-01",
+      "name": "Tasha Smith",
       "position": "Solo OTR",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 12/2/25 at 1 PM/ Docs recived"
     },
     {
       "id": "lead_52",
-      "name": "Trevorus Ellis",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Trevorus Ellis",
       "position": "Memphis Team",
       "recruiter": "Jason",
       "notes": "Driver interested and wants to look further into the details and think it over. App link sent"
     },
     {
       "id": "lead_53",
-      "name": "James Houston",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "James Houston",
       "position": "Memphis Solo",
       "recruiter": "Jason",
       "notes": "Driver interested and wants to look further into the details and think it over. App link sent"
     },
     {
       "id": "lead_54",
-      "name": "David Givner",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "David Givner",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/8/25 at 3:30 PM / RT canceled due to discovery of SAP"
     },
     {
       "id": "lead_55",
-      "name": "Steven Barnes",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "2025-12-03",
+      "name": "Steven Barnes",
       "position": "Memphis Solo",
       "recruiter": "Sara",
       "notes": "Steven completed all NHPW 12/3/25"
     },
     {
       "id": "lead_56",
-      "name": "Michael Davis",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Michael Davis",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 12/3/25 at 9:30 AM / pending Docs"
     },
     {
       "id": "lead_57",
-      "name": "Bobby Long",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Bobby Long",
       "position": "Memphis Solo",
       "recruiter": "Jason",
       "notes": "Driver advising that he is interested again. Waiting on CDL & Med Card docs to start the process"
     },
     {
       "id": "lead_58",
-      "name": "Andrew Miller",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Andrew Miller",
       "position": "Memphis Solo",
       "recruiter": "Jason",
       "notes": "Driver interested and wants to look further into the details and think it over. App link sent"
     },
     {
       "id": "lead_59",
-      "name": "Matrell Hall",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Matrell Hall",
       "position": "Memphis Solo",
       "recruiter": "Jason",
       "notes": "Driver advising that he is interested. Waiting on CDL & Med Card docs to start the process"
     },
     {
       "id": "lead_60",
-      "name": "Gregory Bethune",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "2025-12-03",
+      "name": "Gregory Bethune",
       "position": "S.A. Solo OTR",
       "recruiter": "Jason",
       "notes": "S.A. Driver scheduled for RT on Tuesday 12/9 at 11:30 am"
     },
     {
       "id": "lead_61",
-      "name": "Yanko Alvarez",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Yanko Alvarez",
       "position": "Solo OTR",
       "recruiter": "Ghassan",
       "notes": "Funnel pending docs"
     },
     {
       "id": "lead_62",
-      "name": "Curtis House",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Curtis House",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 12/3/25 Wednesday at 11:30 AM"
     },
     {
       "id": "lead_63",
-      "name": "Travis Elsamiller",
       "dateAccepted": "2025-12-02",
       "dateSentPhase2": "",
+      "name": "Travis Elsamiller",
       "position": "SA Solo OTR",
       "recruiter": "Sara",
       "notes": "RT 12/3/25 at 2:30 PM"
     },
     {
       "id": "lead_64",
-      "name": "Steven Johnson",
       "dateAccepted": "2025-12-03",
       "dateSentPhase2": "",
+      "name": "Steven Johnson",
       "position": "DTX Team",
       "recruiter": "Jason",
       "notes": "Waiting on CDL & Med Card info to proceed with review"
     },
     {
       "id": "lead_65",
-      "name": "Stephon Johnson",
       "dateAccepted": "2025-12-03",
       "dateSentPhase2": "",
+      "name": "Stephon Johnson",
       "position": "DTX Team",
       "recruiter": "Jason",
       "notes": "Waiting on CDL & Med Card info to proceed with review"
     },
     {
       "id": "lead_66",
-      "name": "Clay Montgomery",
       "dateAccepted": "2025-12-03",
       "dateSentPhase2": "",
+      "name": "Clay Montgomery",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 12/5/25 at 10:30 AM / Docs available"
     },
     {
       "id": "lead_67",
-      "name": "Jaterious Bryant",
       "dateAccepted": "2025-12-03",
       "dateSentPhase2": "",
+      "name": "Jaterious Bryant",
       "position": "Memphis Solo",
       "recruiter": "Jason",
       "notes": "Working on updating app and sending CDL/Med Card info"
     },
     {
       "id": "lead_68",
-      "name": "Thomas Bradford",
       "dateAccepted": "2025-12-04",
       "dateSentPhase2": "2025-12-04",
+      "name": "Thomas Bradford",
       "position": "Dallas Team",
       "recruiter": "Jason",
       "notes": "Sent for Drug Test. Start time Monday 12/8 at 0800 am"
     },
     {
       "id": "lead_69",
-      "name": "Gloria Tye",
       "dateAccepted": "2025-12-04",
       "dateSentPhase2": "",
+      "name": "Gloria Tye",
       "position": "Memphis Solo",
       "recruiter": "Jason",
       "notes": "Cancelled due to being solo driver- not needed at this time"
     },
     {
       "id": "lead_70",
-      "name": "Joshua Wierzbicki-",
       "dateAccepted": "2025-12-04",
       "dateSentPhase2": "",
+      "name": "Joshua Wierzbicki-",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Holding until driver update CDL/ Docs received"
     },
     {
       "id": "lead_71",
-      "name": "Keith Evans",
       "dateAccepted": "2025-12-04",
       "dateSentPhase2": "",
+      "name": "Keith Evans",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 12/9/25 at 1:30 PM / Docs available"
     },
     {
       "id": "lead_72",
-      "name": "Michael Kruszynski",
       "dateAccepted": "2025-12-04",
       "dateSentPhase2": "2025-12-05",
+      "name": "Michael Kruszynski",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "RT Friday 12/5 at 3:30 PM (needs a partner)"
     },
     {
       "id": "lead_73",
-      "name": "Peyton Cole",
       "dateAccepted": "2025-12-04",
       "dateSentPhase2": "2025-12-04",
+      "name": "Peyton Cole",
       "position": "S.A. Wkly Team",
       "recruiter": "Jason",
       "notes": "Passed RT- Working on docs and Drug Test (teaming with Izaiah Garza)"
     },
     {
       "id": "lead_74",
-      "name": "Justin Matthews",
       "dateAccepted": "2025-12-04",
       "dateSentPhase2": "2025-12-04",
+      "name": "Justin Matthews",
       "position": "Memphis Teams",
       "recruiter": "Jason",
       "notes": "Memphis Teams Driver- RT scheduled for Tuesday 12/9 at 0900 am"
     },
     {
       "id": "lead_75",
-      "name": "Todd Moland",
       "dateAccepted": "2025-12-05",
       "dateSentPhase2": "",
+      "name": "Todd Moland",
       "position": "Dallas Team",
       "recruiter": "Jason",
       "notes": "Application sent. Waiting on driver to update and send CDL & Med Card"
     },
     {
       "id": "lead_76",
-      "name": "Steven Guerrero",
       "dateAccepted": "2025-12-05",
       "dateSentPhase2": "2025-12-05",
+      "name": "Steven Guerrero",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/8/25 at 1:30 PM/ Docs available"
     },
     {
       "id": "lead_77",
-      "name": "Rodney Humphrey",
       "dateAccepted": "2025-12-05",
       "dateSentPhase2": "",
+      "name": "Rodney Humphrey",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday at 12:30 12/8/25  PM /🚨Needs to be tested on ED🚨/ pending docs"
     },
     {
       "id": "lead_78",
-      "name": "Shedrick Riley",
       "dateAccepted": "2025-12-05",
       "dateSentPhase2": "2025-12-05",
+      "name": "Shedrick Riley",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 12/9/25 at 3:30 PM / Docs available"
     },
     {
       "id": "lead_79",
-      "name": "Edward Famillia",
       "dateAccepted": "2025-12-05",
       "dateSentPhase2": "2025-12-05",
+      "name": "Edward Famillia",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 12/9/25 at 9:30 AM / Docs available"
     },
     {
       "id": "lead_80",
-      "name": "Pedro Scarpelli Maia",
       "dateAccepted": "2025-12-08",
       "dateSentPhase2": "",
+      "name": "Pedro Scarpelli Maia",
       "position": "DTX Team",
       "recruiter": "Jason",
       "notes": "Working on updating app and sending CDL/Med Card info"
     },
     {
       "id": "lead_81",
-      "name": "Ellen Assuncao",
       "dateAccepted": "2025-12-08",
       "dateSentPhase2": "",
+      "name": "Ellen Assuncao",
       "position": "DTX Team",
       "recruiter": "Jason",
       "notes": "Working on updating app and sending CDL/Med Card info"
     },
     {
       "id": "lead_82",
-      "name": "Gerardo Portillo",
       "dateAccepted": "2025-12-08",
       "dateSentPhase2": "",
+      "name": "Gerardo Portillo",
       "position": "DTX Team",
       "recruiter": "Jason",
       "notes": "Driver working on scheduling a RT after Christmas holiday. He wants to complete a 2 week notice with his current company"
     },
     {
       "id": "lead_83",
-      "name": "Gilbert Pacheo",
       "dateAccepted": "2025-12-08",
       "dateSentPhase2": "",
+      "name": "Gilbert Pacheo",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/15/25 at 2:30 PM / pending docs"
     },
     {
       "id": "lead_84",
-      "name": "Christian Ray Rios",
       "dateAccepted": "2025-12-08",
       "dateSentPhase2": "",
+      "name": "Christian Ray Rios",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Returning driver (RT Wednesday 12/10/25 at 9:30 AM) / Pending Docs"
     },
     {
       "id": "lead_85",
-      "name": "Syed Rizvi",
       "dateAccepted": "2025-12-08",
       "dateSentPhase2": "",
+      "name": "Syed Rizvi",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 12/11/2025 at 10 :30 AM / Pending Docs"
     },
     {
       "id": "lead_86",
-      "name": "Karen Perdomo",
       "dateAccepted": "2025-12-09",
       "dateSentPhase2": "2025-12-12",
+      "name": "Karen Perdomo",
       "position": "DTX Weekly",
       "recruiter": "Jason",
       "notes": "RT Scheduled for Wednesday 12/17 at 1130 am Dallas"
     },
     {
       "id": "lead_87",
-      "name": "Marco Rebolledo",
       "dateAccepted": "2025-12-09",
       "dateSentPhase2": "",
+      "name": "Marco Rebolledo",
       "position": "DTX Team",
       "recruiter": "Jason",
       "notes": "Running MVR & CH consents and working on scheduling RT"
     },
     {
       "id": "lead_88",
-      "name": "Karl Rhone",
       "dateAccepted": "2025-12-09",
       "dateSentPhase2": "",
+      "name": "Karl Rhone",
       "position": "S.A. Teams",
       "recruiter": "Jason",
       "notes": "Running MVR & CH consents and working on scheduling RT"
     },
     {
       "id": "lead_89",
-      "name": "Andrew Gonzalez",
       "dateAccepted": "2025-12-09",
       "dateSentPhase2": "",
+      "name": "Andrew Gonzalez",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT scheduled 12/9 at 11:30 AM (needs a partner)"
     },
     {
       "id": "lead_90",
-      "name": "Celeste La Plant",
       "dateAccepted": "2025-12-09",
       "dateSentPhase2": "",
+      "name": "Celeste La Plant",
       "position": "S.A. Wkly Team",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 12/11/25 at 12:30 PM"
     },
     {
       "id": "lead_91",
-      "name": "Desiree Torres",
       "dateAccepted": "2025-12-09",
       "dateSentPhase2": "",
+      "name": "Desiree Torres",
       "position": "S.A. Wkly Team",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 12/11/25 at 12:30 PM"
     },
     {
       "id": "lead_92",
-      "name": "Charles T. Holmes",
       "dateAccepted": "2025-12-09",
       "dateSentPhase2": "2025-12-09",
+      "name": "Charles T. Holmes",
       "position": "Dallas Solo",
       "recruiter": "Jason",
       "notes": "RT Scheduled for Tuesday 12/16 at 1130 am"
     },
     {
       "id": "lead_93",
-      "name": "Malachi Huggins",
       "dateAccepted": "2025-12-10",
       "dateSentPhase2": "",
+      "name": "Malachi Huggins",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Thursday at 9:30 AM 12/11/25 / pending docs"
     },
     {
       "id": "lead_94",
-      "name": "Rene Valadez",
       "dateAccepted": "2025-12-10",
       "dateSentPhase2": "2025-12-10",
+      "name": "Rene Valadez",
       "position": "SA Solo OTR",
       "recruiter": "Sara",
       "notes": "Passed RT 12/10 - Rene was going to run Solo until his wife updated her CDL status. Rene has been unresponsive"
     },
     {
       "id": "lead_95",
-      "name": "Todd Moland",
       "dateAccepted": "2025-12-11",
       "dateSentPhase2": "",
+      "name": "Todd Moland",
       "position": "S.A. Teams",
       "recruiter": "Jason",
       "notes": "Working on updating app and sending CDL/Med Card info"
     },
     {
       "id": "lead_96",
-      "name": "Ykeisha Nelson",
       "dateAccepted": "2025-12-11",
       "dateSentPhase2": "",
+      "name": "Ykeisha Nelson",
       "position": "Memphis Team",
       "recruiter": "Sara",
       "notes": "RT Friday 12/26 at 9 AM (teaming with Methlyn Onogomuho) **NMF**"
     },
     {
       "id": "lead_97",
-      "name": "Katie Wagner",
       "dateAccepted": "2025-12-12",
       "dateSentPhase2": "",
+      "name": "Katie Wagner",
       "position": "S.A Teams",
       "recruiter": "Jason",
       "notes": "Semt for MVR & CH consent review"
     },
     {
       "id": "lead_98",
-      "name": "Jose Mendoza",
       "dateAccepted": "2025-12-12",
       "dateSentPhase2": "2025-12-12",
+      "name": "Jose Mendoza",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/15/25 at 1:30 PM / pending docs"
     },
     {
       "id": "lead_99",
-      "name": "BRIAN MINCEY",
       "dateAccepted": "2025-12-12",
       "dateSentPhase2": "",
+      "name": "BRIAN MINCEY",
       "position": "local SA",
       "recruiter": "Ghassan",
       "notes": "1/19/2026 RT  9:30 AM Monday / Pending docs"
     },
     {
       "id": "lead_100",
-      "name": "Mark Cruz",
       "dateAccepted": "2025-12-12",
       "dateSentPhase2": "",
+      "name": "Mark Cruz",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/22/25 at 9:30 AM"
     },
     {
       "id": "lead_101",
-      "name": "Luis Zamora",
       "dateAccepted": "2025-12-15",
       "dateSentPhase2": "",
+      "name": "Luis Zamora",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT tomorrow Tuesday 12/16/25 at 10:30 AM / Pending docs"
     },
     {
       "id": "lead_102",
-      "name": "Aaron Brown, Jr",
       "dateAccepted": "2025-12-15",
       "dateSentPhase2": "",
+      "name": "Aaron Brown, Jr",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT Friday 12/19/25 at 9:30 AM / Canceled due to MVR"
     },
     {
       "id": "lead_103",
-      "name": "Matthew Torres",
       "dateAccepted": "2025-12-15",
       "dateSentPhase2": "",
+      "name": "Matthew Torres",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "Passed RT 12/15; waiting on Matthew to complete DT and call back. He said he wanted to start 12/17 (needs a partner)"
     },
     {
       "id": "lead_104",
-      "name": "Bruce Woodrum",
       "dateAccepted": "2025-12-15",
       "dateSentPhase2": "",
+      "name": "Bruce Woodrum",
       "position": "Houston Team",
       "recruiter": "Sara",
       "notes": "Passed RT 12/15 (teaming with Anthony \"Tony\" Gonzales)"
     },
     {
       "id": "lead_105",
-      "name": "Anthony \"Tony\" Gonzales",
       "dateAccepted": "2025-12-15",
       "dateSentPhase2": "",
+      "name": "Anthony \"Tony\" Gonzales",
       "position": "Houston Team",
       "recruiter": "Sara",
       "notes": "Passed RT 12/15 (teaming with Bruce Woodrum)"
     },
     {
       "id": "lead_106",
-      "name": "Methlyn Onogomuho",
       "dateAccepted": "2025-12-15",
       "dateSentPhase2": "",
+      "name": "Methlyn Onogomuho",
       "position": "Memphis Team",
       "recruiter": "Sara",
       "notes": "RT Tuesday 12/23 at 9 AM (teaming with Ykeisha Nelson) **NMF**"
     },
     {
       "id": "lead_107",
-      "name": "Mikec Chavez",
       "dateAccepted": "2025-12-16",
       "dateSentPhase2": "",
+      "name": "Mikec Chavez",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT Monday 29th at 11:30 AM"
     },
     {
       "id": "lead_108",
-      "name": "Krystal Thrasher",
       "dateAccepted": "2025-12-16",
       "dateSentPhase2": "",
+      "name": "Krystal Thrasher",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT Monday 29th at 11:30 AM / Docs received"
     },
     {
       "id": "lead_109",
-      "name": "Loriann Lozzi",
       "dateAccepted": "2025-12-16",
       "dateSentPhase2": "",
+      "name": "Loriann Lozzi",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT Monday 29th at 1 PM"
     },
     {
       "id": "lead_110",
-      "name": "David Garza-",
       "dateAccepted": "2025-12-16",
       "dateSentPhase2": "",
+      "name": "David Garza-",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT Friday 12/26/25 at 2:30 PM / From ALice Texas/ Docs received"
     },
     {
       "id": "lead_111",
-      "name": "Hamp Traylor",
       "dateAccepted": "2025-12-17",
       "dateSentPhase2": "2025-12-19",
+      "name": "Hamp Traylor",
       "position": "SA Team/Dallas Solo",
       "recruiter": "Sara",
       "notes": "RT Monday 12/22 at 11:30 AM *Hamp is going to run Solo until his partner, Kelly Alfred is GTG (in January) Hamp requested Christmas Eve and Christmas day off"
     },
     {
       "id": "lead_112",
-      "name": "Michael Miller",
       "dateAccepted": "2025-12-17",
       "dateSentPhase2": "2025-12-17",
+      "name": "Michael Miller",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 12/18/25 at 10:30 AM/ Canceled due to MVR and no show"
     },
     {
       "id": "lead_113",
-      "name": "Dale Robinson",
       "dateAccepted": "2025-12-17",
       "dateSentPhase2": "",
+      "name": "Dale Robinson",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 12/18/25 at 9:30 AM/ Pending Docs"
     },
     {
       "id": "lead_114",
-      "name": "Gustavo Palacios",
       "dateAccepted": "2025-12-17",
       "dateSentPhase2": "",
+      "name": "Gustavo Palacios",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 12/19/25 at 3:30 PM/ Pending Docs"
     },
     {
       "id": "lead_115",
-      "name": "Albert Hernandez",
       "dateAccepted": "2025-12-18",
       "dateSentPhase2": "",
+      "name": "Albert Hernandez",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/22/25 at 1 PM/ ( Returning SAP) /Executive lead"
     },
     {
       "id": "lead_116",
-      "name": "Waldemar Ramos Santiago",
       "dateAccepted": "2025-12-18",
       "dateSentPhase2": "",
+      "name": "Waldemar Ramos Santiago",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 12/23/25 at 1:30 PM / pending docs"
     },
     {
       "id": "lead_117",
-      "name": "Samuel Rodriguez",
       "dateAccepted": "2025-12-18",
       "dateSentPhase2": "",
+      "name": "Samuel Rodriguez",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "RT Tuesday 12/23/25 at 11:30 AM (needs a partner)"
     },
     {
       "id": "lead_118",
-      "name": "Ida Jones",
       "dateAccepted": "",
       "dateSentPhase2": "",
+      "name": "Ida Jones",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT Friday 12/26 11:30 AM"
     },
     {
       "id": "lead_119",
-      "name": "Pamela Brown",
       "dateAccepted": "",
       "dateSentPhase2": "",
+      "name": "Pamela Brown",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT Friday 12/26 time TBD"
     },
     {
       "id": "lead_120",
-      "name": "Michael \"Mike\" Lane",
       "dateAccepted": "",
       "dateSentPhase2": "",
+      "name": "Michael \"Mike\" Lane",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "RT Monday 12/29 at 9 AM (needs a partner)"
     },
     {
       "id": "lead_121",
-      "name": "Jose Guajardo",
       "dateAccepted": "",
       "dateSentPhase2": "",
+      "name": "Jose Guajardo",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "RT Tuesday 12/30 at 3 PM (needs a partner)"
     },
     {
       "id": "lead_122",
-      "name": "Juan Flores",
       "dateAccepted": "2025-12-19",
       "dateSentPhase2": "",
+      "name": "Juan Flores",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Funnel pending docs and driver moving to SA after new years"
     },
     {
       "id": "lead_123",
-      "name": "Joshua  Wierzbicki",
       "dateAccepted": "2025-12-22",
       "dateSentPhase2": "",
+      "name": "Joshua  Wierzbicki",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT tomorrow at 2:30 PM Tuesday 12/23/25 /Docs recived"
     },
     {
       "id": "lead_124",
-      "name": "Christopher Dee",
       "dateAccepted": "2025-12-22",
       "dateSentPhase2": "",
+      "name": "Christopher Dee",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 1/05/26 at 9:30 Am"
     },
     {
       "id": "lead_125",
-      "name": "Hector Pena",
       "dateAccepted": "2025-12-22",
       "dateSentPhase2": "2025-12-22",
+      "name": "Hector Pena",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/29/25 at 2:30 Pm /NMF DUE TO MVR ❌❌❌❌"
     },
     {
       "id": "lead_126",
-      "name": "JESUS ORNELAS JR.",
       "dateAccepted": "2025-12-22",
       "dateSentPhase2": "",
+      "name": "JESUS ORNELAS JR.",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/29/25 at 3:45 PM"
     },
     {
       "id": "lead_127",
-      "name": "Jose Rosales",
       "dateAccepted": "2025-12-23",
       "dateSentPhase2": "",
+      "name": "Jose Rosales",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 12/29/25 at 10:30 AM"
     },
     {
       "id": "lead_128",
-      "name": "JAYSON MARTINEZ",
       "dateAccepted": "2025-12-26",
       "dateSentPhase2": "",
+      "name": "JAYSON MARTINEZ",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 12/30/25 at 10:30 AM"
     },
     {
       "id": "lead_129",
-      "name": "Cullen Cook",
       "dateAccepted": "2025-12-29",
       "dateSentPhase2": "",
+      "name": "Cullen Cook",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "RT Friday 1/2/26 (working with Cody for 1/3/26 start)"
     },
     {
       "id": "lead_130",
-      "name": "Kebron Lampkin",
       "dateAccepted": "2025-12-30",
       "dateSentPhase2": "",
+      "name": "Kebron Lampkin",
       "position": "Dallas local",
       "recruiter": "Ghassan",
       "notes": "RT Monday 1/5/26 at 1:30 PM"
     },
     {
       "id": "lead_131",
-      "name": "Tyana Eason-Nugent",
       "dateAccepted": "2025-12-30",
       "dateSentPhase2": "2026-01-06",
+      "name": "Tyana Eason-Nugent",
       "position": "Dallas Local",
       "recruiter": "Sara",
       "notes": "RT Monday 1/5/26 at 11:30 AM"
     },
     {
       "id": "lead_132",
-      "name": "PETER T. Nguyen",
       "dateAccepted": "2025-12-30",
       "dateSentPhase2": "",
+      "name": "PETER T. Nguyen",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 1/5/26 at 1:30 PM"
     },
     {
       "id": "lead_133",
-      "name": "Brenda Fuller",
       "dateAccepted": "2025-12-30",
       "dateSentPhase2": "",
+      "name": "Brenda Fuller",
       "position": "SA Flatbed",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 1/6/25 at 9:30 AM"
     },
     {
       "id": "lead_134",
-      "name": "Joshua Fuller",
       "dateAccepted": "2025-12-30",
       "dateSentPhase2": "",
+      "name": "Joshua Fuller",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 1/6/25 at 9:30 AM"
     },
     {
       "id": "lead_135",
-      "name": "Brieana Winston",
       "dateAccepted": "2026-12-31",
       "dateSentPhase2": "",
+      "name": "Brieana Winston",
       "position": "Dallas Local",
       "recruiter": "Sara",
       "notes": "RT Friday 1/2/26 at 11:30 AM"
     },
     {
       "id": "lead_136",
-      "name": "Kenestta Johnson",
       "dateAccepted": "2026-01-02",
       "dateSentPhase2": "",
+      "name": "Kenestta Johnson",
       "position": "Weekly Team SA",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/9/26 at 2:30 PM"
     },
     {
       "id": "lead_137",
-      "name": "Mister J Young, Sr",
       "dateAccepted": "2026-01-05",
       "dateSentPhase2": "2026-01-05",
+      "name": "Mister J Young, Sr",
       "position": "Team Mail Houston",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 1/7/26 at 9;30 AM"
     },
     {
       "id": "lead_138",
-      "name": "Rickie Jones",
       "dateAccepted": "2026-01-05",
       "dateSentPhase2": "2026-01-05",
+      "name": "Rickie Jones",
       "position": "Weekly Team Dallas",
       "recruiter": "Ghassan",
       "notes": "1/12/26 Monday at 11:30 AM with Richard"
     },
     {
       "id": "lead_139",
-      "name": "Torion Davis",
       "dateAccepted": "2026-01-05",
       "dateSentPhase2": "2026-01-05",
+      "name": "Torion Davis",
       "position": "Weekly Team Dallas",
       "recruiter": "Ghassan",
       "notes": "1/12/26 Monday at 11:30 AM with Richard"
     },
     {
       "id": "lead_140",
-      "name": "John Esparaza",
       "dateAccepted": "2026-01-05",
       "dateSentPhase2": "",
+      "name": "John Esparaza",
       "position": "Solo Dry",
       "recruiter": "Ghassan",
       "notes": "RT  Tuesday 1/6/26 at 11:30 AM"
     },
     {
       "id": "lead_141",
-      "name": "Marquis Brown",
       "dateAccepted": "2026-01-06",
       "dateSentPhase2": "",
+      "name": "Marquis Brown",
       "position": "Solo Dry Dallas",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 1/8/26 at 11 AM"
     },
     {
       "id": "lead_142",
-      "name": "Rangga S Putra",
       "dateAccepted": "2026-01-06",
       "dateSentPhase2": "",
+      "name": "Rangga S Putra",
       "position": "Team Mail Houston",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/9/26 at 11:30 AM (San Antonio )"
     },
     {
       "id": "lead_143",
-      "name": "Tommy Simmons",
       "dateAccepted": "2026-01-06",
       "dateSentPhase2": "",
+      "name": "Tommy Simmons",
       "position": "Team Mail Dallas",
       "recruiter": "Ghassan",
       "notes": "RT Scheduled 1/9/26 at 12 PM Friday / Possible cancelation due to drivers attitude"
     },
     {
       "id": "lead_144",
-      "name": "Adam Williams",
       "dateAccepted": "2026-01-07",
       "dateSentPhase2": "2026-01-07",
+      "name": "Adam Williams",
       "position": "Dallas  local",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 1/8/26 at 12;30 PM"
     },
     {
       "id": "lead_145",
-      "name": "Michael Turner",
       "dateAccepted": "2026-01-07",
       "dateSentPhase2": "",
+      "name": "Michael Turner",
       "position": "Dallas Teams",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 1/8/26 at 2;00 PM"
     },
     {
       "id": "lead_146",
-      "name": "Benjamin S Shane Anderson -",
       "dateAccepted": "2026-01-08",
       "dateSentPhase2": "2026-01-08",
+      "name": "Benjamin S Shane Anderson -",
       "position": "Dallas local",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/2/26 at 9:30 AM"
     },
     {
       "id": "lead_147",
-      "name": "Robson Bano",
       "dateAccepted": "2026-01-08",
       "dateSentPhase2": "",
+      "name": "Robson Bano",
       "position": "Dallas Teams",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 1/14/26 at 12 PM"
     },
     {
       "id": "lead_148",
-      "name": "Brian A Smith",
       "dateAccepted": "2026-01-08",
       "dateSentPhase2": "2026-01-08",
+      "name": "Brian A Smith",
       "position": "Solo Dry  van SA",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 10:30 AM 1/13/26"
     },
     {
       "id": "lead_149",
-      "name": "Thomas L Bell",
       "dateAccepted": "2026-01-09",
       "dateSentPhase2": "2026-01-09",
+      "name": "Thomas L Bell",
       "position": "Memphis Weekly Teams",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 1/13/26 at 9:30 AM (Nathan)"
     },
     {
       "id": "lead_150",
-      "name": "Jessica Lule",
       "dateAccepted": "2026-01-12",
       "dateSentPhase2": "2026-01-12",
+      "name": "Jessica Lule",
       "position": "Dallas Teams",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 1/14/26 at 10:30 AM"
     },
     {
       "id": "lead_151",
-      "name": "Silvester Alvarez",
       "dateAccepted": "2026-01-12",
       "dateSentPhase2": "2026-01-09",
+      "name": "Silvester Alvarez",
       "position": "SATeam Mail",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 1/22/26 at 2:30 PM"
     },
     {
       "id": "lead_152",
-      "name": "Loriann Lozzi",
       "dateAccepted": "2026-01-12",
       "dateSentPhase2": "2026-01-12",
+      "name": "Loriann Lozzi",
       "position": "SATeam Mail",
       "recruiter": "Ghassan",
       "notes": "RT  Tuesday 1/13/26 at 3:30 PM"
     },
     {
       "id": "lead_153",
-      "name": "Leah May",
       "dateAccepted": "2025-12-15",
       "dateSentPhase2": "2025-12-16",
+      "name": "Leah May",
       "position": "S.A Teams",
       "recruiter": "Ghassan",
       "notes": "RT  Friday  1/16/26 at 3:30 PM"
     },
     {
       "id": "lead_154",
-      "name": "Justin Castillo",
       "dateAccepted": "2026-01-13",
       "dateSentPhase2": "",
+      "name": "Justin Castillo",
       "position": "Weekly Team SA",
       "recruiter": "Ghassan",
       "notes": "RT Tomorrow 1/14/26 at 9:30 AM Wednesday"
     },
     {
       "id": "lead_155",
-      "name": "Ronald Colom JR",
       "dateAccepted": "2026-01-13",
       "dateSentPhase2": "2026-01-13",
+      "name": "Ronald Colom JR",
       "position": "Memphis Teams",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/16/26 at 9:30 AM"
     },
     {
       "id": "lead_156",
-      "name": "Martez Wilson",
       "dateAccepted": "2026-01-13",
       "dateSentPhase2": "",
+      "name": "Martez Wilson",
       "position": "Memphis Teams",
       "recruiter": "Ghassan",
       "notes": ""
     },
     {
       "id": "lead_157",
-      "name": "Jay Harts",
       "dateAccepted": "2026-01-14",
       "dateSentPhase2": "",
+      "name": "Jay Harts",
       "position": "Weekly Team SA",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/16/26 2:30 PM"
     },
     {
       "id": "lead_158",
-      "name": "Miles Murphy",
       "dateAccepted": "2026-01-14",
       "dateSentPhase2": "",
+      "name": "Miles Murphy",
       "position": "Weekly Team SA",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/16/26 2:30 PM"
     },
     {
       "id": "lead_159",
-      "name": "Baxter Franco",
       "dateAccepted": "2026-01-13",
       "dateSentPhase2": "2026-01-14",
+      "name": "Baxter Franco",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "RT Wednesday 1/14/26 at 11 AM"
     },
     {
       "id": "lead_160",
-      "name": "Robert Tucker",
       "dateAccepted": "2026-01-14",
       "dateSentPhase2": "",
+      "name": "Robert Tucker",
       "position": "Memphis Team",
       "recruiter": "Sara",
       "notes": "RT rescheduled to Tuesday 2/3/26 at 9:30 AM due to weather"
     },
     {
       "id": "lead_161",
-      "name": "John Andalon-",
       "dateAccepted": "2026-01-15",
       "dateSentPhase2": "",
+      "name": "John Andalon-",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 1/19/26 at 11 AM"
     },
     {
       "id": "lead_162",
-      "name": "Roman Martinez",
       "dateAccepted": "2026-01-13",
       "dateSentPhase2": "2026-01-13",
+      "name": "Roman Martinez",
       "position": "Local SA",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 1/20/26 at 10:30 AM"
     },
     {
       "id": "lead_163",
-      "name": "Keith S Crain",
       "dateAccepted": "2026-01-16",
       "dateSentPhase2": "2026-01-16",
+      "name": "Keith S Crain",
       "position": "Local Dallas",
       "recruiter": "Ghassan",
       "notes": "RT 1/16 at 4 PM"
     },
     {
       "id": "lead_164",
-      "name": "Alonzo Hargrove",
       "dateAccepted": "2026-01-19",
       "dateSentPhase2": "",
+      "name": "Alonzo Hargrove",
       "position": "Memphis solo",
       "recruiter": "Ghassan",
       "notes": "RT 2/16/26 Monday 9:30 AM"
     },
     {
       "id": "lead_165",
-      "name": "Dominick Rocha",
       "dateAccepted": "2026-01-19",
       "dateSentPhase2": "2026-01-19",
+      "name": "Dominick Rocha",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tomorrow Tuesday 9:30 AM 1/20/26"
     },
     {
       "id": "lead_166",
-      "name": "Luis Torres",
       "dateAccepted": "2026-01-19",
       "dateSentPhase2": "",
+      "name": "Luis Torres",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 1/21/26 at 9:30 AM"
     },
     {
       "id": "lead_167",
-      "name": "Dominice Hardaway",
       "dateAccepted": "2026-01-19",
       "dateSentPhase2": "",
+      "name": "Dominice Hardaway",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 11:30 Am 1/21/26"
     },
     {
       "id": "lead_168",
-      "name": "Jon Marchello",
       "dateAccepted": "2026-01-19",
       "dateSentPhase2": "",
+      "name": "Jon Marchello",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 4 PM  1/20/26"
     },
     {
       "id": "lead_169",
-      "name": "Alton Scott",
       "dateAccepted": "2026-01-21",
       "dateSentPhase2": "",
+      "name": "Alton Scott",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 1/22/26 Thursday at 4:30 PM"
     },
     {
       "id": "lead_170",
-      "name": "Carlos Trevino",
       "dateAccepted": "2026-01-22",
       "dateSentPhase2": "",
+      "name": "Carlos Trevino",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Funnel / Driver waiting for the weather to improve next week and he will inform me of the date/Application sent"
     },
     {
       "id": "lead_171",
-      "name": "Eugene Borrego-",
       "dateAccepted": "2026-01-22",
       "dateSentPhase2": "",
+      "name": "Eugene Borrego-",
       "position": "(Solo Regional)",
       "recruiter": "Ghassan",
       "notes": "RT Tomorrow Friday at 9:30 AM"
     },
     {
       "id": "lead_172",
-      "name": "Joshua Rodriguez",
       "dateAccepted": "2026-01-23",
       "dateSentPhase2": "",
+      "name": "Joshua Rodriguez",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 1/27/2026 at 10 AM"
     },
     {
       "id": "lead_173",
-      "name": "(Dinky) CARMELA SHIVEL",
       "dateAccepted": "2026-01-26",
       "dateSentPhase2": "2026-01-26",
+      "name": "(Dinky) CARMELA SHIVEL",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 1/28/2026 at 1:30 PM"
     },
     {
       "id": "lead_174",
-      "name": "Quincy Robinson",
       "dateAccepted": "2026-01-27",
       "dateSentPhase2": "2026-01-27",
+      "name": "Quincy Robinson",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 1/28/26 at 9:30 AM"
     },
     {
       "id": "lead_175",
-      "name": "Jimmy Lankin",
       "dateAccepted": "2026-01-27",
       "dateSentPhase2": "",
+      "name": "Jimmy Lankin",
       "position": "Team Mail",
       "recruiter": "Ghassan",
       "notes": "RT  Thursday 2/5/26 at 2:30 PM   (partner of Derrick Scott)"
     },
     {
       "id": "lead_176",
-      "name": "Marco A Rebolledo, Sr",
       "dateAccepted": "2026-01-27",
       "dateSentPhase2": "",
+      "name": "Marco A Rebolledo, Sr",
       "position": "Dallas Teams",
       "recruiter": "Ghassab",
       "notes": "RT Thursday 1/29/26 10:30 AM Dallas"
     },
     {
       "id": "lead_177",
-      "name": "Corey Taylor",
       "dateAccepted": "2026-01-22",
       "dateSentPhase2": "",
+      "name": "Corey Taylor",
       "position": "Dallas Local",
       "recruiter": "Sara",
       "notes": "RT rescheduled to Thursday Jan 29th *weather dependent"
     },
     {
       "id": "lead_178",
-      "name": "Celia Cruz",
       "dateAccepted": "2026-01-28",
       "dateSentPhase2": "",
+      "name": "Celia Cruz",
       "position": "Solo Regional SA",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/30/26 at 1:30 PM"
     },
     {
       "id": "lead_179",
-      "name": "Javier Garcia",
       "dateAccepted": "2026-01-28",
       "dateSentPhase2": "2026-01-28",
+      "name": "Javier Garcia",
       "position": "Team Mail/SA",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 2/17/26 10:30 AM"
     },
     {
       "id": "lead_180",
-      "name": "Calvin Rivera",
       "dateAccepted": "2026-01-28",
       "dateSentPhase2": "",
+      "name": "Calvin Rivera",
       "position": "Team Mail/SA",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/30/26 at 3:30 PM"
     },
     {
       "id": "lead_181",
-      "name": "Dewayne Carson",
       "dateAccepted": "2026-01-29",
       "dateSentPhase2": "",
+      "name": "Dewayne Carson",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT Friday 1/30/26 at 10:30 AM"
     },
     {
       "id": "lead_182",
-      "name": "Tarekee Braylock",
       "dateAccepted": "2026-01-29",
       "dateSentPhase2": "",
+      "name": "Tarekee Braylock",
       "position": "Memphis Solo",
       "recruiter": "Sara",
       "notes": "RT Wednesday 2/4/26 at 9:30 AM"
     },
     {
       "id": "lead_183",
-      "name": "Fabian Sanchez",
       "dateAccepted": "2026-01-29",
       "dateSentPhase2": "",
+      "name": "Fabian Sanchez",
       "position": "SA Local",
       "recruiter": "Ghassan",
       "notes": "RT Friday 1/30 at 12 PM"
     },
     {
       "id": "lead_184",
-      "name": "Nils Carrion",
       "dateAccepted": "2026-01-29",
       "dateSentPhase2": "",
+      "name": "Nils Carrion",
       "position": "Solo Regional SA",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/16/26 at 9:30 AM"
     },
     {
       "id": "lead_185",
-      "name": "David Lewis",
       "dateAccepted": "2026-01-30",
       "dateSentPhase2": "2026-01-30",
+      "name": "David Lewis",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 2/4/26 at 10:30 AM"
     },
     {
       "id": "lead_186",
-      "name": "Mike Webb",
       "dateAccepted": "2026-01-30",
       "dateSentPhase2": "2026-01-30",
+      "name": "Mike Webb",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT  Monday 1:30 PM 2/2/26"
     },
     {
       "id": "lead_187",
-      "name": "TITUS VELASQUES",
       "dateAccepted": "2026-01-30",
       "dateSentPhase2": "",
+      "name": "TITUS VELASQUES",
       "position": "Solo Regional SA",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/2 at 3 PM"
     },
     {
       "id": "lead_188",
-      "name": "Shawn Jefferson",
       "dateAccepted": "2026-01-30",
       "dateSentPhase2": "",
+      "name": "Shawn Jefferson",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT  2/4 Wednesday at 11:45 AM"
     },
     {
       "id": "lead_189",
-      "name": "Michael Reggiani",
       "dateAccepted": "2026-01-30",
       "dateSentPhase2": "",
+      "name": "Michael Reggiani",
       "position": "Memphis Team",
       "recruiter": "Ghassan",
       "notes": "RT  2/3 Tuesday  at 11:30 AM"
     },
     {
       "id": "lead_190",
-      "name": "Amy Reggiani",
       "dateAccepted": "2026-01-30",
       "dateSentPhase2": "",
+      "name": "Amy Reggiani",
       "position": "Memphis Team",
       "recruiter": "Ghassan",
       "notes": "RT  2/3 Tuesday  at 11:30 AM"
     },
     {
       "id": "lead_191",
-      "name": "Jeffery Brown",
       "dateAccepted": "2026-02-02",
       "dateSentPhase2": "",
+      "name": "Jeffery Brown",
       "position": "Solo Regional SA",
       "recruiter": "Ghassan",
       "notes": "RT Tomorrow Tuesday 2/3/26 at 2:30 PM"
     },
     {
       "id": "lead_192",
-      "name": "Tywon Alexander",
       "dateAccepted": "2026-02-02",
       "dateSentPhase2": "",
+      "name": "Tywon Alexander",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tomorrow Tuesday 2/3/26 at 12:30 PM"
     },
     {
       "id": "lead_193",
-      "name": "Latoya Duffie",
       "dateAccepted": "2026-02-02",
       "dateSentPhase2": "",
+      "name": "Latoya Duffie",
       "position": "Solo OTR",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/9/26 at 1;30 PM"
     },
     {
       "id": "lead_194",
-      "name": "Raymond Lee Howard",
       "dateAccepted": "2026-02-03",
       "dateSentPhase2": "",
+      "name": "Raymond Lee Howard",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/6/26 2:30 PM"
     },
     {
       "id": "lead_195",
-      "name": "VICTOR GONZALES",
       "dateAccepted": "2026-02-03",
       "dateSentPhase2": "2026-02-03",
+      "name": "VICTOR GONZALES",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 2/4/26 Wednesday 9:30 AM"
     },
     {
       "id": "lead_196",
-      "name": "johnifer Lodge",
       "dateAccepted": "2026-02-03",
       "dateSentPhase2": "2026-02-03",
+      "name": "johnifer Lodge",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/6/26 at 10:30 AM"
     },
     {
       "id": "lead_197",
-      "name": "Christopher Hinton",
       "dateAccepted": "2026-02-04",
       "dateSentPhase2": "",
+      "name": "Christopher Hinton",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/13/26 at 3:45 PM"
     },
     {
       "id": "lead_198",
-      "name": "Jonathan K. Perrin",
       "dateAccepted": "2026-02-04",
       "dateSentPhase2": "",
+      "name": "Jonathan K. Perrin",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/6/26 at 9:30 AM"
     },
     {
       "id": "lead_199",
-      "name": "Juan Rodriguez",
       "dateAccepted": "2026-02-04",
       "dateSentPhase2": "",
+      "name": "Juan Rodriguez",
       "position": "SA Team",
       "recruiter": "Sara",
       "notes": "RT Wednesday 2/4/26 at 1:30 PM"
     },
     {
       "id": "lead_200",
-      "name": "Christopher Ruffin",
       "dateAccepted": "2026-02-04",
       "dateSentPhase2": "",
+      "name": "Christopher Ruffin",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tomorrow Thursday 2/5/26 at 1:30 PM"
     },
     {
       "id": "lead_201",
-      "name": "Darren Domek",
       "dateAccepted": "2026-02-03",
       "dateSentPhase2": "",
+      "name": "Darren Domek",
       "position": "Dallas Local",
       "recruiter": "Sara",
       "notes": "RT Thursday 2/5/26 at 11:30 AM"
     },
     {
       "id": "lead_202",
-      "name": "Curtis House",
       "dateAccepted": "2026-02-04",
       "dateSentPhase2": "",
+      "name": "Curtis House",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/6/26 at 2:30 PM"
     },
     {
       "id": "lead_203",
-      "name": "Joshua Rodriguez",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Joshua Rodriguez",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Rescheduled at Tuesday 2/12/26 at 9:30 AM"
     },
     {
       "id": "lead_204",
-      "name": "Quincy Robinson",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Quincy Robinson",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Today at 3:45 PM 2/5/26"
     },
     {
       "id": "lead_205",
-      "name": "Ashley Washington",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Ashley Washington",
       "position": "Teams Memphis",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 2/12 at 8:30 AM"
     },
     {
       "id": "lead_206",
-      "name": "Mark Salinas",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Mark Salinas",
       "position": "Team Mail SA",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/9/26 at 2:30 PM"
     },
     {
       "id": "lead_207",
-      "name": "Victoria E Gater",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Victoria E Gater",
       "position": "Teams Memphis/week",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 9:30 AM 2/12/26"
     },
     {
       "id": "lead_208",
-      "name": "John Dobbins",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "John Dobbins",
       "position": "Teams Memphis/week",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 9:30 AM 2/12/26"
     },
     {
       "id": "lead_209",
-      "name": "Daryl Marshall",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Daryl Marshall",
       "position": "San Antonio Team",
       "recruiter": "Sara",
       "notes": "RT Friday 2/6/26 at 3:30 PM"
     },
     {
       "id": "lead_210",
-      "name": "Deborah Whitehurst",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Deborah Whitehurst",
       "position": "Team Memphis",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/13 at 8:30 AM"
     },
     {
       "id": "lead_211",
-      "name": "Demariye Mathis Grant",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Demariye Mathis Grant",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT Friday 2/6/26 at 1:30 PM"
     },
     {
       "id": "lead_212",
-      "name": "Kevon Terrell",
       "dateAccepted": "2026-02-05",
       "dateSentPhase2": "",
+      "name": "Kevon Terrell",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT Friday 2/6/26 at 1:30 PM"
     },
     {
       "id": "lead_213",
-      "name": "Jacob Blanton",
       "dateAccepted": "2026-02-06",
       "dateSentPhase2": "",
+      "name": "Jacob Blanton",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/9/26 at 3:30 PM"
     },
     {
       "id": "lead_214",
-      "name": "Tremayne Hardimon",
       "dateAccepted": "2026-02-06",
       "dateSentPhase2": "",
+      "name": "Tremayne Hardimon",
       "position": "Team Memphis",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 2/17/2026 at 8:30 AM"
     },
     {
       "id": "lead_215",
-      "name": "Randy Green",
       "dateAccepted": "2026-02-06",
       "dateSentPhase2": "",
+      "name": "Randy Green",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/13/26 at 1:30 PM"
     },
     {
       "id": "lead_216",
-      "name": "Cipriano Martinez",
       "dateAccepted": "2026-02-06",
       "dateSentPhase2": "",
+      "name": "Cipriano Martinez",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 2/10/26 at 11:30 AM"
     },
     {
       "id": "lead_217",
-      "name": "GBEHLAWO MAKOR",
       "dateAccepted": "2026-02-06",
       "dateSentPhase2": "",
+      "name": "GBEHLAWO MAKOR",
       "position": "Solo Regional SA",
       "recruiter": "KAILIN",
       "notes": "RT TUESDAY 2/10 AT 1530 HOURS"
     },
     {
       "id": "lead_218",
-      "name": "Courey Mbaraonye",
       "dateAccepted": "2026-02-06",
       "dateSentPhase2": "",
+      "name": "Courey Mbaraonye",
       "position": "SA Regional Solo",
       "recruiter": "Sara",
       "notes": "RT Monday 2/9/26 at 9:30 AM"
     },
     {
       "id": "lead_219",
-      "name": "JASON EDWARDS",
       "dateAccepted": "2026-02-09",
       "dateSentPhase2": "2026-02-02",
+      "name": "JASON EDWARDS",
       "position": "Memphis Team",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday at 1PM 2/10/26"
     },
     {
       "id": "lead_220",
-      "name": "Madison Milton",
       "dateAccepted": "2026-02-09",
       "dateSentPhase2": "",
+      "name": "Madison Milton",
       "position": "Memphis Team",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday at 1PM 2/10/26"
     },
     {
       "id": "lead_221",
-      "name": "JEROME KING",
       "dateAccepted": "2026-02-09",
       "dateSentPhase2": "",
+      "name": "JEROME KING",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 2/11/26 at 10 :30 AM ED"
     },
     {
       "id": "lead_222",
-      "name": "NICHOLAS NOCKROES-",
       "dateAccepted": "2026-02-09",
       "dateSentPhase2": "",
+      "name": "NICHOLAS NOCKROES-",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Tuesday 2/10/26 at 1:30 PM"
     },
     {
       "id": "lead_223",
-      "name": "Robert Weary",
       "dateAccepted": "2026-02-09",
       "dateSentPhase2": "",
+      "name": "Robert Weary",
       "position": "Memphis Team",
       "recruiter": "Sara",
       "notes": "RT 2/12 at 9:30 AM"
     },
     {
       "id": "lead_224",
-      "name": "CLAYTON POLLARD",
       "dateAccepted": "2026-02-11",
       "dateSentPhase2": "",
+      "name": "CLAYTON POLLARD",
       "position": "MEMPHIS",
       "recruiter": "KAILIN",
       "notes": "THURSDAY 2/11 AT 0900 HOURS"
     },
     {
       "id": "lead_225",
-      "name": "TYLAN JONES",
       "dateAccepted": "2026-02-17",
       "dateSentPhase2": "",
+      "name": "TYLAN JONES",
       "position": "MEMPHIS",
       "recruiter": "KAILIN",
       "notes": "2/17 AT 0900 HOURS"
     },
     {
       "id": "lead_226",
-      "name": "Jessica Hudson",
       "dateAccepted": "2026-02-09",
       "dateSentPhase2": "",
+      "name": "Jessica Hudson",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT Wednesday 2/11 at 11 AM"
     },
     {
       "id": "lead_227",
-      "name": "Jermaine Thomas",
       "dateAccepted": "2026-02-09",
       "dateSentPhase2": "",
+      "name": "Jermaine Thomas",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT Wednesday 2/11 at 11 AM"
     },
     {
       "id": "lead_228",
-      "name": "Jonathan Perrin",
       "dateAccepted": "2026-02-10",
       "dateSentPhase2": "",
+      "name": "Jonathan Perrin",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "3:30 Pm RT Today 2/10"
     },
     {
       "id": "lead_229",
-      "name": "Avery Davis",
       "dateAccepted": "2026-02-10",
       "dateSentPhase2": "",
+      "name": "Avery Davis",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/13/26 at 10:30"
     },
     {
       "id": "lead_230",
-      "name": "Anthony Alfaro",
       "dateAccepted": "2026-02-10",
       "dateSentPhase2": "",
+      "name": "Anthony Alfaro",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 2/12/26 at 9:30 AM"
     },
     {
       "id": "lead_231",
-      "name": "MARK KYLE",
       "dateAccepted": "2026-02-10",
       "dateSentPhase2": "",
+      "name": "MARK KYLE",
       "position": "AG4",
       "recruiter": "KAILIN",
       "notes": "2/17 0930 HOUR RT"
     },
     {
       "id": "lead_232",
-      "name": "LARRY SMITH",
       "dateAccepted": "2026-02-10",
       "dateSentPhase2": "",
+      "name": "LARRY SMITH",
       "position": "DALLAS RTER",
       "recruiter": "KAILIN",
       "notes": "2/11 1330 HOURS RT"
     },
     {
       "id": "lead_233",
-      "name": "NATHANIEL SIMS",
       "dateAccepted": "2026-02-10",
       "dateSentPhase2": "",
+      "name": "NATHANIEL SIMS",
       "position": "MEMPHIS SOLO",
       "recruiter": "KAILIN",
       "notes": "2/17 RT AT 0900 HOURS"
     },
     {
       "id": "lead_234",
-      "name": "Krystal Thrasher",
       "dateAccepted": "2026-02-11",
       "dateSentPhase2": "",
+      "name": "Krystal Thrasher",
       "position": "Dallas Teams",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 2/12/26 at 10:30 AM"
     },
     {
       "id": "lead_235",
-      "name": "De’Vonte Cunningham",
       "dateAccepted": "2026-02-11",
       "dateSentPhase2": "2026-02-11",
+      "name": "De’Vonte Cunningham",
       "position": "SA Weekly Teams",
       "recruiter": "Ghassan",
       "notes": "RT Friday 02/13/26 at 9:30 AM"
     },
     {
       "id": "lead_236",
-      "name": "Justin Crowe",
       "dateAccepted": "2026-02-11",
       "dateSentPhase2": "2026-02-11",
+      "name": "Justin Crowe",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT  Thursday 2/12/26 4:30 PM"
     },
     {
       "id": "lead_237",
-      "name": "Saladine Obie",
       "dateAccepted": "2026-02-11",
       "dateSentPhase2": "2026-02-11",
+      "name": "Saladine Obie",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/16/2026 at 4 PM"
     },
     {
       "id": "lead_238",
-      "name": "Jonathan Perrin",
       "dateAccepted": "2026-02-12",
       "dateSentPhase2": "RETEST",
+      "name": "Jonathan Perrin",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Friday 2/13 at 4:30 PM"
     },
     {
       "id": "lead_239",
-      "name": "Jose Rosales",
       "dateAccepted": "2026-02-12",
       "dateSentPhase2": "",
+      "name": "Jose Rosales",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 2/16/26 Monday 4:30 PM"
     },
     {
       "id": "lead_240",
-      "name": "Kirson Barnes",
       "dateAccepted": "2026-02-12",
       "dateSentPhase2": "2026-02-12",
+      "name": "Kirson Barnes",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/13/26 at 4:30 PM"
     },
     {
       "id": "lead_241",
-      "name": "Derek Maldonado",
       "dateAccepted": "2026-02-12",
       "dateSentPhase2": "",
+      "name": "Derek Maldonado",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/16/26 at 3 PM"
     },
     {
       "id": "lead_242",
-      "name": "Daniel Ramos",
       "dateAccepted": "2026-02-12",
       "dateSentPhase2": "2026-02-12",
+      "name": "Daniel Ramos",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 2/17/26 at 3 PM"
     },
     {
       "id": "lead_243",
-      "name": "Jonathan Macias",
       "dateAccepted": "2026-02-12",
       "dateSentPhase2": "",
+      "name": "Jonathan Macias",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 2/17/26 at 2:30 PM"
     },
     {
       "id": "lead_244",
-      "name": "Justin Brown",
       "dateAccepted": "2026-02-12",
       "dateSentPhase2": "",
+      "name": "Justin Brown",
       "position": "Memphis Team",
       "recruiter": "Faith",
       "notes": "RT Reschedueled at 2/18 at 9:00 am"
     },
     {
       "id": "lead_245",
-      "name": "Johnifer Lodge",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Johnifer Lodge",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/16/26 at 11 AM / Rescheduale"
     },
     {
       "id": "lead_246",
-      "name": "Cesar  Montano-",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Cesar  Montano-",
       "position": "Solo Dry (Dallas)",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/20/26 at 10:30 AM"
     },
     {
       "id": "lead_247",
-      "name": "Eric Stacker",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Eric Stacker",
       "position": "Dallas Local",
       "recruiter": "Sara",
       "notes": "RT Monday 2/16 at 8 AM"
     },
     {
       "id": "lead_248",
-      "name": "Jonathan Perrin",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Jonathan Perrin",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Retest Moved to Monday  2/16/26  5:30 PM"
     },
     {
-      "id": "lead_249",
-      "name": "Jonathan Macias",
+      "id": "lead_250",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Jonathan Macias",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT  Updated 5:30 PM 2/17 Tuesday"
     },
     {
-      "id": "lead_250",
-      "name": "Joe Garcia",
+      "id": "lead_251",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Joe Garcia",
       "position": "AG4",
       "recruiter": "Ghassan",
-      "notes": "46071.395833333336"
+      "notes": "2026-02-18 09:30:00"
     },
     {
-      "id": "lead_251",
-      "name": "Alfredo Tello",
+      "id": "lead_252",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Alfredo Tello",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/16/26 at 6 PM"
     },
     {
-      "id": "lead_252",
-      "name": "Nils Carrion",
+      "id": "lead_253",
       "dateAccepted": "2026-02-13",
       "dateSentPhase2": "",
+      "name": "Nils Carrion",
       "position": "Solo Dry SA",
       "recruiter": "Ghassan",
       "notes": "Rescheduled  2/24 Tuesday at 10:30 AM"
     },
     {
-      "id": "lead_253",
-      "name": "Johnifer Lodge",
+      "id": "lead_254",
       "dateAccepted": "2026-02-16",
       "dateSentPhase2": "",
+      "name": "Johnifer Lodge",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 2 scheduled at 4:30 Pm tomorrow Tuesday 2/17"
     },
     {
-      "id": "lead_254",
-      "name": "Rossi Warren",
+      "id": "lead_255",
       "dateAccepted": "2026-02-16",
       "dateSentPhase2": "",
+      "name": "Rossi Warren",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 2/17/26 at 11:30"
     },
     {
-      "id": "lead_255",
-      "name": "Cedarien Stevens",
+      "id": "lead_256",
       "dateAccepted": "2026-02-16",
       "dateSentPhase2": "",
+      "name": "Cedarien Stevens",
       "position": "Dallas Solo",
       "recruiter": "Faith",
       "notes": "RT Scheduled 2/23/26 at 10:00 am"
     },
     {
-      "id": "lead_256",
-      "name": "Raul Quintanilla",
+      "id": "lead_257",
       "dateAccepted": "2026-02-16",
       "dateSentPhase2": "",
+      "name": "Raul Quintanilla",
       "position": "SA Weekly Teams",
       "recruiter": "Faith",
       "notes": "RT Schedueled 3/9/2026  at 10:00 am"
     },
     {
-      "id": "lead_257",
-      "name": "Jason Arceneaux",
+      "id": "lead_258",
       "dateAccepted": "2026-02-17",
       "dateSentPhase2": "",
+      "name": "Jason Arceneaux",
       "position": "Dallas Teams",
       "recruiter": "Faith",
       "notes": "RT Scheduled 2/19 at 8 AM"
     },
     {
-      "id": "lead_258",
-      "name": "Robert (Bobby) Stone",
+      "id": "lead_259",
       "dateAccepted": "2026-02-17",
       "dateSentPhase2": "",
+      "name": "Robert (Bobby) Stone",
       "position": "Dallas Teams",
       "recruiter": "Faith",
       "notes": "RT Scheduled 2/19 at 10:00 AM"
     },
     {
-      "id": "lead_259",
-      "name": "Claude Whisenhunt",
+      "id": "lead_260",
       "dateAccepted": "2026-02-17",
       "dateSentPhase2": "",
+      "name": "Claude Whisenhunt",
       "position": "Dallas Teams",
       "recruiter": "Faith",
       "notes": "RT Scheduled 2/19 at 12pm"
     },
     {
-      "id": "lead_260",
-      "name": "Cedarien Stevens",
+      "id": "lead_261",
       "dateAccepted": "2026-02-17",
       "dateSentPhase2": "",
+      "name": "Cedarien Stevens",
       "position": "Dallas Solo",
       "recruiter": "Faith",
       "notes": "RT Scheduled 2/23 at 10:00 am"
     },
     {
-      "id": "lead_261",
-      "name": "Davonte Galbert",
-      "dateAccepted": "2026-02-18",
-      "dateSentPhase2": "",
-      "position": "Dallas Team",
-      "recruiter": "Sara",
-      "notes": "RT scheduled for 2/19 at 1:30 PM"
-    },
-    {
       "id": "lead_262",
-      "name": "Joshuwa Mccain",
       "dateAccepted": "2026-02-18",
       "dateSentPhase2": "",
+      "name": "Davonte Galbert",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT scheduled for 2/19 at 1:30 PM"
     },
     {
       "id": "lead_263",
-      "name": "Saladine Obe",
       "dateAccepted": "2026-02-18",
       "dateSentPhase2": "",
+      "name": "Joshuwa Mccain",
+      "position": "Dallas Team",
+      "recruiter": "Sara",
+      "notes": "RT scheduled for 2/19 at 1:30 PM"
+    },
+    {
+      "id": "lead_264",
+      "dateAccepted": "2026-02-18",
+      "dateSentPhase2": "",
+      "name": "Saladine Obe",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Friday 5 PM 2/20/26 / Test 2"
     },
     {
-      "id": "lead_264",
-      "name": "Derrick delco",
+      "id": "lead_265",
       "dateAccepted": "2026-02-18",
       "dateSentPhase2": "",
+      "name": "Derrick delco",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 2/19/26 at 6 PM/ test 1"
     },
     {
-      "id": "lead_265",
-      "name": "Jonathan Perrin",
+      "id": "lead_266",
       "dateAccepted": "2026-02-18",
       "dateSentPhase2": "",
+      "name": "Jonathan Perrin",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT 2 Tomorrow  Thursday 2/19 at 4:30 PM / retest"
     },
     {
-      "id": "lead_266",
-      "name": "RUBEN PACHECANO",
+      "id": "lead_267",
       "dateAccepted": "2026-02-18",
       "dateSentPhase2": "",
+      "name": "RUBEN PACHECANO",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Thursday 2/19/26 at 10 AM/ test 1"
     },
     {
-      "id": "lead_267",
-      "name": "Mark Kyle",
+      "id": "lead_268",
       "dateAccepted": "2026-02-18",
       "dateSentPhase2": "",
+      "name": "Mark Kyle",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Friday 2/20/26 at  4:30 PM/ Test 2"
     },
     {
-      "id": "lead_268",
-      "name": "Taurino Escobar",
+      "id": "lead_269",
       "dateAccepted": "2026-02-18",
       "dateSentPhase2": "",
+      "name": "Taurino Escobar",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/23/26 at 5 PM / (possible Full test)"
     },
     {
-      "id": "lead_269",
-      "name": "Thomas Feazel",
+      "id": "lead_270",
       "dateAccepted": "2026-02-19",
       "dateSentPhase2": "",
+      "name": "Thomas Feazel",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/23/26  Test 1 at 10:30 AM"
     },
     {
-      "id": "lead_270",
-      "name": "Norman Gregg",
+      "id": "lead_271",
       "dateAccepted": "2026-02-19",
       "dateSentPhase2": "",
+      "name": "Norman Gregg",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday  2/23/26 at 9:30 AM (TEST 1)"
     },
     {
-      "id": "lead_271",
-      "name": "Norman Gregg",
+      "id": "lead_272",
       "dateAccepted": "2026-02-19",
       "dateSentPhase2": "",
+      "name": "Norman Gregg",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday  2/23/26 at 4:30 PM(TEST 2)"
     },
     {
-      "id": "lead_272",
-      "name": "Jose Ramirez",
+      "id": "lead_273",
       "dateAccepted": "2026-02-19",
       "dateSentPhase2": "",
+      "name": "Jose Ramirez",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Monday 2/23/26 at 11:30 AM   (TEST 1)"
     },
     {
-      "id": "lead_273",
-      "name": "Efren Barrera",
+      "id": "lead_274",
       "dateAccepted": "2026-02-19",
       "dateSentPhase2": "",
+      "name": "Efren Barrera",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 02/24/26  at 9:30 AM"
     },
     {
-      "id": "lead_274",
-      "name": "Efren Barrera",
+      "id": "lead_275",
       "dateAccepted": "2026-02-19",
       "dateSentPhase2": "",
+      "name": "Efren Barrera",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 02/24/26  at 4:30 PM"
     },
     {
-      "id": "lead_275",
-      "name": "Sebastian Huape",
+      "id": "lead_276",
       "dateAccepted": "2026-02-19",
       "dateSentPhase2": "",
+      "name": "Sebastian Huape",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Full Test at 5:30 PM Monday 2/23/26"
     },
     {
-      "id": "lead_276",
-      "name": "Joe Angel Rodriguez-",
+      "id": "lead_277",
       "dateAccepted": "2026-02-20",
       "dateSentPhase2": "NEW",
+      "name": "Joe Angel Rodriguez-",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Monday 2/23/26 at 10:30 AM / TEst 1 ED"
     },
     {
-      "id": "lead_277",
-      "name": "Derrick Delco",
+      "id": "lead_278",
       "dateAccepted": "2026-02-20",
       "dateSentPhase2": "Resch",
+      "name": "Derrick Delco",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Part 2 Test rescheduled Tuesday 2/24/26 at 6 PM"
     },
     {
-      "id": "lead_278",
-      "name": "Joshua Garcia",
+      "id": "lead_279",
       "dateAccepted": "2026-02-20",
       "dateSentPhase2": "NEW",
+      "name": "Joshua Garcia",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Wednesday 2/25/26 at 5 PM/ Full test (Night driver)"
     },
     {
-      "id": "lead_279",
-      "name": "Cornelius Gould",
+      "id": "lead_280",
       "dateAccepted": "2026-02-20",
       "dateSentPhase2": "NEW",
+      "name": "Cornelius Gould",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Monday 3/2/26 at 11:30 AM/ Test 1"
     },
     {
-      "id": "lead_280",
-      "name": "Cornelius Gould",
+      "id": "lead_281",
       "dateAccepted": "2026-02-20",
       "dateSentPhase2": "NEW",
+      "name": "Cornelius Gould",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Monday 3/2/26 at 5:00 PM/Test 2"
     },
     {
-      "id": "lead_281",
-      "name": "James Waters",
+      "id": "lead_282",
       "dateAccepted": "2026-02-20",
       "dateSentPhase2": "NEW",
+      "name": "James Waters",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Full test on Monday 2/23/26 at 6 PM"
     },
     {
-      "id": "lead_282",
-      "name": "Joshua Pride",
+      "id": "lead_283",
       "dateAccepted": "2026-02-20",
       "dateSentPhase2": "",
+      "name": "Joshua Pride",
       "position": "Memphis Solo",
       "recruiter": "Sara",
       "notes": "RT Monday 2/23/26 at 12 PM"
     },
     {
-      "id": "lead_283",
-      "name": "Jose Angel Rodriguez-",
+      "id": "lead_284",
       "dateAccepted": "2026-02-23",
       "dateSentPhase2": "",
+      "name": "Jose Angel Rodriguez-",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Monday 2/23/26 at 5 PM / Test 2"
     },
     {
-      "id": "lead_284",
-      "name": "John Sanchez",
+      "id": "lead_285",
       "dateAccepted": "2026-02-23",
       "dateSentPhase2": "",
+      "name": "John Sanchez",
       "position": "Team Mail SA",
       "recruiter": "Ghassan",
       "notes": "RT Tuesday 2/24/26 at 2:30 PM / 1 year exp"
     },
     {
-      "id": "lead_285",
-      "name": "Corey Jackson-",
+      "id": "lead_286",
       "dateAccepted": "2026-02-23",
       "dateSentPhase2": "",
+      "name": "Corey Jackson-",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT Friday 2/27/26 Full Test at 6 PM"
     },
     {
-      "id": "lead_286",
-      "name": "Ricardo Abeyta",
+      "id": "lead_287",
       "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
+      "name": "Ricardo Abeyta",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "Full test Wednesday 2/25/26 at 6 PM"
     },
     {
-      "id": "lead_287",
-      "name": "Craig Vaughn",
+      "id": "lead_288",
       "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
+      "name": "Craig Vaughn",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT (Test 1) Monday 3/2/26 at 10 :30 AM"
     },
     {
-      "id": "lead_288",
-      "name": "Craig Vaughn",
+      "id": "lead_289",
       "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
+      "name": "Craig Vaughn",
       "position": "AG4",
       "recruiter": "Ghassan",
       "notes": "RT (Test 2) Monday 3/2/26 at 4 :30 PM"
     },
     {
-      "id": "lead_289",
-      "name": "Henry Bell",
+      "id": "lead_290",
       "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
+      "name": "Henry Bell",
       "position": "Memphis Teams",
       "recruiter": "Faith",
       "notes": "RT 2/27/2026 at 8:30 AM"
     },
     {
-      "id": "lead_290",
-      "name": "Naomi Owens",
+      "id": "lead_291",
       "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
+      "name": "Naomi Owens",
       "position": "Memphis Solo",
       "recruiter": "Faith",
       "notes": "RT 3/3/2026 at 8:30 AM"
     },
     {
-      "id": "lead_291",
-      "name": "Tyron Forman",
+      "id": "lead_292",
       "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
+      "name": "Tyron Forman",
       "position": "Dallas Teams",
       "recruiter": "Faith",
       "notes": "RT 3/2/2026 at 9:00 AM"
     },
     {
-      "id": "lead_292",
-      "name": "Kalvin Cowsen",
-      "dateAccepted": "2026-02-24",
-      "dateSentPhase2": "",
-      "position": "Dallas Team",
-      "recruiter": "Sara",
-      "notes": "RT 2/25/26 at 8 AM"
-    },
-    {
       "id": "lead_293",
-      "name": "Tirone Cannon",
       "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
+      "name": "Kalvin Cowsen",
       "position": "Dallas Team",
       "recruiter": "Sara",
       "notes": "RT 2/25/26 at 8 AM"
     },
     {
       "id": "lead_294",
-      "name": "Derrick Delco",
-      "dateAccepted": "2026-02-25",
+      "dateAccepted": "2026-02-24",
       "dateSentPhase2": "",
-      "position": "Ag4",
-      "recruiter": "Ghassan",
-      "notes": "Rescheduled 2/25 Wednesday at 1:30 PM / part 1"
+      "name": "Tirone Cannon",
+      "position": "Dallas Team",
+      "recruiter": "Sara",
+      "notes": "RT 2/25/26 at 8 AM"
     },
     {
       "id": "lead_295",
+      "dateAccepted": "2026-02-25",
+      "dateSentPhase2": "",
       "name": "Derrick Delco",
-      "dateAccepted": "2026-02-25",
-      "dateSentPhase2": "",
       "position": "Ag4",
       "recruiter": "Ghassan",
-      "notes": "Rescheduled 2/25 Wednesday at 4:30 PM / part 2"
-    },
-    {
-      "id": "lead_296",
-      "name": "Jose Sanchez",
-      "dateAccepted": "2026-02-25",
-      "dateSentPhase2": "",
-      "position": "Ag4",
-      "recruiter": "Ghassan",
-      "notes": "RT Full Thursday 2/26/26 at 6 PM"
-    },
-    {
-      "id": "lead_297",
-      "name": "Carlos Lopez",
-      "dateAccepted": "2026-02-25",
-      "dateSentPhase2": "",
-      "position": "Ag4",
-      "recruiter": "Ghassan",
-      "notes": "RT Full Friday 2/27/26 at 5 PM"
+      "notes": ""
     }
   ],
   "otrHires": [
     {
-      "id": "otr_1",
+      "id": "otr_2",
       "passed": "2025-12-30",
       "name": "Jonathan Reyes\n(Returning driver and Needs a partner)",
-      "age": "41.0",
+      "age": "41",
       "position": "TEAMS",
       "yoe": "5+",
       "phone": "210-906-1307",
@@ -4464,10 +3833,10 @@
       "rtgDate": "TBA"
     },
     {
-      "id": "otr_2",
+      "id": "otr_3",
       "passed": "2025-12-29",
       "name": "Jose Guajardo\n(Needs a partner)",
-      "age": "62.0",
+      "age": "62",
       "position": "Team- Mail",
       "yoe": "6+",
       "phone": "956-356-3597",
@@ -4486,12 +3855,12 @@
       "rtgDate": "1/1/2026\n(Already started)"
     },
     {
-      "id": "otr_3",
+      "id": "otr_4",
       "passed": "2026-01-13",
       "name": "Loriann Lozzi \n(Team Driver with Leah May)",
-      "age": "45.0",
+      "age": "45",
       "position": "Team- Mail",
-      "yoe": "5.0",
+      "yoe": "5",
       "phone": "210-618-7271",
       "location": "Elmendorf",
       "ajgCH": "No violations",
@@ -4508,12 +3877,12 @@
       "rtgDate": "TBA on Lea May"
     },
     {
-      "id": "otr_4",
+      "id": "otr_5",
       "passed": "2026-01-14",
       "name": "Ricky Jenkins\n(Teaming up with Daniel Williams)",
       "age": "",
       "position": "TEAMS",
-      "yoe": "0.0",
+      "yoe": "0",
       "phone": "210-719-4423",
       "location": "Austin",
       "ajgCH": "No violations",
@@ -4530,10 +3899,10 @@
       "rtgDate": "TBA (Feb 5th)"
     },
     {
-      "id": "otr_5",
+      "id": "otr_6",
       "passed": "2026-01-15",
       "name": "Thomas Bell",
-      "age": "45.0",
+      "age": "45",
       "position": "Memphis Teams",
       "yoe": "10+",
       "phone": "662-457-2016",
@@ -4549,13 +3918,13 @@
       "gtg": "YES",
       "dispatched": "ON HOLD",
       "notes": "01.15 sent message through DP to schedule I9 video call. Will have to send video call tomorrow since driver has verision and cant download the app                                                                                                                                                                                                                                                01.16 completed I9 video call driver will turn in 1 week notice to employer   - Amanda \n01.27 As far as Ive hear hes still with previous employer - Amanda",
-      "rtgDate": "2026-02-02"
+      "rtgDate": "2026-02-02 00:00:00"
     },
     {
-      "id": "otr_6",
+      "id": "otr_7",
       "passed": "2026-01-19",
       "name": "Leah May\n(Team driver of Loriann Lozzi)",
-      "age": "46.0",
+      "age": "46",
       "position": "Dallas Teams",
       "yoe": "2+",
       "phone": "940-867-1344",
@@ -4574,12 +3943,12 @@
       "rtgDate": "TBA with Loriann"
     },
     {
-      "id": "otr_7",
+      "id": "otr_8",
       "passed": "2026-01-22",
       "name": "Silvestre Alvarez\n(Team driver with Luis Trinidad)",
-      "age": "31.0",
+      "age": "31",
       "position": "Team- Mail",
-      "yoe": "3.0",
+      "yoe": "3",
       "phone": "818-620-1080",
       "location": "Ulvalde",
       "ajgCH": "No violations",
@@ -4596,10 +3965,10 @@
       "rtgDate": "01.26.2026"
     },
     {
-      "id": "otr_8",
+      "id": "otr_9",
       "passed": "2025-12-26",
       "name": "Pamela Brown \n(Teaming with Ida)",
-      "age": "54.0",
+      "age": "54",
       "position": "Team- Mail",
       "yoe": "10+",
       "phone": "972-282-4133",
@@ -4615,13 +3984,13 @@
       "gtg": "YES",
       "dispatched": "NO",
       "notes": "01.28 Driver spoke with sara wishing to return to the onboarding process. went over the two forms missing from her DQ profile wich was her W4, the DT Agreement and her onboarding videos pt 1 & 2. Driveer will be ready when Ida returns from OTR. Projected SD of 02.02.2026 \n01.29 Driver has completed all of her NHPw. Notified the team. Ready to start when Ida is G2G - Amanda no EFS Card given to driver",
-      "rtgDate": "2026-02-02"
+      "rtgDate": "2026-02-02 00:00:00"
     },
     {
-      "id": "otr_9",
+      "id": "otr_10",
       "passed": "2026-01-29",
       "name": "Derrick Scott",
-      "age": "34.0",
+      "age": "34",
       "position": "OTR Teams- SA/Dallas",
       "yoe": "3+",
       "phone": "281-662-9673",
@@ -4631,7 +4000,7 @@
       "i9": "Both sections complete",
       "nhpw": "Sent to Taylor",
       "ajgDT": "Negative Dilute",
-      "ghDT": "N/A",
+      "ghDT": "",
       "onboarding": "Completed",
       "insurance": "To be added on 03/05/26",
       "gtg": "YES",
@@ -4640,12 +4009,12 @@
       "rtgDate": "ASAP  pending SAP Provider info\n02/04/2026"
     },
     {
-      "id": "otr_10",
+      "id": "otr_11",
       "passed": "2026-01-29",
       "name": "Dewayne Carson",
-      "age": "32.0",
+      "age": "32",
       "position": "Dallas Teams",
-      "yoe": "46148.0",
+      "yoe": "2026-05-06 00:00:00",
       "phone": "469-883-0296",
       "location": "Dallas",
       "ajgCH": "No violations",
@@ -4662,10 +4031,10 @@
       "rtgDate": "ASAP"
     },
     {
-      "id": "otr_11",
+      "id": "otr_12",
       "passed": "2026-02-03",
       "name": "Benjamin (Shane) Anderson",
-      "age": "51.0",
+      "age": "51",
       "position": "Dallas Local",
       "yoe": "7+",
       "phone": "817-846-1721",
@@ -4684,10 +4053,10 @@
       "rtgDate": "ASAP"
     },
     {
-      "id": "otr_12",
+      "id": "otr_13",
       "passed": "2026-02-03",
       "name": "Jeffery Brown",
-      "age": "36.0",
+      "age": "36",
       "position": "Solo Regional",
       "yoe": "3+",
       "phone": "817-986-5189",
@@ -4706,7 +4075,7 @@
       "rtgDate": "ASAP"
     },
     {
-      "id": "otr_13",
+      "id": "otr_14",
       "passed": "2026-02-06",
       "name": "Demariye Mathis Grant \n(Teaming with Kevon Terrell)",
       "age": "",
@@ -4725,10 +4094,10 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "02.09 Chcking NHPW still missing items/ DT was partial y complete Sara is calling about missing DT - AH\n02.10 Resent Driver the NHPW to redo because there was so much missing. Sara as been assisting with his pre employment DT and the lab due to the mixup and I9 call still needs to be done - AH\n02.11 done i9 video call will add driver to all platforms - AH\n02.25 Pending COC with Fastest labs since there was an error with Fastest Labs. Josie as emailed Yasmine the Director with no response - AH",
-      "rtgDate": "2026-02-10"
+      "rtgDate": "2026-02-10 00:00:00"
     },
     {
-      "id": "otr_14",
+      "id": "otr_15",
       "passed": "2026-02-06",
       "name": "Kevon Terrell\n(Teaming with Demariye Grant)",
       "age": "",
@@ -4747,15 +4116,15 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "02.09 NHPW completed missing one form. Need to schedule i9 call with driver - AH\n02.09 I9 call scheduled for 4 - AH\n02.10 Processed I9 will inform team to process NHPW. Will add to all platforms - AH",
-      "rtgDate": "2026-02-10"
+      "rtgDate": "2026-02-10 00:00:00"
     },
     {
-      "id": "otr_15",
+      "id": "otr_16",
       "passed": "2026-02-06",
       "name": "Daryl Marshall",
       "age": "",
       "position": "Team- Mail",
-      "yoe": "3.0",
+      "yoe": "3",
       "phone": "210-346-7463",
       "location": "San Antonio",
       "ajgCH": "No violations",
@@ -4772,7 +4141,7 @@
       "rtgDate": "This week"
     },
     {
-      "id": "otr_16",
+      "id": "otr_17",
       "passed": "2026-02-09",
       "name": "Latoya Duffie",
       "age": "",
@@ -4794,12 +4163,12 @@
       "rtgDate": ""
     },
     {
-      "id": "otr_17",
+      "id": "otr_18",
       "passed": "TBD",
       "name": "Jermaine Thomas\n(Teaming with Jessica Hudson)",
-      "age": "48.0",
+      "age": "48",
       "position": "Dallas Teams",
-      "yoe": "5.0",
+      "yoe": "5",
       "phone": "214-477-8398",
       "location": "Tye",
       "ajgCH": "No violations",
@@ -4813,13 +4182,13 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "02.11 I9 completed need to add to all platforms - AH",
-      "rtgDate": "2026-02-11"
+      "rtgDate": "2026-02-11 00:00:00"
     },
     {
-      "id": "otr_18",
+      "id": "otr_19",
       "passed": "TBD",
       "name": "Jessica Hudson \n(Teaming with Jermaine Thomas)",
-      "age": "29.0",
+      "age": "29",
       "position": "Dallas Teams",
       "yoe": "2.5",
       "phone": "214-924-7599",
@@ -4835,15 +4204,15 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "02.11 I9 completed need to add to all platforms - AH",
-      "rtgDate": "2026-02-11"
+      "rtgDate": "2026-02-11 00:00:00"
     },
     {
-      "id": "otr_19",
+      "id": "otr_20",
       "passed": "2026-02-10",
       "name": "Jason Edwards \n(Teaming with Madison Milton)",
       "age": "",
       "position": "Memphis Teams",
-      "yoe": "5.0",
+      "yoe": "5",
       "phone": "501-322-5249",
       "location": "Batesville, AR",
       "ajgCH": "No violations",
@@ -4857,15 +4226,15 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "Driver completed i9 video call. Added to all platforms ready for dispatch 02.11",
-      "rtgDate": "2026-02-11"
+      "rtgDate": "2026-02-11 00:00:00"
     },
     {
-      "id": "otr_20",
+      "id": "otr_21",
       "passed": "2026-02-10",
       "name": "Madison Milton\n(Teaming with Jason Edwards)",
       "age": "",
       "position": "Memphis Teams",
-      "yoe": "9.0",
+      "yoe": "9",
       "phone": "314-583-5582",
       "location": "West Helena, AR",
       "ajgCH": "No violations",
@@ -4879,10 +4248,10 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "Driver completed i9 video call. Added to all platforms ready for dispatch 02.11",
-      "rtgDate": "2026-02-11"
+      "rtgDate": "2026-02-11 00:00:00"
     },
     {
-      "id": "otr_21",
+      "id": "otr_22",
       "passed": "2026-02-12",
       "name": "Krystal Thrasher",
       "age": "",
@@ -4901,20 +4270,20 @@
       "gtg": "YES",
       "dispatched": "NO",
       "notes": "02.13 I9 video call completed will notify team to process her NHPW and add her to all platforms - AH\n02.13 I9 came back with non confirmation. Sent driver letter with steps to rebuttal the decision with the SSA. Driver has an appointment with the office on the 23rd. Will continue to add to all platforms - AH",
-      "rtgDate": "2026-02-14"
+      "rtgDate": "2026-02-14 00:00:00"
     },
     {
-      "id": "otr_22",
+      "id": "otr_23",
       "passed": "2026-02-12",
       "name": "DeVonte Cunningham",
       "age": "",
       "position": "OTR Teams- SA/Dallas",
-      "yoe": "5.0",
+      "yoe": "5",
       "phone": "210-883-6641",
       "location": "SATX",
       "ajgCH": "No violations",
       "ghCH": "No violations",
-      "i9": "Both sections complete",
+      "i9": "Section 1 complete",
       "nhpw": "Signed. Reviewing files",
       "ajgDT": "Pending DT Result",
       "ghDT": "Pending DT Result",
@@ -4926,7 +4295,7 @@
       "rtgDate": "03//02/2026"
     },
     {
-      "id": "otr_23",
+      "id": "otr_24",
       "passed": "2026-02-16",
       "name": "Eric Stacker",
       "age": "",
@@ -4945,15 +4314,15 @@
       "gtg": "ON HOLD",
       "dispatched": "ON HOLD",
       "notes": "02.18 Sara left a VM to conform SD and I9 call time - AH\n02.19 I9 video call scheduled for 02.23 at 12 - AH\n02.23 Sent driver follow up messgae through DP for the I9 call since he missed his scheduled app time - AH\n02.24 I9 video call completed at 4:57 yesterday. Will process the I9 form and add to all platforms - AH",
-      "rtgDate": "2026-03-02"
+      "rtgDate": "2026-03-02 00:00:00"
     },
     {
-      "id": "otr_24",
+      "id": "otr_25",
       "passed": "2026-02-17",
       "name": "Tremayne Hardimon\nPairing with Justin Brown tomorrow per dispatch",
-      "age": "38.0",
+      "age": "38",
       "position": "Memphis Teams",
-      "yoe": "5.0",
+      "yoe": "5",
       "phone": "314-465-2197",
       "location": "Saint Louis",
       "ajgCH": "No violations",
@@ -4970,12 +4339,12 @@
       "rtgDate": ""
     },
     {
-      "id": "otr_25",
+      "id": "otr_26",
       "passed": "2026-02-18",
       "name": "Justin Brown\nPairing with Tremayne tomorrow per dispatch",
-      "age": "37.0",
+      "age": "37",
       "position": "Memphis Teams",
-      "yoe": "10.0",
+      "yoe": "10",
       "phone": "601-850-4695",
       "location": "Memphis",
       "ajgCH": "No violations",
@@ -4989,15 +4358,15 @@
       "gtg": "",
       "dispatched": "",
       "notes": "02.17 Pending for driver to complete DT before I9 call - AH\n02.18 i9 video call completed added to all platforms - AH",
-      "rtgDate": "2026-02-19"
+      "rtgDate": "2026-02-19 00:00:00"
     },
     {
-      "id": "otr_26",
+      "id": "otr_27",
       "passed": "2026-02-19",
       "name": "Davonte Galbert\nTeaming with Joshuwa Mccain",
       "age": "",
       "position": "Team- Mail",
-      "yoe": "7.0",
+      "yoe": "7",
       "phone": "469-690-5096",
       "location": "Dallas",
       "ajgCH": "No violations",
@@ -5014,7 +4383,7 @@
       "rtgDate": "ASAP"
     },
     {
-      "id": "otr_27",
+      "id": "otr_28",
       "passed": "2026-02-19",
       "name": "Joshuwa Mccain\nTeaming with Davonte Galbert",
       "age": "",
@@ -5036,29 +4405,29 @@
       "rtgDate": "ASAP"
     },
     {
-      "id": "otr_28",
+      "id": "otr_29",
       "passed": "2026-02-19",
       "name": "Claude Whisenhunt",
       "age": "",
       "position": "Dallas Teams",
-      "yoe": "5.0",
+      "yoe": "5",
       "phone": "208-918-7956",
       "location": "Dallas",
       "ajgCH": "No violations",
       "ghCH": "No violations",
-      "i9": "Both sections complete",
+      "i9": "Section 1 complete",
       "nhpw": "Signed. Reviewing files",
       "ajgDT": "Scheduled. Pending execution",
       "ghDT": "Pending DT Result",
       "onboarding": "Completed",
       "insurance": "To be added on 03/05/26",
-      "gtg": "YES",
+      "gtg": "NO",
       "dispatched": "NO",
       "notes": "02.23 driver only has completed the DT for GH. Faith will call him back to go take the AJG one before his I9 video call - AH\n02.24 Sent Yasmine an email to locate the COC to the second DT because driver did turn in a recipt for both - AH\n02.24 I9 call completed will process i9 and add driver to platforms tomorrow - AH",
       "rtgDate": "ASAP"
     },
     {
-      "id": "otr_29",
+      "id": "otr_30",
       "passed": "2026-02-19",
       "name": "Jason Arceneaux",
       "age": "",
@@ -5077,301 +4446,15 @@
       "gtg": "YES",
       "dispatched": "NO",
       "notes": "02.20 I9 video call completed will add to all platforms on moonday - AH\n02.23 processing i9 now adding driver to all platforms. CH not in his TS profile - AH\n02.24 All documents and DT results are in TS for the driver. Ready for dispatch -AH",
-      "rtgDate": "2026-02-26"
-    },
-    {
-      "id": "otr_30",
-      "passed": "2026-02-25",
-      "name": "Kalvin Cowsen\nTeaming with Tirone Cannon",
-      "age": "",
-      "position": "Team- Mail",
-      "yoe": "46180.0",
-      "phone": "872-286-1463",
-      "location": "Dallas",
-      "ajgCH": "No violations",
-      "ghCH": "No violations",
-      "i9": "Not yet complete",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Scheduled. Pending execution",
-      "ghDT": "Scheduled. Pending execution",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 03/05/26",
-      "gtg": "NO",
-      "dispatched": "",
-      "notes": "",
-      "rtgDate": "ESD 03/02/2026"
-    },
-    {
-      "id": "otr_31",
-      "passed": "2026-02-25",
-      "name": "Tirone Cannon\nTeaming with Kalvin Cowsen",
-      "age": "",
-      "position": "Team- Mail",
-      "yoe": "46117.0",
-      "phone": "817-897-1595",
-      "location": "Dallas",
-      "ajgCH": "No violations",
-      "ghCH": "No violations",
-      "i9": "Not yet complete",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Scheduled. Pending execution",
-      "ghDT": "Scheduled. Pending execution",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 03/05/26",
-      "gtg": "NO",
-      "dispatched": "",
-      "notes": "",
-      "rtgDate": "ESD 03/02/2026"
-    },
-    {
-      "id": "otr_32",
-      "passed": "2025-10-13",
-      "name": "Antwon Harmon",
-      "age": "32.0",
-      "position": "Team- Mail",
-      "yoe": "8.0",
-      "phone": "469-682-2931",
-      "location": "Dallas",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Negative",
-      "ghDT": "Negative",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.13 - Generated lab passes for AJG/GH. \n10.14 - DT still in progress.\n10.15 - DT still in progress.\n10.16 - Complete DT for AJG/GH. Waiting for driver's NHPW and OB Training completion.\n10.17 - Followed up again with the driver regarding his NHPW and OB Training completeion.\n10.20 - Followed up again with the driver regarding his NHPW and OB Training completeion.\n10.21 - Followed up again with the driver regarding his NHPW and OB Training completeion.\n10.22 - Followed up again with the driver regarding his NHPW and OB Training completeion. \n10.23 - Followed up again with the driver regarding his NHPW and OB Training completeion. \n10.24 - Followed up again with the driver regarding his NHPW and OB Training completeion. NOT GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_33",
-      "passed": "2025-10-13",
-      "name": "Stefan Harmon",
-      "age": "28.0",
-      "position": "Team- Mail",
-      "yoe": "3.0",
-      "phone": "662-633-7071",
-      "location": "Dallas",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Negative",
-      "ghDT": "Negative",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.13 - Generated lab passes for AJG/GH. \n10.14 - DT still in progress. \n10.15 - DT for GH is expired on the website will confirm the lab and driver.\n10.16 - DT for GH still expired, as per lab driver only took one will confirm driver\n10.17 - Followed up again with the driver regarding his NHPW and OB Training completeion.\n10.20 - Followed up again with the driver regarding his NHPW and OB Training completeion.\n10.21 - Complete DT for AJG/GH.\n10.22 - Followed up again with the driver regarding his NHPW and OB Training completeion. \n10.23 - Followed up again with the driver regarding his NHPW and OB Training completeion. \n10.24 - Followed up again with the driver regarding his NHPW and OB Training completeion. NOT GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_34",
-      "passed": "2025-10-15",
-      "name": "William Nicholson",
-      "age": "55.0",
-      "position": "Team- Mail",
-      "yoe": "21.0",
-      "phone": "972-480-2623",
-      "location": "Dallas",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent to Taylor",
-      "ajgDT": "Negative",
-      "ghDT": "Pending DT Result",
-      "onboarding": "Completed",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.15 - Generated lab passes for AJG/GH. \n10.16 - DT still in progress.\n10.17 - DT sill in progress. Followed up NHPW and OB Training with the driver. \n10.20 - Both DT is expired on the website, already processed a new pre-emp DT for the driver (still in progress) Received NHPW (will review) and completed OB Training.\n10.21 - DT still in progress.\n10.22 - DT for GH still in progress. Already followed up the lab regarding this. \n10.23 - DT for GH still in progress. Already followed up the lab regarding this. \n10.24 - DT for GH still in progress. NOT GTG",
-      "rtgDate": "ASAP"
-    },
-    {
-      "id": "otr_35",
-      "passed": "2025-10-17",
-      "name": "Javier Villanueva\n(team partner of Joseph Barraza)",
-      "age": "28.0",
-      "position": "Team- Mail",
-      "yoe": "4.0",
-      "phone": "956-286-5516",
-      "location": "San Antonio",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent to Taylor",
-      "ajgDT": "Negative",
-      "ghDT": "Negative",
-      "onboarding": "Completed",
-      "insurance": "To be added on 11/01",
-      "gtg": "YES",
-      "dispatched": "NO",
-      "notes": "10.17 - Generated lab passes for AJG/GH.\n10.20 - DT still in progress.\n10.21 - DT still in progress. Followed up with the driver regarding his NHPW and OB Training completion.\n10.22 - Complete DT for AJG/GH. Complete OB Training. GTG",
-      "rtgDate": "2025-10-25"
-    },
-    {
-      "id": "otr_36",
-      "passed": "",
-      "name": "Celeste LaPlant",
-      "age": "34.0",
-      "position": "Team- Mail",
-      "yoe": "45659.0",
-      "phone": "210-782-1033",
-      "location": "San Antonio",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Didn't send yet",
-      "ghDT": "Didn't send yet",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.22 - Did not take the RT yet, did not issue any DT as of the moment. Driver still needs training per KK, pending compensation form.\n10.23 - Did not take the RT yet, did not issue any DT as of the moment. Driver still needs training per KK, pending compensation form.\n10.24 - Did not take the RT yet, did not issue any DT as of the moment. Driver still needs training per KK, pending compensation form. NOT GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_37",
-      "passed": "2025-10-21",
-      "name": "George Cruz",
-      "age": "47.0",
-      "position": "Local Driver",
-      "yoe": "7.0",
-      "phone": "210-897-6489",
-      "location": "San Antonio",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent to Taylor",
-      "ajgDT": "Negative",
-      "ghDT": "Negative",
-      "onboarding": "Completed",
-      "insurance": "To be added on 11/01",
-      "gtg": "YES",
-      "dispatched": "NO",
-      "notes": "10.22 - Generated lab passes for AJG/GH.\n10.23 - Complete DT for AJG/GH. GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_38",
-      "passed": "2025-10-22",
-      "name": "Marlon Ward",
-      "age": "58.0",
-      "position": "Memphis Teams",
-      "yoe": "10+",
-      "phone": "901-633-7416",
-      "location": "Memphis",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Pending DT Result",
-      "ghDT": "Negative",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.22 - Generated lab passes for AJG/GH.\n10.23 - Pending DT results, NHPW, and Orientation \n10.24 - Pending AJG DT results, NHPW, and Orientation NOT GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_39",
-      "passed": "2025-10-22",
-      "name": "Lance Brown",
-      "age": "37.0",
-      "position": "Memphis Teams",
-      "yoe": "45878.0",
-      "phone": "917-628-5323",
-      "location": "Memphis",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Pending DT Result",
-      "ghDT": "Negative",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.22 - Generated lab passes for AJG/GH.\n10.23 - Pending DT results, NHPW, and Orientation \n10.24 - Pending AJG DT results, NHPW, and Orientation NOT GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_40",
-      "passed": "",
-      "name": "Joseph Duthu",
-      "age": "52.0",
-      "position": "Memphis Teams",
-      "yoe": "10+",
-      "phone": "662-303-0508",
-      "location": "Mississippi",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Pending DT Result",
-      "ghDT": "Pending DT Result",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.22 - Generated lab passes for AJG/GH.\n10.23 - Pending DT results, NHPW, and Orientation \n10.24 - Pending DT results, NHPW, and Orientation NOT GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_41",
-      "passed": "",
-      "name": "Jamarrio Loggins",
-      "age": "25.0",
-      "position": "Memphis Teams",
-      "yoe": "Less than 1 yr",
-      "phone": "662-774-9219",
-      "location": "Mississippi",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Pending DT Result",
-      "ghDT": "Pending DT Result",
-      "onboarding": "Completed part 1",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.22 - Generated lab passes for AJG/GH.\n10.23 - Pending DT results, NHPW, and Orientation \n10.24 - Pending DT results, NHPW, and Orientation part 2 NOT GTG",
-      "rtgDate": ""
-    },
-    {
-      "id": "otr_42",
-      "passed": "2025-10-23",
-      "name": "Gary White (Returning Driver)",
-      "age": "42.0",
-      "position": "Local Driver",
-      "yoe": "10+",
-      "phone": "210-868-4740",
-      "location": "San Antonio",
-      "ajgCH": "",
-      "ghCH": "",
-      "i9": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "ajgDT": "Pending DT Result",
-      "ghDT": "Pending DT Result",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "To be added on 11/01",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": "10.23 - Generated lab passes for AJG/GH.\n10.24 - Pending DT results, NHPW, and Orientation NOT GTG",
-      "rtgDate": ""
+      "rtgDate": "2026-02-26 00:00:00"
     }
   ],
   "ag4Hires": [
     {
-      "id": "ag4_1",
+      "id": "ag4_2",
       "passed": "2026-02-16",
       "name": "Christopher Hinton",
-      "age": "49.0",
+      "age": "49",
       "position": "AG4-ED",
       "yoe": "",
       "phone": "601-596-3443",
@@ -5388,10 +4471,10 @@
       "notes": "02.16 I9 video call complete. Will process the I9 parobably tomorrow - AH\n02.16 Reminded driver to please take care of the CH before start - AH\n02.17 DT still shows scheduled - holding off him to insurance - AR\n02.18 still didnt took DT \n02.19 received new MC -- sent to insurance -- pending to DT result\n02.23 - called driver per mj, driver will start on monday next week"
     },
     {
-      "id": "ag4_2",
+      "id": "ag4_3",
       "passed": "2026-02-17",
       "name": "Jonathan Macias",
-      "age": "36.0",
+      "age": "36",
       "position": "AG4-BD",
       "yoe": "",
       "phone": "(210) 602-0830",
@@ -5408,12 +4491,12 @@
       "notes": "02.20 received new mc from Amanda, sent him to insurance and payroll.\n02.23 - called out on dispatch -- will call him again later today per MJ for tomorrow's dispatch - AR"
     },
     {
-      "id": "ag4_3",
+      "id": "ag4_4",
       "passed": "2026-02-20",
       "name": "Mark Kyle",
-      "age": "58.0",
+      "age": "58",
       "position": "AG4-BD",
-      "yoe": "22.0",
+      "yoe": "22",
       "phone": "210-584-6557",
       "location": "SATX",
       "rtgDate": "2026-03-02",
@@ -5428,12 +4511,12 @@
       "notes": "RT 2 passed 02.20\n02.23 - MC expired 2025 - need new MC.  Will hold him off from insurance, payroll, and dispatch until we receive his DT and MC. - AR\n02.23 - Left VM about his DT and new MC request - AH"
     },
     {
-      "id": "ag4_4",
+      "id": "ag4_5",
       "passed": "2026-02-20",
       "name": "Saladine Obie",
-      "age": "33.0",
+      "age": "33",
       "position": "AG4-ED",
-      "yoe": "10.0",
+      "yoe": "10",
       "phone": "(484) 548-3387",
       "location": "SATX",
       "rtgDate": "2026-03-02",
@@ -5442,30 +4525,10 @@
       "ag4DT": "Pending DT Result",
       "dotMedical": "Yes- 2  Years",
       "onboarding": "Completed",
-      "insurance": "Added",
+      "insurance": "Pending Confirmation",
       "gtg": "NO",
       "dispatched": "NO",
       "notes": "02.24 driver took DT (collected status)\n02.25 - received new MC - added to insurance AR"
-    },
-    {
-      "id": "ag4_5",
-      "passed": "2026-02-23",
-      "name": "James Waters",
-      "age": "",
-      "position": "AG4-BD",
-      "yoe": "",
-      "phone": "",
-      "location": "",
-      "rtgDate": "",
-      "nhpw": "Sent via Tenstreet. Did not sign yet.",
-      "i9": "",
-      "ag4DT": "sent and scheduled",
-      "dotMedical": "Sent and scheduled",
-      "onboarding": "Assigned. Not yet started",
-      "insurance": "Added",
-      "gtg": "NO",
-      "dispatched": "NO",
-      "notes": ""
     },
     {
       "id": "ag4_6",
@@ -5489,6 +4552,26 @@
     },
     {
       "id": "ag4_7",
+      "passed": "2026-02-23",
+      "name": "James Waters",
+      "age": "",
+      "position": "AG4-BD",
+      "yoe": "",
+      "phone": "",
+      "location": "",
+      "rtgDate": "",
+      "nhpw": "Sent via Tenstreet. Did not sign yet.",
+      "i9": "",
+      "ag4DT": "sent and scheduled",
+      "dotMedical": "Sent and scheduled",
+      "onboarding": "Assigned. Not yet started",
+      "insurance": "Pending Files",
+      "gtg": "NO",
+      "dispatched": "NO",
+      "notes": ""
+    },
+    {
+      "id": "ag4_8",
       "passed": "2026-02-24",
       "name": "Jose Rodriguez",
       "age": "",
@@ -5508,7 +4591,7 @@
       "notes": ""
     },
     {
-      "id": "ag4_8",
+      "id": "ag4_11",
       "passed": "2026-02-16",
       "name": "Derek Maldonado (need RT2)",
       "age": "",
@@ -5528,7 +4611,7 @@
       "notes": "02.16 Test 1 PASSED! -- pending test 2\n02.17 called driver and LVM to schedule DT and NHPW - AH\n02.18 Awaiting MC to be sent to insurance \n02.20 failed RT 2 -- will be scheduled for retest"
     },
     {
-      "id": "ag4_9",
+      "id": "ag4_12",
       "passed": "2026-02-17",
       "name": "Jose Rosales (need RT2)",
       "age": "",
@@ -5550,7 +4633,7 @@
   ],
   "ag4Sep": [
     {
-      "id": "ag4sep_1",
+      "id": "ag4sep_3",
       "passed": "2025-05-30",
       "name": "Justin Hernandez (Pending CDL)",
       "nhpw": "For Scanning",
@@ -5567,7 +4650,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_2",
+      "id": "ag4sep_4",
       "passed": "2025-06-24",
       "name": "Ammar Gooden",
       "nhpw": "For Scanning",
@@ -5584,7 +4667,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_3",
+      "id": "ag4sep_5",
       "passed": "2025-06-25",
       "name": "Carlos Garza Villanueva",
       "nhpw": "For Scanning",
@@ -5601,7 +4684,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_4",
+      "id": "ag4sep_6",
       "passed": "2025-06-25",
       "name": "Jonathan Goodwin",
       "nhpw": "Sent to Paige",
@@ -5618,7 +4701,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_5",
+      "id": "ag4sep_7",
       "passed": "2025-07-11",
       "name": "Ramiro Vaquera",
       "nhpw": "For Scanning",
@@ -5635,7 +4718,24 @@
       "position": ""
     },
     {
-      "id": "ag4sep_6",
+      "id": "ag4sep_21",
+      "passed": "Passed",
+      "name": "Driver Name",
+      "nhpw": "NHPW",
+      "ag4DT": "AG4 DT",
+      "onboarding": "Onboarding Training",
+      "insurance": "Added to Insurance",
+      "gtg": "GTG?",
+      "dispatched": "Dispatched",
+      "notes": "Notes",
+      "rtgDate": "RTG Date",
+      "returnDate": "Return Date",
+      "location": "Location",
+      "phone": "Number",
+      "position": "Position"
+    },
+    {
+      "id": "ag4sep_22",
       "passed": "2025-05-14",
       "name": "Ricardo Garcia",
       "nhpw": "Sent to Paige",
@@ -5652,7 +4752,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_7",
+      "id": "ag4sep_23",
       "passed": "2025-05-23",
       "name": "James Lee O'neal",
       "nhpw": "Sent to Paige",
@@ -5662,14 +4762,14 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "",
-      "rtgDate": "2025-05-26",
+      "rtgDate": "2025-05-26 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "",
       "position": ""
     },
     {
-      "id": "ag4sep_8",
+      "id": "ag4sep_24",
       "passed": "2025-05-23",
       "name": "Jose Ruiz",
       "nhpw": "For Scanning",
@@ -5679,14 +4779,14 @@
       "gtg": "YES",
       "dispatched": "NMF",
       "notes": "⚠️Pending Prev CDL/Certification\nYOE: 17yrs",
-      "rtgDate": "2025-05-27",
+      "rtgDate": "2025-05-27 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "",
       "position": ""
     },
     {
-      "id": "ag4sep_9",
+      "id": "ag4sep_25",
       "passed": "2025-05-27",
       "name": "David Carney\nUnresponsive",
       "nhpw": "For Scanning",
@@ -5696,14 +4796,14 @@
       "gtg": "NMF",
       "dispatched": "NMF",
       "notes": "⚠️Pending Full Application\nYOE: 22\nNMF: Disregard he is been a while not responding NMF",
-      "rtgDate": "2025-06-04",
+      "rtgDate": "2025-06-04 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "714-390-3430",
       "position": ""
     },
     {
-      "id": "ag4sep_10",
+      "id": "ag4sep_26",
       "passed": "2025-05-27",
       "name": "Eladio Espinoza",
       "nhpw": "Sent to Paige",
@@ -5720,7 +4820,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_11",
+      "id": "ag4sep_27",
       "passed": "2025-05-28",
       "name": "Jeremy Bumbrey",
       "nhpw": "For Scanning",
@@ -5737,7 +4837,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_12",
+      "id": "ag4sep_28",
       "passed": "2025-05-30",
       "name": "Reynaldo Valero Jr",
       "nhpw": "Missing Info",
@@ -5754,7 +4854,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_13",
+      "id": "ag4sep_29",
       "passed": "2025-05-30",
       "name": "Reynaldo Valero  Sr",
       "nhpw": "Missing Info",
@@ -5771,7 +4871,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_14",
+      "id": "ag4sep_30",
       "passed": "2025-06-09",
       "name": "Natividad Loredo",
       "nhpw": "Sent to Paige",
@@ -5781,14 +4881,14 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "",
-      "rtgDate": "2025-09-10",
+      "rtgDate": "2025-09-10 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "",
       "position": ""
     },
     {
-      "id": "ag4sep_15",
+      "id": "ag4sep_31",
       "passed": "2025-06-10",
       "name": "Harcourt Edgecome",
       "nhpw": "Sent to Paige",
@@ -5798,14 +4898,14 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "",
-      "rtgDate": "2025-06-16",
+      "rtgDate": "2025-06-16 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "",
       "position": ""
     },
     {
-      "id": "ag4sep_16",
+      "id": "ag4sep_32",
       "passed": "2025-06-16",
       "name": "Justin Morgen Joyce",
       "nhpw": "Sent to Paige",
@@ -5815,14 +4915,14 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "",
-      "rtgDate": "2025-06-19",
+      "rtgDate": "2025-06-19 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "210-517-9055",
       "position": ""
     },
     {
-      "id": "ag4sep_17",
+      "id": "ag4sep_33",
       "passed": "2025-06-17",
       "name": "Juan Padilla",
       "nhpw": "Sent to Paige",
@@ -5832,14 +4932,14 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "13 and 18 speed",
-      "rtgDate": "2025-06-19",
+      "rtgDate": "2025-06-19 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "512-745-5648",
       "position": ""
     },
     {
-      "id": "ag4sep_18",
+      "id": "ag4sep_34",
       "passed": "2025-06-17",
       "name": "Jesus Aguilar",
       "nhpw": "Sent to Paige",
@@ -5849,14 +4949,14 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "18 speed",
-      "rtgDate": "2025-06-19",
+      "rtgDate": "2025-06-19 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "682-718-5211",
       "position": ""
     },
     {
-      "id": "ag4sep_19",
+      "id": "ag4sep_35",
       "passed": "2025-06-11",
       "name": "Bryan Quinn",
       "nhpw": "Sent to Paige",
@@ -5873,7 +4973,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_20",
+      "id": "ag4sep_36",
       "passed": "2025-06-11",
       "name": "Nelson Orelvis Becerrill",
       "nhpw": "Sent to Paige",
@@ -5883,14 +4983,14 @@
       "gtg": "YES",
       "dispatched": "YES",
       "notes": "18 speed",
-      "rtgDate": "2025-06-30",
+      "rtgDate": "2025-06-30 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "682-718-5211",
       "position": ""
     },
     {
-      "id": "ag4sep_21",
+      "id": "ag4sep_37",
       "passed": "2025-06-25",
       "name": "Stephen Anson",
       "nhpw": "Pending",
@@ -5907,7 +5007,7 @@
       "position": ""
     },
     {
-      "id": "ag4sep_22",
+      "id": "ag4sep_38",
       "passed": "2025-06-25",
       "name": "Ilda Nichols",
       "nhpw": "Pending",
@@ -5917,14 +5017,14 @@
       "gtg": "NMF",
       "dispatched": "NMF",
       "notes": "Not accepted by the insurance, Already being pulled and MRG is aware",
-      "rtgDate": "2025-06-30",
+      "rtgDate": "2025-06-30 00:00:00",
       "returnDate": "",
       "location": "",
       "phone": "",
       "position": ""
     },
     {
-      "id": "ag4sep_23",
+      "id": "ag4sep_39",
       "passed": "2025-06-25",
       "name": "Joseph West",
       "nhpw": "For Scanning",
@@ -5943,103 +5043,103 @@
   ],
   "historical": [
     {
-      "id": "hist_1",
+      "id": "hist_3",
       "lastName": "Perez Ramirez",
       "firstName": "Gerson",
       "position": "SA Local",
       "terminationDate": "",
-      "incentives": "NA"
+      "incentives": ""
     },
     {
-      "id": "hist_2",
+      "id": "hist_4",
       "lastName": "Nelson",
       "firstName": "Alex",
       "position": "Dallas Local",
       "terminationDate": "",
-      "incentives": "NA"
+      "incentives": ""
     },
     {
-      "id": "hist_3",
+      "id": "hist_5",
       "lastName": "Maldonado",
       "firstName": "Ruben",
       "position": "Solo OTR",
       "terminationDate": "",
-      "incentives": "NA"
+      "incentives": ""
     },
     {
-      "id": "hist_4",
+      "id": "hist_6",
       "lastName": "Morales",
       "firstName": "Jose",
       "position": "SA Night Local",
       "terminationDate": "",
-      "incentives": "NA"
-    },
-    {
-      "id": "hist_5",
-      "lastName": "Gonzalez",
-      "firstName": "Roger",
-      "position": "Solo OTR",
-      "terminationDate": "",
-      "incentives": "NA"
-    },
-    {
-      "id": "hist_6",
-      "lastName": "Dominguez",
-      "firstName": "Johnny",
-      "position": "SA Night Local",
-      "terminationDate": "",
-      "incentives": "NA"
+      "incentives": ""
     },
     {
       "id": "hist_7",
       "lastName": "Gonzalez",
       "firstName": "Roger",
-      "position": "Solo - Dry Van",
+      "position": "Solo OTR",
       "terminationDate": "",
-      "incentives": "NA"
+      "incentives": ""
     },
     {
       "id": "hist_8",
-      "lastName": "Morales",
-      "firstName": "Jose",
-      "position": "SA Night Local",
-      "terminationDate": "",
-      "incentives": "NA"
-    },
-    {
-      "id": "hist_9",
-      "lastName": "Maldonado",
-      "firstName": "Ruben",
-      "position": "Solo - Dry Van",
-      "terminationDate": "",
-      "incentives": "NA"
-    },
-    {
-      "id": "hist_10",
-      "lastName": "Perez Ramirez",
-      "firstName": "Gerson",
-      "position": "SA Local",
-      "terminationDate": "",
-      "incentives": "NA"
-    },
-    {
-      "id": "hist_11",
-      "lastName": "Nelson",
-      "firstName": "Alex",
-      "position": "Dallas Local",
-      "terminationDate": "",
-      "incentives": "NA"
-    },
-    {
-      "id": "hist_12",
       "lastName": "Dominguez",
       "firstName": "Johnny",
       "position": "SA Night Local",
       "terminationDate": "",
-      "incentives": "NA"
+      "incentives": ""
+    },
+    {
+      "id": "hist_9",
+      "lastName": "Gonzalez",
+      "firstName": "Roger",
+      "position": "Solo - Dry Van",
+      "terminationDate": "",
+      "incentives": ""
+    },
+    {
+      "id": "hist_10",
+      "lastName": "Morales",
+      "firstName": "Jose",
+      "position": "SA Night Local",
+      "terminationDate": "",
+      "incentives": ""
+    },
+    {
+      "id": "hist_11",
+      "lastName": "Maldonado",
+      "firstName": "Ruben",
+      "position": "Solo - Dry Van",
+      "terminationDate": "",
+      "incentives": ""
+    },
+    {
+      "id": "hist_12",
+      "lastName": "Perez Ramirez",
+      "firstName": "Gerson",
+      "position": "SA Local",
+      "terminationDate": "",
+      "incentives": ""
     },
     {
       "id": "hist_13",
+      "lastName": "Nelson",
+      "firstName": "Alex",
+      "position": "Dallas Local",
+      "terminationDate": "",
+      "incentives": ""
+    },
+    {
+      "id": "hist_14",
+      "lastName": "Dominguez",
+      "firstName": "Johnny",
+      "position": "SA Night Local",
+      "terminationDate": "",
+      "incentives": ""
+    },
+    {
+      "id": "hist_15",
       "lastName": "Manuel",
       "firstName": "Pena",
       "position": "SA Teams",
