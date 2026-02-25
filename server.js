@@ -6,6 +6,7 @@ const PORT = Number(process.env.PORT || 3000);
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'db.json');
+const SEED_FILE = path.join(ROOT, 'seed-db.json');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -25,6 +26,18 @@ async function ensureDataFile() {
   await fs.mkdir(DATA_DIR, { recursive: true });
   try {
     await fs.access(DATA_FILE);
+    const raw = await fs.readFile(DATA_FILE, 'utf8');
+    const parsed = JSON.parse(raw || '{}');
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && Object.keys(parsed).length > 0) {
+      return;
+    }
+  } catch {
+    // Continue to seed write below.
+  }
+  try {
+    const seedRaw = await fs.readFile(SEED_FILE, 'utf8');
+    const seedParsed = JSON.parse(seedRaw || '{}');
+    await fs.writeFile(DATA_FILE, JSON.stringify(seedParsed, null, 2), 'utf8');
   } catch {
     await fs.writeFile(DATA_FILE, JSON.stringify({}, null, 2), 'utf8');
   }

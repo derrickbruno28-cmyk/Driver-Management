@@ -323,18 +323,29 @@ function getCurrentUser() {
 
 const DATA_API_URL = '/api/data';
 let persistQueue = Promise.resolve();
+const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
+
+function hasRequiredTabs(data) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
+  return REQUIRED_TABS.every(tab => Array.isArray(data[tab]));
+}
 
 async function loadSharedData() {
   try {
     const res = await fetch(DATA_API_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error('load failed');
     const remoteData = await res.json();
-    if (remoteData && typeof remoteData === 'object') {
+    if (hasRequiredTabs(remoteData)) {
       DB = remoteData;
       return true;
     }
+    // If backend is empty/malformed, auto-heal by seeding from embedded RAW_DATA.
+    DB = JSON.parse(JSON.stringify(RAW_DATA));
+    await queuePersistData();
+    return true;
   } catch (err) {
     console.warn('Using embedded data fallback:', err);
+    DB = JSON.parse(JSON.stringify(RAW_DATA));
   }
   return false;
 }
