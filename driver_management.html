@@ -369,6 +369,10 @@ function hasRequiredTabs(data) {
   return REQUIRED_TABS.every(tab => Array.isArray(data[tab]));
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function normalizeDatabaseShape(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return;
   [...REQUIRED_TABS, ...EXTRA_TABS].forEach(tab => {
@@ -419,13 +423,30 @@ async function loadSharedData() {
 function queuePersistData() {
   persistQueue = persistQueue.then(async () => {
     setLiveSyncState('syncing', 'Saving');
-    const res = await fetch(DATA_API_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(DB),
-    });
-    if (!res.ok) throw new Error('save failed');
-    setLiveSyncState('live', 'Live');
+    let lastErr = null;
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const res = await fetch(DATA_API_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(DB),
+        });
+        if (!res.ok) {
+          let detail = '';
+          try {
+            const body = await res.json();
+            detail = body.detail || body.error || '';
+          } catch (_) {}
+          throw new Error(`HTTP ${res.status}${detail ? `: ${detail}` : ''}`);
+        }
+        setLiveSyncState('live', 'Live');
+        return;
+      } catch (err) {
+        lastErr = err;
+        if (attempt < 2) await sleep(600);
+      }
+    }
+    throw lastErr || new Error('save failed');
   });
   return persistQueue;
 }
@@ -1693,7 +1714,7 @@ async function saveRecord() {
   try {
     await queuePersistData();
   } catch (err) {
-    showToast('Save failed to sync with server', 'var(--red)');
+    showToast(`Save failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
     console.error(err);
   }
 
@@ -1710,7 +1731,7 @@ async function deleteRecord() {
   try {
     await queuePersistData();
   } catch (err) {
-    showToast('Delete failed to sync with server', 'var(--red)');
+    showToast(`Delete failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
     console.error(err);
   }
   updateBadges();

@@ -56,10 +56,17 @@ async function readData() {
 
 function writeData(nextData) {
   writeQueue = writeQueue.then(async () => {
+    await fs.mkdir(DATA_DIR, { recursive: true });
     const tmpFile = `${DATA_FILE}.tmp`;
     const payload = JSON.stringify(nextData, null, 2);
-    await fs.writeFile(tmpFile, payload, 'utf8');
-    await fs.rename(tmpFile, DATA_FILE);
+    try {
+      await fs.writeFile(tmpFile, payload, 'utf8');
+      await fs.rename(tmpFile, DATA_FILE);
+    } catch (err) {
+      // Fallback for environments where atomic rename may fail unexpectedly.
+      await fs.writeFile(DATA_FILE, payload, 'utf8');
+      console.warn('Atomic rename failed, fallback write used:', err && err.message ? err.message : err);
+    }
   });
   return writeQueue;
 }
@@ -218,7 +225,8 @@ const server = http.createServer(async (req, res) => {
       res.end(fallback);
     }
   } catch (err) {
-    sendJson(res, 500, { error: 'Internal server error' });
+    console.error('Request failed:', err);
+    sendJson(res, 500, { error: 'Internal server error', detail: err && err.message ? err.message : 'unknown' });
   }
 });
 
