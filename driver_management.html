@@ -321,6 +321,7 @@
       <button class="btn btn-success" onclick="sendOtrToDriverSepPending()" id="sendToDriverSepBtn" style="display:none">Send to Driver Sep</button>
       <button class="btn btn-secondary" onclick="sendToNotMovingForward()" id="sendToNmfBtn" style="display:none">Send to Not Moving Forward</button>
       <button class="btn btn-success" onclick="sendRoadTestToOtr()" id="sendRoadTestToOtrBtn" style="display:none">Send to OTR New Hires</button>
+      <button class="btn btn-success" onclick="reactivateTerminatedDriver()" id="reactivateDriverBtn" style="display:none">Reactivate Driver</button>
       <button class="btn btn-danger" onclick="moveToTerminatedFolder()" id="moveToTerminatedBtn" style="display:none">Move to Terminated/Removals</button>
       <button class="btn btn-danger" onclick="deleteRecord()" id="deleteBtn">Delete</button>
       <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
@@ -559,6 +560,18 @@ function getTerminationCompletionStatus(rec) {
   return checks.every(v => (v || '').toUpperCase() === 'YES') ? 'removalsCompleted' : 'pendingRemovalTasks';
 }
 
+function daysSinceDate(ymd) {
+  const d = parseFlexDate(ymd || '');
+  if (!d) return null;
+  const now = new Date();
+  return Math.floor((now.getTime() - d.getTime()) / (24 * 60 * 60 * 1000));
+}
+
+function needsRehireDrugScreen(rec) {
+  const days = daysSinceDate(rec && rec.lastDateWorked);
+  return days !== null && days > 90;
+}
+
 function parseFlexDate(str) {
   if (!str) return null;
   str = str.trim();
@@ -715,6 +728,7 @@ const TABS = {
       { key: 'removedByName', label: 'Removed By (Name)', type: 'text', required: true },
       { key: 'removedByTitle', label: 'Removed By (Job Title)', type: 'text', required: true },
       { key: 'removedByPhone', label: 'Removed By (Phone)', type: 'text', required: true },
+      { key: 'reactivationApprovedBy', label: 'Reactivation/Rehire Approved By', type: 'text' },
       { key: 'tenstreetRemoved', label: 'Tenstreet Removed', type: 'select', options: ['YES','NO',''], required: true },
       { key: 'loadstopRemoved', label: 'Loadstop Removed', type: 'select', options: ['YES','NO',''], required: true },
       { key: 'samsaraRemoved', label: 'Samsara Removed', type: 'select', options: ['YES','NO',''], required: true },
@@ -727,8 +741,8 @@ const TABS = {
       { key: 'removalEmailSent', label: 'Removal Email Sent', type: 'select', options: ['YES','NO',''], required: true },
       { key: 'notes', label: 'Additional Notes', type: 'textarea', full: true },
     ],
-    columns: ['name','terminationType','rehirable','lastDateWorked','terminationReason','completionStatus'],
-    colLabels: { name:'Driver',terminationType:'Type',rehirable:'Rehirable',lastDateWorked:'Last Worked',terminationReason:'Reason',completionStatus:'Removal Status' },
+    columns: ['name','terminationType','rehirable','lastDateWorked','terminationReason','rehireScreening','completionStatus'],
+    colLabels: { name:'Driver',terminationType:'Type',rehirable:'Rehirable',lastDateWorked:'Last Worked',terminationReason:'Reason',rehireScreening:'Rehire Requirement',completionStatus:'Removal Status' },
     filterKey: 'completionStatus',
   },
   otrHires: {
@@ -1290,6 +1304,9 @@ function renderPage(tab) {
         const done = getTerminationCompletionStatus(r) === 'removalsCompleted';
         return `<td>${done ? '<span class="badge badge-green">Completed</span>' : '<span class="badge badge-yellow">Pending Tasks</span>'}</td>`;
       }
+      if (col === 'rehireScreening') {
+        return `<td>${needsRehireDrugScreen(r) ? '<span class="badge badge-red">Drug Screen Required</span>' : '<span class="badge badge-green">No Extra Screening</span>'}</td>`;
+      }
       if (col.includes('date') || col.includes('Date') || col === 'passed') return `<td style="font-family:var(--mono);font-size:12px;color:var(--text2)">${fmtDate(val)}</td>`;
       if (col === 'homeBase' || col === 'location') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
       if (col === 'hiredCity') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
@@ -1511,6 +1528,9 @@ function rerenderTable(tab) {
         const done = getTerminationCompletionStatus(r) === 'removalsCompleted';
         return `<td>${done ? '<span class="badge badge-green">Completed</span>' : '<span class="badge badge-yellow">Pending Tasks</span>'}</td>`;
       }
+      if (col === 'rehireScreening') {
+        return `<td>${needsRehireDrugScreen(r) ? '<span class="badge badge-red">Drug Screen Required</span>' : '<span class="badge badge-green">No Extra Screening</span>'}</td>`;
+      }
       if (col.includes('date') || col.includes('Date') || col === 'passed') return `<td style="font-family:var(--mono);font-size:12px;color:var(--text2)">${fmtDate(val)}</td>`;
       if (col === 'homeBase' || col === 'location') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
       if (col === 'hiredCity') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
@@ -1611,6 +1631,7 @@ function toggleModalActionButtons() {
   set('sendToDriverSepBtn', editingTab === 'otrHires' && !!editingId);
   set('sendToNmfBtn', (editingTab === 'otrHires' || editingTab === 'ag4Hires') && !!editingId);
   set('sendRoadTestToOtrBtn', editingTab === 'roadTestScheduling' && !!editingId);
+  set('reactivateDriverBtn', editingTab === 'terminatedRemovals' && !!editingId);
   set('moveToTerminatedBtn', editingTab === 'driversSep' && !!editingId);
 }
 
@@ -1893,6 +1914,7 @@ async function moveToTerminatedFolder() {
     removedByName: '',
     removedByTitle: '',
     removedByPhone: '',
+    reactivationApprovedBy: '',
     tenstreetRemoved: 'NO',
     loadstopRemoved: 'NO',
     samsaraRemoved: 'NO',
@@ -1915,6 +1937,54 @@ async function moveToTerminatedFolder() {
   closeModal();
   renderPage('driversSep');
   showToast('Moved to Terminated/Removals');
+}
+
+async function reactivateTerminatedDriver() {
+  if (editingTab !== 'terminatedRemovals' || !editingId) return;
+  const srcIdx = DB.terminatedRemovals.findIndex(x => x.id === editingId);
+  if (srcIdx < 0) return;
+  const src = DB.terminatedRemovals[srcIdx];
+
+  const approvalInput = document.getElementById('field_reactivationApprovedBy');
+  const approvalAuthority = (approvalInput ? approvalInput.value : src.reactivationApprovedBy || '').trim();
+  if (!approvalAuthority) {
+    showToast('Reactivation/Rehire approval authority is required', 'var(--red)');
+    return;
+  }
+
+  const needsScreen = needsRehireDrugScreen(src);
+  const addedNotes = [
+    src.notes || '',
+    `Reactivated/Rehired approved by: ${approvalAuthority}`,
+    needsScreen ? 'REHIRE NOTE: Terminated over 90 days. Must complete new employment drug screening before return to work.' : ''
+  ].filter(Boolean).join('\n');
+
+  DB.driversSep.push({
+    id: 'sep_' + Date.now(),
+    name: src.name || '',
+    homeBase: '',
+    position: src.position || '',
+    twic: '',
+    hiredCity: '',
+    currentCity: '',
+    followUpDate: '',
+    preferredPartner: '',
+    routeRestrictions: '',
+    notes: addedNotes,
+    _pendingAcceptance: false,
+    _rehireDrugScreenRequired: needsScreen,
+    _reactivatedFromTermination: true,
+    _lastEditBy: getCurrentUser(),
+    _lastEditTime: new Date().toLocaleString(),
+  });
+
+  DB.terminatedRemovals.splice(srcIdx, 1);
+  try { await queuePersistData(); } catch (_) {}
+  updateBadges();
+  updateFleetBar();
+  closeModal();
+  renderPage('terminatedRemovals');
+  showToast(needsScreen ? 'Driver reactivated. Drug screening note added.' : 'Driver reactivated and moved to Driver Sep.');
 }
 
 async function acceptDriverSep(id) {
