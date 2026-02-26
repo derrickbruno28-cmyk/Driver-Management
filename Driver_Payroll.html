@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Driver Payroll System</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0c0f; --surface:#111418; --surface2:#181d24; --surface3:#1e242e;
+  --border:#252d38; --border2:#1a2030;
+  --text:#dce6f0; --text-muted:#6b7a8d; --text-faint:#353e4a;
+  --accent:#4da3ff; --accent-dim:#1a3a5c;
+  --green:#2ecc71; --green-bg:#0a2016; --green-border:#1a4a2a;
+  --orange:#f0a500; --orange-bg:#251800; --orange-border:#4a3000;
+  --red:#e84040; --red-bg:#2a0808; --red-border:#5a1515;
+  --purple:#a78bfa; --teal:#2dd4bf;
+  --mono:'IBM Plex Mono',monospace; --sans:'Syne',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;font-size:14px;line-height:1.5;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+.app-header{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:54px;position:sticky;top:0;z-index:200;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--bg);background:var(--accent);padding:3px 8px;border-radius:4px;letter-spacing:.08em;}
+.brand-name{font-size:15px;font-weight:700;letter-spacing:-.02em;}
+.header-center{display:flex;align-items:center;gap:8px;}
+.week-pill{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-family:var(--mono);font-size:11px;color:var(--text-muted);}
+.week-pill input[type=date]{background:transparent;border:none;color:var(--accent);font-family:var(--mono);font-size:11px;outline:none;cursor:pointer;width:120px;}
+.week-range{color:var(--text);font-family:var(--mono);font-size:11px;}
+.paydate-badge{font-family:var(--mono);font-size:10px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);padding:3px 10px;border-radius:4px;}
+.header-right{display:flex;align-items:center;gap:8px;}
+.live-status{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;padding:4px 9px;border-radius:6px;border:1px solid var(--border);color:var(--text-muted);background:var(--surface2);}
+.live-status .dot{width:7px;height:7px;border-radius:50%;background:var(--text-faint);}
+.live-status.online{color:var(--green);border-color:var(--green-border);background:var(--green-bg);}
+.live-status.online .dot{background:var(--green);}
+.live-status.syncing{color:var(--orange);border-color:var(--orange-border);background:var(--orange-bg);}
+.live-status.syncing .dot{background:var(--orange);}
+.live-status.offline{color:var(--red);border-color:var(--red-border);background:var(--red-bg);}
+.live-status.offline .dot{background:var(--red);}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:6px;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;border:1px solid;transition:all .15s;white-space:nowrap;text-decoration:none;}
+.btn-primary{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.btn-primary:hover{background:var(--accent);color:var(--bg);}
+.btn-success{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+.btn-success:hover{background:#0f3020;}
+.btn-danger{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+.btn-danger:hover{background:#3d0d09;}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--text-muted);}
+.btn-ghost:hover{border-color:var(--text-muted);color:var(--text);}
+.btn-sm{padding:3px 9px;font-size:11px;}
+.btn-icon{padding:4px 8px;font-size:12px;line-height:1;}
+
+.layout{display:grid;grid-template-columns:195px 1fr;min-height:calc(100vh - 54px);}
+
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:14px 0;position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto;display:flex;flex-direction:column;}
+.sb-block{padding:0 10px;margin-bottom:18px;}
+.sb-head{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text-faint);letter-spacing:.15em;text-transform:uppercase;padding:0 8px;margin-bottom:5px;}
+.nav-item{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;background:none;border:none;border-radius:6px;color:var(--text-muted);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;text-align:left;transition:all .12s;white-space:nowrap;}
+.nav-item:hover{background:var(--surface2);color:var(--text);}
+.nav-item.active{background:var(--surface3);color:var(--text);}
+.nav-pip{width:6px;height:6px;border-radius:50%;flex-shrink:0;opacity:.35;}
+.nav-item.active .nav-pip{opacity:1;}
+.pip-satx{background:var(--accent);} .pip-solo{background:var(--purple);} .pip-dallas{background:var(--green);} .pip-memphis{background:var(--teal);} .pip-tasks{background:var(--orange);} .pip-summary{background:var(--red);}
+.sb-stat{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 11px;margin-bottom:5px;}
+.sb-stat-label{font-family:var(--mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;}
+.sb-stat-val{font-family:var(--mono);font-size:18px;font-weight:600;}
+.sb-stat-val.green{color:var(--green);} .sb-stat-val.orange{color:var(--orange);} .sb-stat-val.red{color:var(--red);}
+.sb-info{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 11px;margin:0 10px 16px;}
+.sb-info-title{font-family:var(--mono);font-size:9px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;}
+.sb-info-row{font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between;padding:1px 0;}
+.sb-info-row span{color:var(--accent);font-family:var(--mono);}
+
+main{padding:20px 22px;overflow:auto;}
+.view{display:none;}
+.view.active{display:block;animation:fadeIn .18s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.view-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.view-title{font-size:20px;font-weight:800;letter-spacing:-.03em;}
+.view-sub{font-size:11px;color:var(--text-muted);margin-top:3px;font-family:var(--mono);}
+
+.ot-banner{background:var(--orange-bg);border:1px solid var(--orange-border);border-radius:8px;padding:11px 15px;margin-bottom:12px;display:none;}
+.ot-banner.red-mode{background:var(--red-bg);border-color:var(--red-border);}
+.ot-banner-title{font-size:12px;font-weight:700;color:var(--orange);display:flex;align-items:center;gap:6px;margin-bottom:7px;}
+.ot-banner.red-mode .ot-banner-title{color:var(--red);}
+.ot-row{display:flex;align-items:center;gap:10px;font-size:11px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ot-row:last-child{border-bottom:none;}
+.ot-name{font-weight:700;min-width:145px;}
+.ot-detail{font-family:var(--mono);font-size:10px;color:var(--text-muted);}
+
+.week-tabs{display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.week-tab{padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:5px;font-family:var(--mono);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:6px;}
+.week-tab:hover{border-color:var(--accent);color:var(--accent);}
+.week-tab.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.week-tab .tab-x{color:var(--text-faint);font-size:10px;margin-left:2px;cursor:pointer;padding:1px 4px;border-radius:2px;}
+.week-tab .tab-x:hover{color:var(--red);background:var(--red-bg);}
+
+.add-driver-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;margin-bottom:16px;}
+.add-driver-bar input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:5px 10px;border-radius:5px;outline:none;width:220px;transition:border-color .15s;}
+.add-driver-bar input:focus{border-color:var(--accent);}
+.add-driver-bar input::placeholder{color:var(--text-faint);}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px 8px 0 0;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead{position:sticky;top:0;z-index:10;}
+th{background:var(--surface);border-bottom:1px solid var(--border);border-right:1px solid var(--border2);padding:7px 5px;font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text-muted);text-align:center;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
+th.th-day{background:var(--surface2);color:var(--accent);font-size:10px;border-right:2px solid var(--border);}
+th.th-name{text-align:left;padding-left:13px;min-width:165px;position:sticky;left:0;background:var(--surface);border-right:2px solid var(--border);z-index:11;}
+th.th-final{min-width:90px;} th.th-act{width:44px;}
+th.sub-sep{border-right:2px solid var(--border);}
+th.sub-name{text-align:left;padding-left:13px;position:sticky;left:0;background:var(--surface);border-right:2px solid var(--border);z-index:11;}
+
+tbody tr{border-bottom:1px solid var(--border2);transition:background .08s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.014);}
+tbody tr:hover td.td-name{background:var(--surface2);}
+tbody tr.row-ot td.td-name{border-left:3px solid var(--orange);}
+tbody tr.row-send td.td-name{border-left:3px solid var(--red);}
+
+td{padding:3px 3px;text-align:center;border-right:1px solid var(--border2);vertical-align:middle;}
+td:last-child{border-right:none;}
+td.td-name{text-align:left;padding:6px 13px;font-weight:700;font-size:12px;white-space:nowrap;position:sticky;left:0;background:var(--bg);z-index:1;border-right:2px solid var(--border);transition:background .08s;}
+td.td-sep{border-right:2px solid var(--border);}
+td.td-act{text-align:center;padding:3px 5px;}
+
+input.t-in{background:transparent;border:1px solid transparent;border-radius:4px;color:var(--accent);font-family:var(--mono);font-size:11px;padding:3px 3px;width:56px;text-align:center;outline:none;transition:all .12s;}
+input.t-in:hover{border-color:var(--border);}
+input.t-in:focus{border-color:var(--accent);background:var(--surface2);}
+input.t-in::placeholder{color:var(--text-faint);font-size:10px;}
+input.f-in{background:transparent;border:1px solid transparent;border-radius:4px;color:var(--purple);font-family:var(--mono);font-size:11px;padding:3px 3px;width:50px;text-align:center;outline:none;transition:all .12s;}
+input.f-in:hover{border-color:var(--border);}
+input.f-in:focus{border-color:var(--purple);background:var(--surface2);}
+input.f-in::placeholder{color:var(--text-faint);font-size:10px;}
+
+.c-hrs{font-family:var(--mono);font-size:11px;color:var(--text-muted);}
+.c-ot{font-family:var(--mono);font-size:11px;color:var(--orange);font-weight:600;}
+.c-ot.dim{color:var(--text-faint);}
+.c-pay{font-family:var(--mono);font-size:11px;color:var(--green);}
+
+.flag{display:inline-flex;align-items:center;gap:2px;padding:2px 5px;border-radius:3px;font-family:var(--mono);font-size:8px;font-weight:600;white-space:nowrap;}
+.flag-ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.flag-ot{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-border);animation:blinkO 2s infinite;}
+.flag-send{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);animation:blinkR 1s infinite;}
+.flag-na{color:var(--text-faint);font-family:var(--mono);font-size:9px;}
+.flag-off{background:var(--surface2);color:var(--text-faint);border:1px solid var(--border2);}
+@keyframes blinkO{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes blinkR{0%,100%{box-shadow:0 0 0 0 rgba(232,64,64,.4)}50%{box-shadow:0 0 0 4px rgba(232,64,64,0)}}
+
+.final-cell{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green);background:var(--green-bg);padding:5px 9px;border-radius:4px;display:inline-block;min-width:82px;text-align:right;}
+.final-cell.ot{color:var(--orange);background:var(--orange-bg);}
+.final-cell.send{color:var(--red);background:var(--red-bg);}
+
+tr.totals-row td{background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:600;padding:8px 5px;border-top:2px solid var(--border);}
+tr.totals-row td.td-name{font-size:10px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
+
+.task-form{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:16px;}
+.task-form-title{font-size:13px;font-weight:700;color:var(--orange);margin-bottom:12px;}
+.form-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.fg{display:flex;flex-direction:column;gap:4px;}
+.fg label{font-family:var(--mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;}
+.fg input,.fg select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:6px 10px;border-radius:5px;outline:none;transition:border-color .15s;}
+.fg input:focus,.fg select:focus{border-color:var(--accent);}
+.fg input::placeholder{color:var(--text-faint);}
+.fg.wide input{width:180px;} .fg.med select,.fg.med input{width:145px;} .fg.sm input{width:85px;}
+
+.task-tbl-wrap{border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.task-tbl-wrap th{text-align:left;padding:9px 12px;}
+.task-tbl-wrap td{padding:7px 12px;font-size:12px;border-right:1px solid var(--border2);}
+.task-total-row{text-align:right;margin-top:10px;font-family:var(--mono);font-size:13px;color:var(--orange);padding-right:4px;}
+
+.sum-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.sum-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+.sum-card-label{font-family:var(--mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;}
+.sum-card-val{font-family:var(--mono);font-size:24px;font-weight:600;}
+.sum-card-val.green{color:var(--green);} .sum-card-val.orange{color:var(--orange);} .sum-card-val.red{color:var(--red);}
+.sum-tbl-wrap{border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.sum-tbl-wrap th{text-align:left;padding:9px 12px;}
+.sum-tbl-wrap td{padding:7px 12px;font-size:12px;border-right:1px solid var(--border2);}
+.badge{display:inline-block;padding:2px 7px;border-radius:3px;font-family:var(--mono);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+.badge-satx{background:rgba(77,163,255,.15);color:var(--accent);}
+.badge-solo{background:rgba(167,139,250,.15);color:var(--purple);}
+.badge-dallas{background:rgba(46,204,113,.15);color:var(--green);}
+.badge-memphis{background:rgba(45,212,191,.15);color:var(--teal);}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;min-width:340px;max-width:420px;animation:fadeIn .18s ease;}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:12px;}
+.modal-body{font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;}
+.modal-foot{display:flex;justify-content:flex-end;gap:8px;}
+</style>
+</head>
+<body>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="modal-confirm" onclick="">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-mark">PAY</span>
+    <span class="brand-name">Driver Payroll</span>
+  </div>
+  <div class="header-center">
+    <div class="week-pill">
+      <span>Week</span>
+      <input type="date" id="week-start-input" onchange="onWeekPickerChange()">
+      <span class="week-range" id="week-range-label">—</span>
+    </div>
+    <span class="paydate-badge" id="paydate-badge">Pay: —</span>
+  </div>
+  <div class="header-right">
+    <div id="live-status" class="live-status syncing"><span class="dot"></span><span id="live-status-text">Connecting...</span></div>
+    <button class="btn btn-success" onclick="createNewWeek()">＋ New Week</button>
+    <button class="btn btn-ghost" onclick="window.print()">⬇ Print</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sb-block">
+      <div class="sb-head">Sections</div>
+      <button class="nav-item active" onclick="switchView('satx',this)"><span class="nav-pip pip-satx"></span>SATX Local</button>
+      <button class="nav-item" onclick="switchView('solo',this)"><span class="nav-pip pip-solo"></span>Solo / OTR</button>
+      <button class="nav-item" onclick="switchView('dallas',this)"><span class="nav-pip pip-dallas"></span>Dallas</button>
+      <button class="nav-item" onclick="switchView('memphis',this)"><span class="nav-pip pip-memphis"></span>Memphis TN</button>
+      <button class="nav-item" onclick="switchView('tasks',this)"><span class="nav-pip pip-tasks"></span>Task Pay</button>
+      <button class="nav-item" onclick="switchView('summary',this)"><span class="nav-pip pip-summary"></span>Summary</button>
+    </div>
+    <div class="sb-block">
+      <div class="sb-head">This Week</div>
+      <div class="sb-stat"><div class="sb-stat-label">Total Payroll</div><div class="sb-stat-val green" id="sb-total">$0</div></div>
+      <div class="sb-stat"><div class="sb-stat-label">Task Pay</div><div class="sb-stat-val" id="sb-task">$0</div></div>
+      <div class="sb-stat"><div class="sb-stat-label">OT Flags</div><div class="sb-stat-val orange" id="sb-ot">0</div></div>
+      <div class="sb-stat"><div class="sb-stat-label">Send Home</div><div class="sb-stat-val red" id="sb-send">0</div></div>
+    </div>
+    <div class="sb-info">
+      <div class="sb-info-title">Payroll Rules</div>
+      <div class="sb-info-row">Period <span>Sun – Sat</span></div>
+      <div class="sb-info-row">Payout <span>Wednesday</span></div>
+      <div class="sb-info-row">OT starts <span>hr 12</span></div>
+      <div class="sb-info-row">OT pay <span>hr 13+</span></div>
+      <div class="sb-info-row">Hard cap <span>hr 14.5</span></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="week-tabs" id="week-tabs"></div>
+
+    <!-- SATX -->
+    <div class="view active" id="view-satx">
+      <div class="view-head"><div><div class="view-title">SATX Local Drivers</div><div class="view-sub">Hourly · OT tracked · Sun–Sat period</div></div></div>
+      <div class="ot-banner" id="ot-banner-satx"><div class="ot-banner-title">⚠ Overtime Alerts</div><div id="ot-list-satx"></div></div>
+      <div class="tbl-wrap" id="tbl-satx"></div>
+      <div class="add-driver-bar">
+        <input type="text" id="add-satx" placeholder="New driver name..." onkeydown="if(event.key==='Enter')addDriver('satx')">
+        <button class="btn btn-primary btn-sm" onclick="addDriver('satx')">＋ Add Driver</button>
+      </div>
+    </div>
+
+    <!-- SOLO -->
+    <div class="view" id="view-solo">
+      <div class="view-head"><div><div class="view-title">Solo / OTR Drivers</div><div class="view-sub">Flat / Miles-based · No OT tracking</div></div></div>
+      <div class="tbl-wrap" id="tbl-solo"></div>
+      <div class="add-driver-bar">
+        <input type="text" id="add-solo" placeholder="New driver name..." onkeydown="if(event.key==='Enter')addDriver('solo')">
+        <button class="btn btn-primary btn-sm" onclick="addDriver('solo')">＋ Add Driver</button>
+      </div>
+    </div>
+
+    <!-- DALLAS -->
+    <div class="view" id="view-dallas">
+      <div class="view-head"><div><div class="view-title">Dallas Drivers</div><div class="view-sub">Flat shift rate · OT tracked</div></div></div>
+      <div class="ot-banner" id="ot-banner-dallas"><div class="ot-banner-title">⚠ Overtime Alerts</div><div id="ot-list-dallas"></div></div>
+      <div class="tbl-wrap" id="tbl-dallas"></div>
+      <div class="add-driver-bar">
+        <input type="text" id="add-dallas" placeholder="New driver name..." onkeydown="if(event.key==='Enter')addDriver('dallas')">
+        <button class="btn btn-primary btn-sm" onclick="addDriver('dallas')">＋ Add Driver</button>
+      </div>
+    </div>
+
+    <!-- MEMPHIS -->
+    <div class="view" id="view-memphis">
+      <div class="view-head"><div><div class="view-title">Memphis TN Drivers</div><div class="view-sub">Hourly · OT tracked · Sun–Sat period</div></div></div>
+      <div class="ot-banner" id="ot-banner-memphis"><div class="ot-banner-title">⚠ Overtime Alerts</div><div id="ot-list-memphis"></div></div>
+      <div class="tbl-wrap" id="tbl-memphis"></div>
+      <div class="add-driver-bar">
+        <input type="text" id="add-memphis" placeholder="New driver name..." onkeydown="if(event.key==='Enter')addDriver('memphis')">
+        <button class="btn btn-primary btn-sm" onclick="addDriver('memphis')">＋ Add Driver</button>
+      </div>
+    </div>
+
+    <!-- TASK PAY -->
+    <div class="view" id="view-tasks">
+      <div class="view-head"><div><div class="view-title">Task / Ad-Hoc Pay</div><div class="view-sub">One-off payments, loads, special tasks</div></div></div>
+      <div class="task-form">
+        <div class="task-form-title">＋ Add Task Payment</div>
+        <div class="form-row">
+          <div class="fg sm"><label>Date</label><input type="date" id="t-date"></div>
+          <div class="fg wide"><label>Driver</label><input type="text" id="t-driver" placeholder="Driver name" list="all-drivers-dl"><datalist id="all-drivers-dl"></datalist></div>
+          <div class="fg med"><label>Task Type</label>
+            <select id="t-type">
+              <option value="">Select...</option>
+              <option>Local Delivery</option><option>PU Assist</option><option>Layover</option>
+              <option>Deadhead</option><option>McAllen Run</option><option>OKC Run</option>
+              <option>THS Run</option><option>USPS Run</option><option>IRV Run</option>
+              <option>Memphis Run</option><option>Training</option><option>Return Trip</option><option>Other</option>
+            </select>
+          </div>
+          <div class="fg sm"><label>Load #</label><input type="text" id="t-load" placeholder="LS #####"></div>
+          <div class="fg sm"><label>Amount $</label><input type="number" id="t-pay" placeholder="0" min="0"></div>
+          <div class="fg wide"><label>Notes</label><input type="text" id="t-notes" placeholder="Optional"></div>
+          <div class="fg"><label>&nbsp;</label><button class="btn btn-success" onclick="addTask()">Add</button></div>
+        </div>
+      </div>
+      <div class="task-tbl-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Driver</th><th>Task</th><th>Load #</th><th style="text-align:right;padding-right:12px">Amount</th><th>Notes</th><th></th></tr></thead>
+          <tbody id="task-tbody"><tr><td colspan="7" style="text-align:center;padding:22px;color:var(--text-faint);font-family:var(--mono)">No task payments yet</td></tr></tbody>
+        </table>
+      </div>
+      <div class="task-total-row">Total Task Pay: <strong id="task-total">$0.00</strong></div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="view" id="view-summary">
+      <div class="view-head"><div><div class="view-title">Weekly Summary</div><div class="view-sub">All drivers — pay totals and OT status</div></div><button class="btn btn-ghost" onclick="window.print()">⬇ Print</button></div>
+      <div class="sum-cards">
+        <div class="sum-card"><div class="sum-card-label">Grand Total</div><div class="sum-card-val green" id="sum-grand">$0.00</div></div>
+        <div class="sum-card"><div class="sum-card-label">Driver Pay</div><div class="sum-card-val" id="sum-driver">$0.00</div></div>
+        <div class="sum-card"><div class="sum-card-label">Task Pay</div><div class="sum-card-val orange" id="sum-task">$0.00</div></div>
+        <div class="sum-card"><div class="sum-card-label">OT / Send Home</div><div class="sum-card-val red" id="sum-flags">0 / 0</div></div>
+      </div>
+      <div class="sum-tbl-wrap">
+        <table>
+          <thead><tr><th>Driver</th><th>Section</th><th style="text-align:right;padding-right:12px">Weekly Pay</th><th style="text-align:right;padding-right:12px">Task Pay</th><th style="text-align:right;padding-right:12px">Total</th><th>OT Status</th></tr></thead>
+          <tbody id="sum-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+// ─── CONSTANTS ───────────────────────────────────────────
+const SECTION_META = {
+  satx:    {label:'SATX Local',  badge:'badge-satx',    ot:true},
+  solo:    {label:'Solo/OTR',    badge:'badge-solo',    ot:false},
+  dallas:  {label:'Dallas',      badge:'badge-dallas',  ot:true},
+  memphis: {label:'Memphis TN',  badge:'badge-memphis', ot:true},
+};
+const SECTIONS = ['satx','solo','dallas','memphis'];
+const DAY_LABELS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+// solo section uses flat-per-day model (no in/out times)
+const FLAT_SECTIONS = new Set(['solo']);
+
+// Default drivers — only Daniel Herrera=260, Gerson=300, Gary White=300, Susana=260 pre-filled
+const DEFAULT_DRIVERS = {
+  satx:[
+    {name:'Daniel Herrera',    flat:260},
+    {name:'Gerson Ramirez',    flat:300},
+    {name:'Steven Howell',     flat:null},
+    {name:'Gary White',        flat:300},
+    {name:'Rubin Cantu',       flat:null},
+    {name:'Amir De Leon',      flat:null},
+    {name:'Leo Avila',         flat:null},
+    {name:'Raymond Nunn',      flat:null},
+    {name:'Susana H',          flat:260},
+    {name:'Rocio Grano',       flat:null},
+    {name:'Derek Ramirez',     flat:null},
+    {name:'Roger Mccracken',   flat:null},
+    {name:'Jose Morales',      flat:null},
+    {name:'Joan Jose Morales', flat:null},
+    {name:'Leroy Drury',       flat:null},
+    {name:'Johnny Dominguez',  flat:null},
+    {name:'Salvador Garcia',   flat:null},
+    {name:'Sergio Castellion', flat:null},
+    {name:'Roman Martinez',    flat:null},
+    {name:'Jeffrey Brown',     flat:null},
+  ],
+  solo:[
+    {name:'Steven Barnes',      flat:null},
+    {name:'Donje McDonalds',    flat:null},
+    {name:'Laquallys Hollomon', flat:null},
+    {name:'Michael Firsthley',  flat:null},
+    {name:'Kevin Carr',         flat:null},
+    {name:'Tremayne Hardimon',  flat:null},
+    {name:'Latoya Duffie',      flat:null},
+  ],
+  dallas:[
+    {name:'Richard Perez',      flat:null},
+    {name:'Abdelrahman Ahmed',  flat:null},
+    {name:'Alex Nelson',        flat:null},
+    {name:'Briena Winston',     flat:null},
+    {name:'Kimala Brown',       flat:null},
+    {name:'Tyana Eason-Nugent', flat:null},
+    {name:'Shane Anderson',     flat:null},
+  ],
+  memphis:[]
+};
+
+// ─── STATE ───────────────────────────────────────────────
+let weeks = [];        // array of week objects
+let curIdx = 0;        // index of current week
+const socket = window.io ? window.io() : null;
+let clientId = null;
+let hasServerSnapshot = false;
+let syncTimer = null;
+let applyingRemote = false;
+let pendingSync = false;
+
+function cw() { return weeks[curIdx]; }
+
+function setLiveStatus(mode, text) {
+  const el = document.getElementById('live-status');
+  const txt = document.getElementById('live-status-text');
+  if (!el || !txt) return;
+  el.classList.remove('online', 'syncing', 'offline');
+  el.classList.add(mode);
+  txt.textContent = text;
+}
+
+function setLivePresence(count) {
+  const txt = document.getElementById('live-status-text');
+  if (!txt) return;
+  const users = Number.isFinite(count) ? count : 1;
+  const suffix = users === 1 ? 'user' : 'users';
+  txt.textContent = `Live (${users} ${suffix})`;
+}
+
+function applySharedState(state) {
+  if (!state || !Array.isArray(state.weeks) || !state.weeks.length) return false;
+  applyingRemote = true;
+  weeks = state.weeks;
+  if (curIdx >= weeks.length) curIdx = weeks.length - 1;
+  if (curIdx < 0) curIdx = 0;
+  renderAll();
+  applyingRemote = false;
+  return true;
+}
+
+function queueSync() {
+  if (applyingRemote || !socket || !hasServerSnapshot) return;
+  pendingSync = true;
+  setLiveStatus('syncing', 'Syncing...');
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => {
+    socket.emit('state:update', { weeks });
+  }, 120);
+}
+
+function setupRealtime() {
+  if (!socket) {
+    hasServerSnapshot = true;
+    setLiveStatus('offline', 'Local mode');
+    return;
+  }
+
+  setLiveStatus('syncing', 'Connecting...');
+  socket.on('connect', () => {
+    setLiveStatus('syncing', 'Connected');
+  });
+
+  socket.on('presence:update', (payload) => {
+    if (!payload || typeof payload.count !== 'number') return;
+    if (pendingSync) return;
+    setLiveStatus('online', 'Live');
+    setLivePresence(payload.count);
+  });
+
+  socket.on('state:snapshot', (payload) => {
+    if (!payload) return;
+    clientId = payload.clientId || null;
+    const applied = applySharedState(payload.state);
+    hasServerSnapshot = true;
+    if (!applied) queueSync();
+    pendingSync = false;
+    setLiveStatus('online', 'Live');
+  });
+
+  socket.on('state:updated', (payload) => {
+    if (!payload || payload.sourceClientId === clientId) {
+      pendingSync = false;
+      setLiveStatus('online', 'Live');
+      return;
+    }
+    applySharedState(payload.state);
+    pendingSync = false;
+    setLiveStatus('online', 'Live');
+  });
+
+  socket.on('disconnect', () => {
+    pendingSync = false;
+    setLiveStatus('offline', 'Disconnected');
+  });
+}
+
+// ─── WEEK HELPERS ────────────────────────────────────────
+function toYMD(d) { return d.toISOString().split('T')[0]; }
+function fromYMD(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+function addDays(ymd,n) { const d=fromYMD(ymd); d.setDate(d.getDate()+n); return toYMD(d); }
+function fmtShort(ymd) { return fromYMD(ymd).toLocaleDateString('en-US',{month:'numeric',day:'numeric'}); }
+function fmtMed(ymd) { return fromYMD(ymd).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+
+function getThisSunday() {
+  const d=new Date(); d.setDate(d.getDate()-d.getDay()); return toYMD(d);
+}
+
+function blankDays() {
+  return Array.from({length:7},()=>({in:'',out:'',_hrs:null,_pay:0,_flag:'off'}));
+}
+
+function makeDriver(name, flat) {
+  return {name, flat: flat??null, days:blankDays(), _total:0, _worstFlag:'ok'};
+}
+
+function makeWeek(sundayYMD) {
+  const w = {startSunday:sundayYMD, sections:{}, tasks:[]};
+  SECTIONS.forEach(s => {
+    w.sections[s] = (DEFAULT_DRIVERS[s]||[]).map(d=>makeDriver(d.name,d.flat));
+  });
+  return w;
+}
+
+function copyWeekDrivers(fromWeek) {
+  // Copy driver roster + flat rates but clear all hours/pay
+  const sections = {};
+  SECTIONS.forEach(s => {
+    sections[s] = fromWeek.sections[s].map(d=>makeDriver(d.name,d.flat));
+  });
+  return sections;
+}
+
+// ─── CALCULATION ─────────────────────────────────────────
+function parseTime(s) {
+  if(!s||!s.trim()) return null;
+  s=s.trim().toLowerCase().replace(/\s+/,'');
+  let m;
+  m=s.match(/^(\d{1,2}):(\d{2})$/);
+  if(m){let h=+m[1],mn=+m[2];if(h<24&&mn<60)return h+mn/60;}
+  m=s.match(/^(\d{1,2}):(\d{2})(am|pm)$/);
+  if(m){let h=+m[1],mn=+m[2],ap=m[3];if(ap==='am'&&h===12)h=0;if(ap==='pm'&&h!==12)h+=12;return h+mn/60;}
+  m=s.match(/^(\d{1,2})(am|pm)$/);
+  if(m){let h=+m[1],ap=m[2];if(ap==='am'&&h===12)h=0;if(ap==='pm'&&h!==12)h+=12;return h;}
+  m=s.match(/^(\d{1,2})$/);
+  if(m){let h=+m[1];if(h<24)return h;}
+  return null;
+}
+
+function calcHrs(inV,outV) {
+  const i=parseTime(inV),o=parseTime(outV);
+  if(i===null||o===null) return null;
+  let d=o-i; if(d<0)d+=24; return d;
+}
+
+function calcPay(hrs,flat) {
+  if(hrs===null||!flat) return 0;
+  if(hrs<=12) return Math.min((hrs/12)*flat,flat);
+  if(hrs<13)  return flat;
+  return flat + (Math.min(hrs,14.5)-13)*(flat/12);
+}
+
+function getFlag(hrs) {
+  if(hrs===null) return 'off';
+  if(hrs>=14.5)  return 'send';
+  if(hrs>=12)    return 'ot';
+  return 'ok';
+}
+
+function computeDriver(drv,isFlat) {
+  if(isFlat) {
+    // Solo: each day pay = flat value (entered per day as flat rate)
+    drv.days.forEach(day=>{day._hrs=null;day._pay=drv.flat||0;day._flag='off';});
+  } else {
+    drv.days.forEach(day=>{
+      const hrs=calcHrs(day.in,day.out);
+      day._hrs=hrs; day._pay=calcPay(hrs,drv.flat); day._flag=getFlag(hrs);
+    });
+  }
+  drv._total=drv.days.reduce((a,d)=>a+d._pay,0);
+  drv._worstFlag=drv.days.reduce((w,d)=>{
+    if(d._flag==='send') return 'send';
+    if(d._flag==='ot'&&w!=='send') return 'ot';
+    return w;
+  },'ok');
+}
+
+function computeAll() {
+  SECTIONS.forEach(s=>{
+    const isFlat=FLAT_SECTIONS.has(s);
+    cw().sections[s].forEach(drv=>computeDriver(drv,isFlat));
+  });
+}
+
+// ─── RENDER ──────────────────────────────────────────────
+function renderAll() {
+  updateWeekHeader();
+  renderWeekTabs();
+  computeAll();
+  SECTIONS.forEach(s=>renderTable(s));
+  renderTasks();
+  updateSidebar();
+  renderSummary();
+  SECTIONS.filter(s=>SECTION_META[s].ot).forEach(s=>renderAlerts(s));
+  updateDriverDatalist();
+}
+
+function updateWeekHeader() {
+  const w=cw();
+  const sat=addDays(w.startSunday,6);
+  document.getElementById('week-start-input').value=w.startSunday;
+  document.getElementById('week-range-label').textContent=`${fmtMed(w.startSunday)} – ${fmtMed(sat)}`;
+  // Pay date = Wednesday of following week (startSunday + 11 days)
+  const pd=fromYMD(w.startSunday); pd.setDate(pd.getDate()+11);
+  document.getElementById('paydate-badge').textContent=
+    `Pay: ${pd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}`;
+}
+
+function renderWeekTabs() {
+  document.getElementById('week-tabs').innerHTML=weeks.map((w,i)=>{
+    const sat=addDays(w.startSunday,6);
+    return `<div class="week-tab${i===curIdx?' active':''}" onclick="switchWeek(${i})">
+      ${fmtShort(w.startSunday)}–${fmtShort(sat)}
+      ${weeks.length>1?`<span class="tab-x" onclick="event.stopPropagation();confirmDeleteWeek(${i})">✕</span>`:''}
+    </div>`;
+  }).join('');
+}
+
+function dayLabel(di) {
+  const d=fromYMD(cw().startSunday); d.setDate(d.getDate()+di);
+  return `${DAY_LABELS[di]} ${d.toLocaleDateString('en-US',{month:'numeric',day:'numeric'})}`;
+}
+
+function flagHtml(flag) {
+  if(flag==='ok')   return `<span class="flag flag-ok">✓ OK</span>`;
+  if(flag==='ot')   return `<span class="flag flag-ot">⚠ OT</span>`;
+  if(flag==='send') return `<span class="flag flag-send">🔴 SEND</span>`;
+  if(flag==='off')  return `<span class="flag flag-off">OFF</span>`;
+  return `<span class="flag-na">—</span>`;
+}
+
+function renderTable(section) {
+  const w=cw(), drivers=w.sections[section];
+  const isFlat=FLAT_SECTIONS.has(section);
+  const container=document.getElementById(`tbl-${section}`);
+
+  // THEAD
+  const colsPerDay = isFlat ? 2 : 5; // flat: FLAT + EARNED; hourly: IN OUT HRS OT FLAG
+  let h=`<thead><tr>
+    <th class="th-name" rowspan="2">Driver</th>
+    <th class="th-final" rowspan="2">Final Pay</th>`;
+  for(let d=0;d<7;d++) h+=`<th class="th-day" colspan="${colsPerDay}">${dayLabel(d)}</th>`;
+  h+=`<th class="th-act" rowspan="2"></th></tr><tr>`;
+  for(let d=0;d<7;d++){
+    if(isFlat){
+      h+=`<th>Flat $</th><th class="sub-sep">Earned</th>`;
+    } else {
+      h+=`<th>In</th><th>Out</th><th>Hrs</th><th>OT Hrs</th><th class="sub-sep">Flag</th>`;
+    }
+  }
+  h+=`</tr></thead>`;
+
+  // TBODY
+  let b=`<tbody>`;
+  drivers.forEach((drv,di)=>{
+    const rowCls=SECTION_META[section].ot?(drv._worstFlag==='send'?'row-send':drv._worstFlag==='ot'?'row-ot':''):'';
+    b+=`<tr id="row-${section}-${di}" class="${rowCls}">`;
+    b+=`<td class="td-name">${drv.name}</td>`;
+    const finalCls=drv._worstFlag==='send'?'send':drv._worstFlag==='ot'?'ot':'';
+    b+=`<td>
+          ${!isFlat?`<div style="display:flex;align-items:center;gap:4px;justify-content:flex-end">
+            <input class="f-in" type="number" placeholder="rate" value="${drv.flat!=null?drv.flat:''}"
+              data-s="${section}" data-di="${di}" data-field="flat"
+              title="Flat rate per shift ($)"
+              oninput="onFlatInput(this)" style="width:48px;font-size:10px">
+            <span class="final-cell ${finalCls}" id="final-${section}-${di}">$${(drv._total).toFixed(2)}</span>
+          </div>`:
+          `<span class="final-cell ${finalCls}" id="final-${section}-${di}">$${(drv._total).toFixed(2)}</span>`}
+        </td>`;
+    for(let d=0;d<7;d++){
+      const day=drv.days[d];
+      if(isFlat){
+        // Flat per day input — re-use drv.flat as a per-day override by storing in day object
+        const dayFlat = day.flatOverride!=null ? day.flatOverride : (drv.flat||'');
+        const earned = dayFlat!=='' ? `$${(+dayFlat).toFixed(0)}` : '—';
+        b+=`<td><input class="f-in" type="number" placeholder="$" value="${dayFlat}"
+            data-s="${section}" data-di="${di}" data-d="${d}" data-field="flatday"
+            oninput="onFlatDayInput(this)"></td>
+          <td class="td-sep c-pay" id="pd-${section}-${di}-${d}">${earned}</td>`;
+      } else {
+        const hrs=day._hrs!==null?day._hrs.toFixed(2):'—';
+        const ot=day._hrs!==null&&day._hrs>12?(day._hrs-12).toFixed(2):'—';
+        const otCls=day._hrs!==null&&day._hrs>12?'c-ot':'c-ot dim';
+        b+=`<td><input class="t-in" type="text" placeholder="6:00" value="${day.in||''}"
+              data-s="${section}" data-di="${di}" data-d="${d}" data-field="in"
+              oninput="onTimeInput(this)"></td>
+            <td><input class="t-in" type="text" placeholder="18:30" value="${day.out||''}"
+              data-s="${section}" data-di="${di}" data-d="${d}" data-field="out"
+              oninput="onTimeInput(this)"></td>
+            <td class="c-hrs" id="hrs-${section}-${di}-${d}">${hrs}</td>
+            <td class="${otCls}" id="ot-${section}-${di}-${d}">${ot}</td>
+            <td class="td-sep" id="flag-${section}-${di}-${d}">${flagHtml(day._flag)}</td>`;
+      }
+    }
+    // Final pay column is rendered right after driver name for quick visibility.
+    b+=`<td class="td-act"><button class="btn btn-danger btn-icon btn-sm" title="Remove driver"
+          onclick="removeDriver('${section}',${di})">✕</button></td>`;
+    b+=`</tr>`;
+  });
+
+  // Totals
+  const secTot=drivers.reduce((a,d)=>a+(d._total||0),0);
+  b+=`<tr class="totals-row"><td class="td-name">Section Total</td>`;
+  b+=`<td><span class="final-cell" style="background:var(--surface2)">$${secTot.toFixed(2)}</span></td>`;
+  for(let d=0;d<7;d++){
+    if(isFlat){
+      const dt=drivers.reduce((a,drv)=>a+(drv.days[d].flatOverride!=null?+drv.days[d].flatOverride:(drv.flat||0)),0);
+      b+=`<td></td><td class="td-sep c-pay">$${dt.toFixed(0)}</td>`;
+    } else {
+      const dt=drivers.reduce((a,drv)=>a+(drv.days[d]._pay||0),0);
+      b+=`<td></td><td></td><td></td><td></td><td class="td-sep c-pay">$${dt.toFixed(0)}</td>`;
+    }
+  }
+  b+=`<td></td></tr>`;
+  b+=`</tbody>`;
+  container.innerHTML=`<table>${h}${b}</table>`;
+}
+
+// ─── INPUT HANDLERS ──────────────────────────────────────
+function onTimeInput(el) {
+  const s=el.dataset.s, di=+el.dataset.di, d=+el.dataset.d, field=el.dataset.field;
+  const w=cw(), drv=w.sections[s][di], day=drv.days[d];
+  day[field]=el.value;
+
+  // Compute as soon as both in and out exist; also clear if out removed
+  if(day.in && day.out){
+    const hrs=calcHrs(day.in,day.out);
+    day._hrs=hrs; day._pay=calcPay(hrs,drv.flat); day._flag=getFlag(hrs);
+  } else {
+    day._hrs=null; day._pay=0; day._flag='off';
+  }
+
+  // Live-update cells
+  const hrsEl=document.getElementById(`hrs-${s}-${di}-${d}`);
+  const otEl=document.getElementById(`ot-${s}-${di}-${d}`);
+  const flagEl=document.getElementById(`flag-${s}-${di}-${d}`);
+  if(hrsEl) hrsEl.textContent=day._hrs!==null?day._hrs.toFixed(2):'—';
+  if(otEl){
+    otEl.textContent=day._hrs!==null&&day._hrs>12?(day._hrs-12).toFixed(2):'—';
+    otEl.className=day._hrs!==null&&day._hrs>12?'c-ot':'c-ot dim';
+  }
+  if(flagEl) flagEl.innerHTML=flagHtml(day._flag);
+
+  refreshDriverFinal(s,di);
+  renderAlerts(s);
+  updateSidebar();
+  renderSummary();
+  queueSync();
+}
+
+function onFlatInput(el) {
+  const s=el.dataset.s, di=+el.dataset.di;
+  const drv=cw().sections[s][di];
+  drv.flat=parseFloat(el.value)||null;
+  // Recompute all days for this driver
+  computeDriver(drv,false);
+  // Re-render all computed cells for this driver
+  for(let d=0;d<7;d++){
+    const day=drv.days[d];
+    const hrsEl=document.getElementById(`hrs-${s}-${di}-${d}`);
+    const otEl=document.getElementById(`ot-${s}-${di}-${d}`);
+    const flagEl=document.getElementById(`flag-${s}-${di}-${d}`);
+    if(hrsEl) hrsEl.textContent=day._hrs!==null?day._hrs.toFixed(2):'—';
+    if(otEl){
+      otEl.textContent=day._hrs!==null&&day._hrs>12?(day._hrs-12).toFixed(2):'—';
+      otEl.className=day._hrs!==null&&day._hrs>12?'c-ot':'c-ot dim';
+    }
+    if(flagEl) flagEl.innerHTML=flagHtml(day._flag);
+  }
+  refreshDriverFinal(s,di);
+  renderAlerts(s);
+  updateSidebar();
+  renderSummary();
+  queueSync();
+}
+
+function onFlatDayInput(el) {
+  const s=el.dataset.s, di=+el.dataset.di, d=+el.dataset.d;
+  const drv=cw().sections[s][di];
+  const val=parseFloat(el.value)||null;
+  drv.days[d].flatOverride=val!=null?val:null;
+  const payEl=document.getElementById(`pd-${s}-${di}-${d}`);
+  if(payEl) payEl.textContent=val!=null?`$${val.toFixed(0)}`:'—';
+  // Recompute total
+  drv._total=drv.days.reduce((a,day)=>{
+    const v=day.flatOverride!=null?day.flatOverride:(drv.flat||0);
+    return a+v;
+  },0);
+  refreshDriverFinal(s,di);
+  updateSidebar();
+  renderSummary();
+  queueSync();
+}
+
+function refreshDriverFinal(s,di) {
+  const drv=cw().sections[s][di];
+  if(!FLAT_SECTIONS.has(s)){
+    drv._total=drv.days.reduce((a,d)=>a+d._pay,0);
+    drv._worstFlag=drv.days.reduce((w,d)=>{
+      if(d._flag==='send') return 'send';
+      if(d._flag==='ot'&&w!=='send') return 'ot';
+      return w;
+    },'ok');
+  }
+  const finalEl=document.getElementById(`final-${s}-${di}`);
+  if(finalEl){
+    finalEl.textContent=`$${drv._total.toFixed(2)}`;
+    finalEl.className=`final-cell${drv._worstFlag==='send'?' send':drv._worstFlag==='ot'?' ot':''}`;
+  }
+  const rowEl=document.getElementById(`row-${s}-${di}`);
+  if(rowEl&&SECTION_META[s].ot)
+    rowEl.className=drv._worstFlag==='send'?'row-send':drv._worstFlag==='ot'?'row-ot':'';
+}
+
+// ─── ADD / REMOVE DRIVERS ─────────────────────────────────
+function addDriver(section) {
+  const inp=document.getElementById(`add-${section}`);
+  const name=inp.value.trim();
+  if(!name){inp.focus();return;}
+  const w=cw();
+  if(w.sections[section].some(d=>d.name.toLowerCase()===name.toLowerCase())){
+    alert(`"${name}" already exists in this section.`); return;
+  }
+  w.sections[section].push(makeDriver(name,null));
+  inp.value='';
+  renderTable(section);
+  updateDriverDatalist();
+  updateSidebar();
+  renderSummary();
+  queueSync();
+}
+
+function removeDriver(section,di) {
+  const drv=cw().sections[section][di];
+  showModal('Remove Driver',
+    `Remove <strong style="color:var(--text)">${drv.name}</strong> from this section?<br>Their hours and pay for this week will be deleted.`,
+    ()=>{
+      cw().sections[section].splice(di,1);
+      computeAll();
+      renderTable(section);
+      if(SECTION_META[section].ot) renderAlerts(section);
+      updateSidebar();
+      renderSummary();
+      updateDriverDatalist();
+      queueSync();
+    });
+}
+
+// ─── OT ALERTS ───────────────────────────────────────────
+function renderAlerts(section) {
+  const banner=document.getElementById(`ot-banner-${section}`);
+  const list=document.getElementById(`ot-list-${section}`);
+  if(!banner) return;
+  const alerts=[];
+  cw().sections[section].forEach(drv=>{
+    drv.days.forEach((day,d)=>{
+      if(day._flag==='ot'||day._flag==='send')
+        alerts.push({name:drv.name,day:dayLabel(d),hrs:day._hrs,flag:day._flag});
+    });
+  });
+  if(!alerts.length){banner.style.display='none';return;}
+  banner.style.display='block';
+  const hasSend=alerts.some(a=>a.flag==='send');
+  banner.className=`ot-banner${hasSend?' red-mode':''}`;
+  banner.querySelector('.ot-banner-title').style.color=hasSend?'var(--red)':'var(--orange)';
+  list.innerHTML=alerts.map(a=>`
+    <div class="ot-row">
+      <span class="ot-name">${a.name}</span>
+      <span class="ot-detail">${a.day} — ${a.hrs.toFixed(2)} hrs</span>
+      ${flagHtml(a.flag)}
+    </div>`).join('');
+}
+
+// ─── TASK PAY ─────────────────────────────────────────────
+function addTask() {
+  const date=document.getElementById('t-date').value;
+  const driver=document.getElementById('t-driver').value.trim();
+  const type=document.getElementById('t-type').value;
+  const load=document.getElementById('t-load').value.trim();
+  const pay=parseFloat(document.getElementById('t-pay').value)||0;
+  const notes=document.getElementById('t-notes').value.trim();
+  if(!driver||!pay){alert('Driver name and amount are required.');return;}
+  cw().tasks.push({id:Date.now(),date,driver,type,load,pay,notes});
+  ['t-date','t-driver','t-load','t-pay','t-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('t-type').value='';
+  document.getElementById('t-date').value=toYMD(new Date());
+  renderTasks();
+  updateSidebar();
+  renderSummary();
+  queueSync();
+}
+
+function deleteTask(id) {
+  cw().tasks=cw().tasks.filter(t=>t.id!==id);
+  renderTasks();
+  updateSidebar();
+  renderSummary();
+  queueSync();
+}
+
+function renderTasks() {
+  const tasks=cw().tasks;
+  const tbody=document.getElementById('task-tbody');
+  const totEl=document.getElementById('task-total');
+  if(!tasks.length){
+    tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:22px;color:var(--text-faint);font-family:var(--mono)">No task payments yet</td></tr>`;
+    totEl.textContent='$0.00';return;
+  }
+  let tot=0;
+  tbody.innerHTML=tasks.map(t=>{
+    tot+=t.pay;
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:11px">${t.date||'—'}</td>
+      <td style="font-weight:700">${t.driver}</td>
+      <td style="color:var(--orange);font-size:11px">${t.type||'—'}</td>
+      <td style="font-family:var(--mono);font-size:11px">${t.load||'—'}</td>
+      <td style="font-family:var(--mono);color:var(--green);text-align:right;padding-right:12px">$${t.pay.toFixed(2)}</td>
+      <td style="color:var(--text-muted);font-size:11px">${t.notes||'—'}</td>
+      <td><button class="btn btn-danger btn-icon btn-sm" onclick="deleteTask(${t.id})">✕</button></td>
+    </tr>`;
+  }).join('');
+  totEl.textContent=`$${tot.toFixed(2)}`;
+}
+
+// ─── SIDEBAR ─────────────────────────────────────────────
+function updateSidebar() {
+  const w=cw();
+  let dp=0,tp=0,otC=0,sendC=0;
+  SECTIONS.forEach(s=>w.sections[s].forEach(drv=>{
+    dp+=drv._total||0;
+    drv.days.forEach(d=>{if(d._flag==='ot')otC++;if(d._flag==='send')sendC++;});
+  }));
+  w.tasks.forEach(t=>tp+=t.pay);
+  document.getElementById('sb-total').textContent=`$${(dp+tp).toLocaleString('en-US',{minimumFractionDigits:0})}`;
+  document.getElementById('sb-task').textContent=`$${tp.toLocaleString('en-US',{minimumFractionDigits:0})}`;
+  document.getElementById('sb-ot').textContent=otC;
+  document.getElementById('sb-send').textContent=sendC;
+}
+
+// ─── SUMMARY ─────────────────────────────────────────────
+function renderSummary() {
+  const w=cw();
+  let grand=0,driver=0,task=0,otC=0,sendC=0;
+  const rows=[];
+  SECTIONS.forEach(s=>w.sections[s].forEach(drv=>{
+    const wp=drv._total||0;
+    const tp=w.tasks.filter(t=>t.driver.toLowerCase()===drv.name.toLowerCase()).reduce((a,t)=>a+t.pay,0);
+    grand+=wp+tp; driver+=wp; task+=tp;
+    drv.days.forEach(d=>{if(d._flag==='ot')otC++;if(d._flag==='send')sendC++;});
+    rows.push({name:drv.name,section:s,wp,tp,total:wp+tp,worst:drv._worstFlag||'ok'});
+  }));
+  document.getElementById('sum-grand').textContent=`$${grand.toFixed(2)}`;
+  document.getElementById('sum-driver').textContent=`$${driver.toFixed(2)}`;
+  document.getElementById('sum-task').textContent=`$${task.toFixed(2)}`;
+  document.getElementById('sum-flags').textContent=`${otC} / ${sendC}`;
+  document.getElementById('sum-tbody').innerHTML=rows.map(r=>{
+    const isOT=SECTION_META[r.section].ot;
+    const flag=isOT?flagHtml(r.worst==='ok'?'ok':r.worst):`<span class="flag-na">N/A</span>`;
+    return `<tr>
+      <td style="font-weight:700">${r.name}</td>
+      <td><span class="badge ${SECTION_META[r.section].badge}">${SECTION_META[r.section].label}</span></td>
+      <td style="font-family:var(--mono);color:var(--green);text-align:right;padding-right:12px">$${r.wp.toFixed(2)}</td>
+      <td style="font-family:var(--mono);color:var(--orange);text-align:right;padding-right:12px">${r.tp>0?'$'+r.tp.toFixed(2):'—'}</td>
+      <td style="font-family:var(--mono);font-weight:700;text-align:right;padding-right:12px">$${r.total.toFixed(2)}</td>
+      <td>${flag}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── DATALIST ────────────────────────────────────────────
+function updateDriverDatalist() {
+  const names=new Set();
+  SECTIONS.forEach(s=>cw().sections[s].forEach(d=>names.add(d.name)));
+  document.getElementById('all-drivers-dl').innerHTML=[...names].map(n=>`<option value="${n}">`).join('');
+}
+
+// ─── WEEK MANAGEMENT ─────────────────────────────────────
+function switchWeek(idx) {
+  curIdx=idx; renderAll();
+}
+
+function createNewWeek() {
+  const sat=addDays(cw().startSunday,6);
+  const nextSun=addDays(sat,1);
+  const w={startSunday:nextSun,sections:{},tasks:[]};
+  // Copy drivers + flat rates from current week
+  SECTIONS.forEach(s=>{
+    w.sections[s]=cw().sections[s].map(d=>makeDriver(d.name,d.flat));
+  });
+  weeks.push(w);
+  curIdx=weeks.length-1;
+  renderAll();
+  queueSync();
+}
+
+function confirmDeleteWeek(idx) {
+  if(weeks.length<=1){alert('Cannot delete the only week.');return;}
+  showModal('Delete Week',
+    `Delete week of <strong style="color:var(--text)">${fmtMed(weeks[idx].startSunday)}</strong>? All data will be permanently lost.`,
+    ()=>{weeks.splice(idx,1);if(curIdx>=weeks.length)curIdx=weeks.length-1;renderAll();queueSync();}
+  );
+}
+
+function onWeekPickerChange() {
+  const val=document.getElementById('week-start-input').value;
+  if(!val) return;
+  cw().startSunday=val;
+  renderAll();
+  queueSync();
+}
+
+// ─── NAV ─────────────────────────────────────────────────
+function switchView(name,btn) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`view-${name}`).classList.add('active');
+  btn.classList.add('active');
+  if(name==='summary') renderSummary();
+}
+
+// ─── MODAL ───────────────────────────────────────────────
+let modalCb=null;
+function showModal(title,body,onConfirm){
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-body').innerHTML=body;
+  const overlay=document.getElementById('modal-overlay');
+  const btn=document.getElementById('modal-confirm');
+  modalCb=onConfirm;
+  btn.onclick=()=>{closeModal();if(modalCb)modalCb();};
+  overlay.classList.add('open');
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');modalCb=null;}
+document.getElementById('modal-overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+
+// ─── INIT ────────────────────────────────────────────────
+(function init(){
+  weeks.push(makeWeek(getThisSunday()));
+  renderAll();
+  document.getElementById('t-date').value=toYMD(new Date());
+  setupRealtime();
+})();
+</script>
+</body>
+</html>
