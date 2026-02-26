@@ -108,7 +108,15 @@ thead{position:sticky;top:0;z-index:10;}
 th{background:var(--surface);border-bottom:1px solid var(--border);border-right:1px solid var(--border2);padding:7px 5px;font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text-muted);text-align:center;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
 th.th-day{background:var(--surface2);color:var(--accent);font-size:10px;border-right:2px solid var(--border);}
 th.th-name{text-align:left;padding-left:13px;min-width:165px;position:sticky;left:0;background:var(--surface);border-right:2px solid var(--border);z-index:11;}
-th.th-final{min-width:90px;} th.th-act{width:44px;}
+th.th-final{
+  min-width:90px;
+  position:sticky;
+  left:165px;
+  background:var(--surface);
+  border-right:2px solid var(--border);
+  z-index:11;
+}
+th.th-act{width:44px;}
 th.sub-sep{border-right:2px solid var(--border);}
 th.sub-name{text-align:left;padding-left:13px;position:sticky;left:0;background:var(--surface);border-right:2px solid var(--border);z-index:11;}
 
@@ -122,6 +130,13 @@ tbody tr.row-send td.td-name{border-left:3px solid var(--red);}
 td{padding:3px 3px;text-align:center;border-right:1px solid var(--border2);vertical-align:middle;}
 td:last-child{border-right:none;}
 td.td-name{text-align:left;padding:6px 13px;font-weight:700;font-size:12px;white-space:nowrap;position:sticky;left:0;background:var(--bg);z-index:1;border-right:2px solid var(--border);transition:background .08s;}
+td.td-final{
+  position:sticky;
+  left:165px;
+  background:var(--bg);
+  z-index:1;
+  border-right:2px solid var(--border);
+}
 td.td-sep{border-right:2px solid var(--border);}
 td.td-act{text-align:center;padding:3px 5px;}
 
@@ -677,7 +692,7 @@ function renderTable(section) {
     b+=`<tr id="row-${section}-${di}" class="${rowCls}">`;
     b+=`<td class="td-name">${drv.name}</td>`;
     const finalCls=drv._worstFlag==='send'?'send':drv._worstFlag==='ot'?'ot':'';
-    b+=`<td>
+    b+=`<td class="td-final">
           ${!isFlat?`<div style="display:flex;align-items:center;gap:4px;justify-content:flex-end">
             <input class="f-in" type="number" placeholder="rate" value="${drv.flat!=null?drv.flat:''}"
               data-s="${section}" data-di="${di}" data-field="flat"
@@ -721,7 +736,7 @@ function renderTable(section) {
   // Totals
   const secTot=drivers.reduce((a,d)=>a+(d._total||0),0);
   b+=`<tr class="totals-row"><td class="td-name">Section Total</td>`;
-  b+=`<td><span class="final-cell" style="background:var(--surface2)">$${secTot.toFixed(2)}</span></td>`;
+  b+=`<td class="td-final"><span class="final-cell" style="background:var(--surface2)">$${secTot.toFixed(2)}</span></td>`;
   for(let d=0;d<7;d++){
     if(isFlat){
       const dt=drivers.reduce((a,drv)=>a+(drv.days[d].flatOverride!=null?+drv.days[d].flatOverride:(drv.flat||0)),0);
