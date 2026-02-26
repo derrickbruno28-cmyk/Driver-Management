@@ -321,6 +321,7 @@
       <button class="btn btn-success" onclick="sendOtrToDriverSepPending()" id="sendToDriverSepBtn" style="display:none">Send to Driver Sep</button>
       <button class="btn btn-secondary" onclick="sendToNotMovingForward()" id="sendToNmfBtn" style="display:none">Send to Not Moving Forward</button>
       <button class="btn btn-success" onclick="sendRoadTestToOtr()" id="sendRoadTestToOtrBtn" style="display:none">Send to OTR New Hires</button>
+      <button class="btn btn-success" onclick="sendRoadTestToAg4()" id="sendRoadTestToAg4Btn" style="display:none">Send to AG4 New Hires</button>
       <button class="btn btn-success" onclick="reactivateTerminatedDriver()" id="reactivateDriverBtn" style="display:none">Reactivate Driver</button>
       <button class="btn btn-danger" onclick="moveToTerminatedFolder()" id="moveToTerminatedBtn" style="display:none">Move to Terminated/Removals</button>
       <button class="btn btn-danger" onclick="deleteRecord()" id="deleteBtn">Delete</button>
@@ -1631,6 +1632,7 @@ function toggleModalActionButtons() {
   set('sendToDriverSepBtn', editingTab === 'otrHires' && !!editingId);
   set('sendToNmfBtn', (editingTab === 'otrHires' || editingTab === 'ag4Hires') && !!editingId);
   set('sendRoadTestToOtrBtn', editingTab === 'roadTestScheduling' && !!editingId);
+  set('sendRoadTestToAg4Btn', editingTab === 'roadTestScheduling' && !!editingId);
   set('reactivateDriverBtn', editingTab === 'terminatedRemovals' && !!editingId);
   set('moveToTerminatedBtn', editingTab === 'driversSep' && !!editingId);
 }
@@ -1896,6 +1898,41 @@ async function sendRoadTestToOtr() {
   closeModal();
   renderPage('roadTestScheduling');
   showToast('Transferred to OTR New Hires and removed from Road Test Scheduling');
+}
+
+async function sendRoadTestToAg4() {
+  if (editingTab !== 'roadTestScheduling' || !editingId) return;
+  const srcIdx = DB.roadTestScheduling.findIndex(x => x.id === editingId);
+  const src = srcIdx >= 0 ? DB.roadTestScheduling[srcIdx] : null;
+  if (!src) return;
+  DB.ag4Hires.push({
+    id: 'ag4_' + Date.now(),
+    passed: '',
+    name: src.name || '',
+    age: '',
+    position: src.position || 'AG4-BD',
+    yoe: '',
+    phone: src.phone || '',
+    location: src.roadTestCity || '',
+    rtgDate: '',
+    nhpw: '',
+    i9: '',
+    ag4DT: '',
+    dotMedical: '',
+    onboarding: '',
+    insurance: '',
+    gtg: 'NO',
+    dispatched: 'NO',
+    notes: `Road test scheduled: ${src.roadTestDate || ''} ${src.roadTestTime || ''} at ${src.roadTestCity || ''} with ${src.roadTester || ''}\n${src.notes || ''}`.trim(),
+    _lastEditBy: getCurrentUser(),
+    _lastEditTime: new Date().toLocaleString(),
+  });
+  DB.roadTestScheduling.splice(srcIdx, 1);
+  try { await queuePersistData(); } catch (_) {}
+  updateBadges();
+  closeModal();
+  renderPage('roadTestScheduling');
+  showToast('Transferred to AG4 New Hires and removed from Road Test Scheduling');
 }
 
 async function moveToTerminatedFolder() {
