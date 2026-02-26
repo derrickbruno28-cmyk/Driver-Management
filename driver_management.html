@@ -547,6 +547,29 @@ function parseFollowUpDate(record) {
   return parseNextDate(notes, 'follow up date') || parseNextDate(notes, 'follow-up date');
 }
 
+function getDriverDateObj(record, key) {
+  if (!record) return null;
+  if (record[key]) {
+    const explicit = parseFlexDate(record[key]);
+    if (explicit) return explicit;
+  }
+  if (key === 'rtgDate') return parseNextDate(record.notes || '', 'rtg date');
+  if (key === 'returnDate') return parseNextDate(record.notes || '', 'return date');
+  return null;
+}
+
+function toYmd(dateObj) {
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const d = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function getDriverDateDisplay(record, key) {
+  const d = getDriverDateObj(record, key);
+  return d ? toYmd(d) : '';
+}
+
 function isOffDutyPosition(pos) {
   const p = (pos || '').toLowerCase();
   return p.includes('off duty') || p.includes('unresponsive');
@@ -708,13 +731,15 @@ const TABS = {
       { key: 'twic', label: 'TWIC Card', type: 'text' },
       { key: 'hiredCity', label: 'Hired Departure City', type: 'select', options: ['San Antonio','Dallas','Houston','Memphis','Austin','El Paso','Laredo','Other',''] },
       { key: 'currentCity', label: 'Current Home City / Location', type: 'text' },
+      { key: 'rtgDate', label: 'RTG Date', type: 'date' },
+      { key: 'returnDate', label: 'Return Home Date', type: 'date' },
       { key: 'followUpDate', label: 'Follow Up Date', type: 'date' },
       { key: 'preferredPartner', label: 'Preferred Partner', type: 'text' },
       { key: 'routeRestrictions', label: 'Route Restrictions', type: 'text', full: true },
       { key: 'notes', label: 'Notes / Availability & Constraints', type: 'textarea', full: true },
     ],
-    columns: ['name','homeBase','position','hiredCity','followUpDate','preferredPartner','routeRestrictions','notes'],
-    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', hiredCity:'Hired City', followUpDate:'Follow Up', preferredPartner:'Preferred Partner', routeRestrictions:'Route Restrictions', notes:'Notes' },
+    columns: ['name','homeBase','position','hiredCity','rtgDate','returnDate','followUpDate','preferredPartner','routeRestrictions','notes'],
+    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', hiredCity:'Hired City', rtgDate:'RTG Date', returnDate:'Return Home Date', followUpDate:'Follow Up', preferredPartner:'Preferred Partner', routeRestrictions:'Route Restrictions', notes:'Notes' },
     filterKey: 'position',
   },
   terminatedRemovals: {
@@ -952,6 +977,25 @@ function getFilterOptions(tab) {
   return vals;
 }
 
+function sortRecordsForTab(tab, records, sortCfg) {
+  if (!sortCfg) return records;
+  const sorted = [...records];
+  sorted.sort((a, b) => {
+    if (tab === 'driversSep' && (sortCfg.col === 'rtgDate' || sortCfg.col === 'returnDate')) {
+      const da = getDriverDateObj(a, sortCfg.col);
+      const db = getDriverDateObj(b, sortCfg.col);
+      if (!da && !db) return 0;
+      if (!da) return 1;
+      if (!db) return -1;
+      return sortCfg.dir === 'asc' ? (da - db) : (db - da);
+    }
+    const av = (a[sortCfg.col] || '').toString().toLowerCase();
+    const bv = (b[sortCfg.col] || '').toString().toLowerCase();
+    return sortCfg.dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+  return sorted;
+}
+
 function getAugmentedOptions(tab, key, baseOptions = []) {
   const extraMap = loadCustomSelectOptions();
   const custom = (extraMap[`${tab}:${key}`] || []).filter(Boolean);
@@ -1006,17 +1050,13 @@ function renderPage(tab) {
   // Sort
   const ss = sortState[tab];
   if (ss) {
-    filtered.sort((a,b) => {
-      const av = (a[ss.col]||'').toString().toLowerCase();
-      const bv = (b[ss.col]||'').toString().toLowerCase();
-      return ss.dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
-    });
+    filtered = sortRecordsForTab(tab, filtered, ss);
   }
 
   const filterOptions = getFilterOptions(tab);
   
   // Sub-tab for driversSep
-  const subTab = (tab === 'driversSep') ? (activeSubTabs['driversSep'] || 'all') : null;
+  const subTab = (tab === 'driversSep' || tab === 'ag4Sep') ? (activeSubTabs[tab] || 'all') : null;
   
   // Apply sub-tab filtering AFTER regular filter/search for driversSep
   if (tab === 'driversSep' && subTab !== 'all') {
@@ -1073,6 +1113,10 @@ function renderPage(tab) {
       return true;
     });
   }
+  if (tab === 'ag4Sep' && subTab === 'duplicates') {
+    const dupIds = new Set(findDuplicates(records).map(x => x.id));
+    filtered = filtered.filter(r => dupIds.has(r.id));
+  }
   if ((tab === 'otrHires' || tab === 'roadTestScheduling') && subTab === 'duplicates') {
     const dupIds = new Set(findDuplicates(records).map(x => x.id));
     filtered = filtered.filter(r => dupIds.has(r.id));
@@ -1101,6 +1145,20 @@ function renderPage(tab) {
       <div class="subtab-nav">
         <button class="subtab-btn ${curSub==='all'?'active':''}" onclick="setSubTab('otrHires','all')">📋 All <span class="subtab-badge">${records.length}</span></button>
         <button class="subtab-btn ${curSub==='duplicates'?'active dup':''}" onclick="setSubTab('otrHires','duplicates')">🔍 Dup Audit <span class="subtab-badge dup">${dupCount}</span></button>
+      </div>`;
+    } else if (tab === 'ag4Sep') {
+      const curSub = activeSubTabs[tab] || 'all';
+      const dupCount = findDuplicates(records).length;
+      const dispatched = records.filter(r => r.dispatched === 'YES').length;
+      statsHtml = `<div class="stats-bar">
+        <div class="stat-item"><div class="stat-num">${records.length}</div><div class="stat-label">Total</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--green)">${gtgYes}</div><div class="stat-label">GTG</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--red)">${gtgNo}</div><div class="stat-label">Not GTG</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--accent2)">${dispatched}</div><div class="stat-label">Dispatched</div></div>
+      </div>
+      <div class="subtab-nav">
+        <button class="subtab-btn ${curSub==='all'?'active':''}" onclick="setSubTab('ag4Sep','all')">📋 All <span class="subtab-badge">${records.length}</span></button>
+        <button class="subtab-btn ${curSub==='duplicates'?'active dup':''}" onclick="setSubTab('ag4Sep','duplicates')">🔍 Dup Audit <span class="subtab-badge dup">${dupCount}</span></button>
       </div>`;
     } else {
       const dispatched = records.filter(r => r.dispatched === 'YES').length;
@@ -1262,6 +1320,10 @@ function renderPage(tab) {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
       if (col === 'position' && (tab==='driversSep')) return `<td>${positionBadge(val)}</td>`;
+      if (tab === 'driversSep' && (col === 'rtgDate' || col === 'returnDate')) {
+        const disp = getDriverDateDisplay(r, col);
+        return `<td style="font-family:var(--mono);font-size:12px;color:${disp?'var(--text)':'var(--text2)'}">${disp || '—'}</td>`;
+      }
       if ((col === 'ajgDT' || col === 'ghDT' || col === 'ag4DT') && val) return `<td>${dtResult(val)}</td>`;
       if (col === 'notes') {
         // Enhanced notes cell for driversSep sub-tabs
@@ -1293,6 +1355,9 @@ function renderPage(tab) {
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'duplicates') {
+          return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
+        }
+        if (tab === 'ag4Sep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
         if ((tab === 'otrHires' || tab === 'roadTestScheduling') && subTab === 'duplicates') {
@@ -1403,8 +1468,10 @@ function rerenderTable(tab) {
     }
     return true;
   });
-  // Apply sub-tab filter for driversSep
-  const rSubTabFilter = (tab === 'driversSep') ? (activeSubTabs['driversSep'] || 'all') : null;
+  // Apply sub-tab filters
+  const rSubTabFilter = (tab === 'driversSep' || tab === 'ag4Sep' || tab === 'otrHires' || tab === 'roadTestScheduling')
+    ? (activeSubTabs[tab] || 'all')
+    : null;
   const subTab = rSubTabFilter; // used in row rendering below
   if (tab === 'driversSep' && rSubTabFilter !== 'all') {
     filtered = filtered.filter(r => {
@@ -1456,6 +1523,10 @@ function rerenderTable(tab) {
     const dupIds = new Set(findDuplicates(records).map(x => x.id));
     filtered = filtered.filter(r => dupIds.has(r.id));
   }
+  if (tab === 'ag4Sep' && rSubTabFilter === 'duplicates') {
+    const dupIds = new Set(findDuplicates(records).map(x => x.id));
+    filtered = filtered.filter(r => dupIds.has(r.id));
+  }
   if (tab === 'terminatedRemovals') {
     const tSub = activeSubTabs[tab] || 'all';
     if (tSub !== 'all') {
@@ -1466,11 +1537,7 @@ function rerenderTable(tab) {
   
   const ss = sortState[tab];
   if (ss) {
-    filtered.sort((a,b) => {
-      const av = (a[ss.col]||'').toString().toLowerCase();
-      const bv = (b[ss.col]||'').toString().toLowerCase();
-      return ss.dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
-    });
+    filtered = sortRecordsForTab(tab, filtered, ss);
   }
 
   // Update tbody
@@ -1486,6 +1553,10 @@ function rerenderTable(tab) {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
       if (col === 'position' && (tab==='driversSep')) return `<td>${positionBadge(val)}</td>`;
+      if (tab === 'driversSep' && (col === 'rtgDate' || col === 'returnDate')) {
+        const disp = getDriverDateDisplay(r, col);
+        return `<td style="font-family:var(--mono);font-size:12px;color:${disp?'var(--text)':'var(--text2)'}">${disp || '—'}</td>`;
+      }
       if ((col === 'ajgDT' || col === 'ghDT' || col === 'ag4DT') && val) return `<td>${dtResult(val)}</td>`;
       if (col === 'notes') {
         // Enhanced notes cell for driversSep sub-tabs
@@ -1517,6 +1588,9 @@ function rerenderTable(tab) {
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'duplicates') {
+          return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
+        }
+        if (tab === 'ag4Sep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
         if ((tab === 'otrHires' || tab === 'roadTestScheduling') && subTab === 'duplicates') {
@@ -1613,7 +1687,10 @@ function buildFormFields(tab, record) {
       });
       html += `</select>`;
     } else if (f.type === 'date') {
-      const dval = fmtDate(val);
+      let dval = fmtDate(val);
+      if (tab === 'driversSep' && !dval && (f.key === 'rtgDate' || f.key === 'returnDate') && record) {
+        dval = getDriverDateDisplay(record, f.key);
+      }
       html += `<input type="date" id="field_${f.key}" value="${escHtml(dval)}" />`;
     } else {
       html += `<input type="text" id="field_${f.key}" value="${escHtml(val)}" />`;
