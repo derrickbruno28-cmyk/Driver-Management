@@ -42,12 +42,12 @@
   .nav-item.active .nav-badge { background: rgba(245,158,11,0.2); color: var(--accent); }
 
   /* Header */
-  .page-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .page-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; position: sticky; top: 0; z-index: 20; }
   .page-title { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); }
   .search-box { flex: 1; min-width: 200px; position: relative; }
-  .search-box input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px 8px 36px; color: var(--text); font-family: var(--sans); font-size: 13px; outline: none; }
+  .search-box input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: var(--text); font-family: var(--sans); font-size: 13px; outline: none; }
   .search-box input:focus { border-color: var(--accent2); }
-  .search-box::before { content: "🔍"; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; }
+  .search-box::before { content: ""; }
   .filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
   .filter-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); font-size: 12px; cursor: pointer; transition: all 0.15s; font-family: var(--sans); }
   .filter-btn:hover, .filter-btn.active { background: rgba(245,158,11,0.15); border-color: var(--accent); color: var(--accent); }
@@ -55,7 +55,7 @@
   /* Table */
   .table-wrap { flex: 1; overflow: auto; padding: 16px 24px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { background: var(--surface); color: var(--text2); font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; }
+  th { background: var(--surface); color: var(--text2); font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; position: sticky; top: 0; z-index: 8; }
   th:hover { color: var(--text); }
   td { padding: 10px 12px; border-bottom: 1px solid rgba(30,45,66,0.6); vertical-align: top; }
   tr:hover td { background: rgba(255,255,255,0.02); }
@@ -240,13 +240,25 @@
         <span class="icon">📋</span> Driver Sep
         <span class="nav-badge" id="badge-driversSep">0</span>
       </div>
+      <div class="nav-item" data-tab="terminatedRemovals" onclick="switchTab('terminatedRemovals',this)">
+        <span class="icon">⛔</span> Terminated/Removals
+        <span class="nav-badge" id="badge-terminatedRemovals">0</span>
+      </div>
       <div class="nav-item" data-tab="otrHires" onclick="switchTab('otrHires',this)">
         <span class="icon">🚗</span> OTR New Hires
         <span class="nav-badge" id="badge-otrHires">0</span>
       </div>
+      <div class="nav-item" data-tab="roadTestScheduling" onclick="switchTab('roadTestScheduling',this)">
+        <span class="icon">🛣️</span> Road Test Scheduling
+        <span class="nav-badge" id="badge-roadTestScheduling">0</span>
+      </div>
       <div class="nav-item" data-tab="ag4Hires" onclick="switchTab('ag4Hires',this)">
         <span class="icon">🏭</span> AG4 New Hires
         <span class="nav-badge" id="badge-ag4Hires">0</span>
+      </div>
+      <div class="nav-item" data-tab="notMovingForward" onclick="switchTab('notMovingForward',this)">
+        <span class="icon">🚫</span> Not Moving Forward
+        <span class="nav-badge" id="badge-notMovingForward">0</span>
       </div>
       <div class="nav-item" data-tab="ag4Sep" onclick="switchTab('ag4Sep',this)">
         <span class="icon">📁</span> AG4 Driver Sep
@@ -278,9 +290,15 @@
     <div id="page-driversSep" class="page-content">
       <!-- content injected by JS -->
     </div>
+    <div id="page-terminatedRemovals" class="page-content" style="display:none">
+    </div>
     <div id="page-otrHires" class="page-content" style="display:none">
     </div>
+    <div id="page-roadTestScheduling" class="page-content" style="display:none">
+    </div>
     <div id="page-ag4Hires" class="page-content" style="display:none">
+    </div>
+    <div id="page-notMovingForward" class="page-content" style="display:none">
     </div>
     <div id="page-ag4Sep" class="page-content" style="display:none">
     </div>
@@ -300,6 +318,10 @@
     </div>
     <div class="modal-body" id="modalBody"></div>
     <div class="modal-footer">
+      <button class="btn btn-success" onclick="sendOtrToDriverSepPending()" id="sendToDriverSepBtn" style="display:none">Send to Driver Sep</button>
+      <button class="btn btn-secondary" onclick="sendToNotMovingForward()" id="sendToNmfBtn" style="display:none">Send to Not Moving Forward</button>
+      <button class="btn btn-success" onclick="sendRoadTestToOtr()" id="sendRoadTestToOtrBtn" style="display:none">Send to OTR New Hires</button>
+      <button class="btn btn-danger" onclick="moveToTerminatedFolder()" id="moveToTerminatedBtn" style="display:none">Move to Terminated/Removals</button>
       <button class="btn btn-danger" onclick="deleteRecord()" id="deleteBtn">Delete</button>
       <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
       <button class="btn btn-primary" onclick="saveRecord()">Save Changes</button>
@@ -334,6 +356,8 @@ const PRESENCE_STATUS_URL = '/api/presence';
 const PRESENCE_HEARTBEAT_URL = '/api/presence/heartbeat';
 let persistQueue = Promise.resolve();
 const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
+const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling'];
+const CUSTOM_SELECT_KEY = 'dms_custom_select_options';
 const presenceSessionId = (window.crypto && crypto.randomUUID)
   ? crypto.randomUUID()
   : ('sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10));
@@ -345,22 +369,49 @@ function hasRequiredTabs(data) {
   return REQUIRED_TABS.every(tab => Array.isArray(data[tab]));
 }
 
+function normalizeDatabaseShape(data) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return;
+  [...REQUIRED_TABS, ...EXTRA_TABS].forEach(tab => {
+    if (!Array.isArray(data[tab])) data[tab] = [];
+  });
+}
+
+function loadCustomSelectOptions() {
+  try {
+    const raw = localStorage.getItem(CUSTOM_SELECT_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveCustomSelectOptions(map) {
+  try {
+    localStorage.setItem(CUSTOM_SELECT_KEY, JSON.stringify(map));
+  } catch (_) {}
+}
+
 async function loadSharedData() {
   try {
     const res = await fetch(DATA_API_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error('load failed');
     const remoteData = await res.json();
     if (hasRequiredTabs(remoteData)) {
+      normalizeDatabaseShape(remoteData);
       DB = remoteData;
       return true;
     }
     // If backend is empty/malformed, auto-heal by seeding from embedded RAW_DATA.
     DB = JSON.parse(JSON.stringify(RAW_DATA));
+    normalizeDatabaseShape(DB);
     await queuePersistData();
     return true;
   } catch (err) {
     console.warn('Using embedded data fallback:', err);
     DB = JSON.parse(JSON.stringify(RAW_DATA));
+    normalizeDatabaseShape(DB);
   }
   return false;
 }
@@ -464,6 +515,27 @@ function parseNextDate(notes, label) {
     }
   }
   return bestDate;
+}
+
+function parseFollowUpDate(record) {
+  if (!record) return null;
+  if (record.followUpDate) return parseFlexDate(record.followUpDate);
+  const notes = record.notes || '';
+  return parseNextDate(notes, 'follow up date') || parseNextDate(notes, 'follow-up date');
+}
+
+function isOffDutyPosition(pos) {
+  const p = (pos || '').toLowerCase();
+  return p.includes('off duty') || p.includes('unresponsive');
+}
+
+function getTerminationCompletionStatus(rec) {
+  const checks = [
+    rec.tenstreetRemoved, rec.loadstopRemoved, rec.samsaraRemoved, rec.sambaSafetyRemoved,
+    rec.dialpadDnuMarked, rec.insuranceRemoved, rec.insuranceArchiveAdded, rec.drivewyzeDeactivated,
+    rec.efsDeactivated, rec.removalEmailSent
+  ];
+  return checks.every(v => (v || '').toUpperCase() === 'YES') ? 'removalsCompleted' : 'pendingRemovalTasks';
 }
 
 function parseFlexDate(str) {
@@ -601,13 +673,42 @@ const TABS = {
       { key: 'twic', label: 'TWIC Card', type: 'text' },
       { key: 'hiredCity', label: 'Hired Departure City', type: 'select', options: ['San Antonio','Dallas','Houston','Memphis','Austin','El Paso','Laredo','Other',''] },
       { key: 'currentCity', label: 'Current Home City / Location', type: 'text' },
+      { key: 'followUpDate', label: 'Follow Up Date', type: 'date' },
       { key: 'preferredPartner', label: 'Preferred Partner', type: 'text' },
       { key: 'routeRestrictions', label: 'Route Restrictions', type: 'text', full: true },
       { key: 'notes', label: 'Notes / Availability & Constraints', type: 'textarea', full: true },
     ],
-    columns: ['name','homeBase','position','hiredCity','routeRestrictions','notes'],
-    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', hiredCity:'Hired City', routeRestrictions:'Route Restrictions', notes:'Notes' },
+    columns: ['name','homeBase','position','hiredCity','followUpDate','routeRestrictions','notes'],
+    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', hiredCity:'Hired City', followUpDate:'Follow Up', routeRestrictions:'Route Restrictions', notes:'Notes' },
     filterKey: 'position',
+  },
+  terminatedRemovals: {
+    label: 'Terminated/Removals',
+    fields: [
+      { key: 'name', label: 'Driver Name', type: 'text', required: true },
+      { key: 'position', label: 'Last Position', type: 'text' },
+      { key: 'lastDateWorked', label: 'Last Date Worked', type: 'date', required: true },
+      { key: 'rehirable', label: 'Rehirable?', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'terminationType', label: 'Resigned or Fired', type: 'select', options: ['Resigned','Fired',''], required: true },
+      { key: 'terminationReason', label: 'Reason for Termination', type: 'textarea', full: true, required: true },
+      { key: 'removedByName', label: 'Removed By (Name)', type: 'text', required: true },
+      { key: 'removedByTitle', label: 'Removed By (Job Title)', type: 'text', required: true },
+      { key: 'removedByPhone', label: 'Removed By (Phone)', type: 'text', required: true },
+      { key: 'tenstreetRemoved', label: 'Tenstreet Removed', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'loadstopRemoved', label: 'Loadstop Removed', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'samsaraRemoved', label: 'Samsara Removed', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'sambaSafetyRemoved', label: 'Samba Safety Removed', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'dialpadDnuMarked', label: 'Dialpad DNU Marked', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'insuranceRemoved', label: 'Removed from Insurance', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'insuranceArchiveAdded', label: 'Added to Insurance Archive', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'drivewyzeDeactivated', label: 'Drivewyze Deactivated', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'efsDeactivated', label: 'EFS Deactivated', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'removalEmailSent', label: 'Removal Email Sent', type: 'select', options: ['YES','NO',''], required: true },
+      { key: 'notes', label: 'Additional Notes', type: 'textarea', full: true },
+    ],
+    columns: ['name','terminationType','rehirable','lastDateWorked','terminationReason','completionStatus'],
+    colLabels: { name:'Driver',terminationType:'Type',rehirable:'Rehirable',lastDateWorked:'Last Worked',terminationReason:'Reason',completionStatus:'Removal Status' },
+    filterKey: 'completionStatus',
   },
   otrHires: {
     label: 'OTR New Hires Status',
@@ -628,12 +729,11 @@ const TABS = {
       { key: 'onboarding', label: 'Onboarding Training', type: 'select', options: ['Completed','Assigned. Not yet started','Completed part 1',''] },
       { key: 'insurance', label: 'Added to Insurance', type: 'text' },
       { key: 'gtg', label: 'GTG?', type: 'select', options: ['YES','NO','ON HOLD',''] },
-      { key: 'dispatched', label: 'Dispatched', type: 'select', options: ['YES','NO','ON HOLD',''] },
       { key: 'rtgDate', label: 'RTG Date', type: 'text' },
       { key: 'notes', label: 'Notes', type: 'textarea', full: true },
     ],
-    columns: ['name','position','location','ajgDT','ghDT','i9','gtg','dispatched','rtgDate','notes'],
-    colLabels: { name:'Driver',position:'Position',location:'Location',ajgDT:'AJG DT',ghDT:'GH DT',i9:'I9',gtg:'GTG',dispatched:'Dispatched',rtgDate:'RTG Date',notes:'Notes' },
+    columns: ['name','position','location','ajgDT','ghDT','i9','gtg','rtgDate','notes'],
+    colLabels: { name:'Driver',position:'Position',location:'Location',ajgDT:'AJG DT',ghDT:'GH DT',i9:'I9',gtg:'GTG',rtgDate:'RTG Date',notes:'Notes' },
     filterKey: 'gtg',
   },
   ag4Hires: {
@@ -660,6 +760,21 @@ const TABS = {
     columns: ['name','position','ag4DT','dotMedical','gtg','dispatched','rtgDate','notes'],
     colLabels: { name:'Driver',position:'Position',ag4DT:'AG4 DT',dotMedical:'DOT Medical',gtg:'GTG',dispatched:'Dispatched',rtgDate:'RTG Date',notes:'Notes' },
     filterKey: 'gtg',
+  },
+  roadTestScheduling: {
+    label: 'Road Test Scheduling',
+    fields: [
+      { key: 'name', label: 'Driver Name', type: 'text', required: true },
+      { key: 'phone', label: 'Phone', type: 'text' },
+      { key: 'position', label: 'Position', type: 'text' },
+      { key: 'roadTestDate', label: 'Road Test Date', type: 'date', required: true },
+      { key: 'roadTestCity', label: 'Road Test City', type: 'text', required: true },
+      { key: 'roadTester', label: 'Road Tester', type: 'text', required: true },
+      { key: 'notes', label: 'Notes', type: 'textarea', full: true },
+    ],
+    columns: ['name','roadTestDate','roadTestCity','roadTester','position','notes'],
+    colLabels: { name:'Driver',roadTestDate:'Road Test Date',roadTestCity:'City',roadTester:'Road Tester',position:'Position',notes:'Notes' },
+    filterKey: null,
   },
   ag4Sep: {
     label: 'AG4 Driver Sep',
@@ -696,6 +811,34 @@ const TABS = {
     columns: ['name','dateAccepted','dateSentPhase2','position','recruiter','notes'],
     colLabels: { name:'Driver Name',dateAccepted:'Date Accepted',dateSentPhase2:'Phase 2 Date',position:'Position',recruiter:'Recruiter',notes:'Notes' },
     filterKey: 'recruiter',
+  },
+  notMovingForward: {
+    label: 'Not Moving Forward',
+    fields: [
+      { key: 'sourceFolder', label: 'Source Folder', type: 'text' },
+      { key: 'name', label: 'Driver Name', type: 'text', required: true },
+      { key: 'passed', label: 'Date Passed RT', type: 'date' },
+      { key: 'position', label: 'Position', type: 'text' },
+      { key: 'age', label: 'Age', type: 'text' },
+      { key: 'yoe', label: 'Years of Experience', type: 'text' },
+      { key: 'phone', label: 'Phone', type: 'text' },
+      { key: 'location', label: 'Location', type: 'text' },
+      { key: 'nhpw', label: 'NHPW', type: 'text' },
+      { key: 'i9', label: 'I9', type: 'text' },
+      { key: 'ajgDT', label: 'AJG DT', type: 'text' },
+      { key: 'ghDT', label: 'GH DT', type: 'text' },
+      { key: 'ag4DT', label: 'AG4 DT', type: 'text' },
+      { key: 'dotMedical', label: 'DOT Medical', type: 'text' },
+      { key: 'onboarding', label: 'Onboarding', type: 'text' },
+      { key: 'insurance', label: 'Insurance', type: 'text' },
+      { key: 'gtg', label: 'GTG', type: 'text' },
+      { key: 'rtgDate', label: 'RTG Date', type: 'text' },
+      { key: 'nmfReason', label: 'Reason Not Moving Forward', type: 'textarea', full: true, required: true },
+      { key: 'notes', label: 'Notes', type: 'textarea', full: true },
+    ],
+    columns: ['name','sourceFolder','position','phone','location','nmfReason'],
+    colLabels: { name:'Driver',sourceFolder:'Source',position:'Position',phone:'Phone',location:'Location',nmfReason:'Reason' },
+    filterKey: 'sourceFolder',
   },
   historical: {
     label: 'Historical Drivers',
@@ -772,6 +915,38 @@ function getFilterOptions(tab) {
   return vals;
 }
 
+function getAugmentedOptions(tab, key, baseOptions = []) {
+  const extraMap = loadCustomSelectOptions();
+  const custom = (extraMap[`${tab}:${key}`] || []).filter(Boolean);
+  const merged = [...new Set([...(baseOptions || []), ...custom])];
+  if (!merged.includes('')) merged.push('');
+  merged.push('__add_new_option__');
+  return merged;
+}
+
+function handleSelectOptionAdd(tab, key, selectEl) {
+  if (!selectEl || selectEl.value !== '__add_new_option__') return;
+  const next = (prompt('Add new dropdown option:') || '').trim();
+  if (!next) {
+    selectEl.value = '';
+    return;
+  }
+  const optionKey = `${tab}:${key}`;
+  const extraMap = loadCustomSelectOptions();
+  const arr = extraMap[optionKey] || [];
+  if (!arr.includes(next)) arr.push(next);
+  extraMap[optionKey] = arr;
+  saveCustomSelectOptions(extraMap);
+
+  const addOpt = selectEl.querySelector('option[value="__add_new_option__"]');
+  const opt = document.createElement('option');
+  opt.value = next;
+  opt.textContent = next;
+  if (addOpt) selectEl.insertBefore(opt, addOpt);
+  else selectEl.appendChild(opt);
+  selectEl.value = next;
+}
+
 function renderPage(tab) {
   const cfg = TABS[tab];
   const records = DB[tab];
@@ -816,9 +991,9 @@ function renderPage(tab) {
       const notes = (r.notes || '').toLowerCase();
       
       if (subTab === 'home48') {
-        // Look for "return date:" in notes and check if within 48h
-        return parseNextDate(r.notes, 'return date') !== null && 
-               isWithin48h(parseNextDate(r.notes, 'return date'));
+        const dReturn = parseNextDate(r.notes, 'return date');
+        const dFollow = parseFollowUpDate(r);
+        return (dReturn && isWithin48h(dReturn)) || (dFollow && isWithin48h(dFollow));
       }
       if (subTab === 'rtg48') {
         // Look for "rtg date:" in notes and check if within 48h
@@ -837,8 +1012,10 @@ function renderPage(tab) {
         return !hasRtg || !hasReturn;
       }
       if (subTab === 'offDuty') {
-        const pos = (r.position || '').toLowerCase();
-        return pos.includes('off duty') || pos.includes('unresponsive');
+        return isOffDutyPosition(r.position);
+      }
+      if (subTab === 'pendingAccept') {
+        return !!r._pendingAcceptance;
       }
       if (subTab === 'duplicates') {
         const dupIds = new Set(findDuplicates(records).map(x => x.id));
@@ -849,7 +1026,7 @@ function renderPage(tab) {
         const hc = (r.hiredCity || r.homeBase || '').toLowerCase();
         const cityL = city.toLowerCase();
         const pos = (r.position || '').toLowerCase();
-        const cityMatch = hc.includes(cityL) || (cityL === 'san' && hc.includes('satx'));
+        const cityMatch = hc.includes(cityL) || (cityL.includes('san antonio') && hc.includes('satx'));
         if (!cityMatch) return false;
         if (posType === 'team') return pos.includes('team') || pos.includes('weekly');
         if (posType === 'solo') return pos.includes('solo') || pos.includes('regional');
@@ -859,19 +1036,34 @@ function renderPage(tab) {
       return true;
     });
   }
+  if (tab === 'terminatedRemovals') {
+    const tSub = activeSubTabs[tab] || 'all';
+    if (tSub !== 'all') {
+      filtered = filtered.filter(r => getTerminationCompletionStatus(r) === tSub);
+    }
+    filtered.forEach(r => { r.completionStatus = getTerminationCompletionStatus(r); });
+  }
 
   // Stats
   let statsHtml = '';
   if (tab === 'otrHires' || tab === 'ag4Hires' || tab === 'ag4Sep') {
     const gtgYes = records.filter(r => r.gtg === 'YES').length;
     const gtgNo = records.filter(r => r.gtg === 'NO').length;
-    const dispatched = records.filter(r => r.dispatched === 'YES').length;
-    statsHtml = `<div class="stats-bar">
-      <div class="stat-item"><div class="stat-num">${records.length}</div><div class="stat-label">Total</div></div>
-      <div class="stat-item"><div class="stat-num" style="color:var(--green)">${gtgYes}</div><div class="stat-label">GTG</div></div>
-      <div class="stat-item"><div class="stat-num" style="color:var(--red)">${gtgNo}</div><div class="stat-label">Not GTG</div></div>
-      <div class="stat-item"><div class="stat-num" style="color:var(--accent2)">${dispatched}</div><div class="stat-label">Dispatched</div></div>
-    </div>`;
+    if (tab === 'otrHires') {
+      statsHtml = `<div class="stats-bar">
+        <div class="stat-item"><div class="stat-num">${records.length}</div><div class="stat-label">Total</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--green)">${gtgYes}</div><div class="stat-label">GTG</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--red)">${gtgNo}</div><div class="stat-label">Not GTG</div></div>
+      </div>`;
+    } else {
+      const dispatched = records.filter(r => r.dispatched === 'YES').length;
+      statsHtml = `<div class="stats-bar">
+        <div class="stat-item"><div class="stat-num">${records.length}</div><div class="stat-label">Total</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--green)">${gtgYes}</div><div class="stat-label">GTG</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--red)">${gtgNo}</div><div class="stat-label">Not GTG</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--accent2)">${dispatched}</div><div class="stat-label">Dispatched</div></div>
+      </div>`;
+    }
   } else if (tab === 'leads') {
     const phase2 = records.filter(r => r.dateSentPhase2).length;
     const noPhase2 = records.filter(r => !r.dateSentPhase2).length;
@@ -882,13 +1074,18 @@ function renderPage(tab) {
     </div>`;
   } else if (tab === 'driversSep') {
     const today2 = new Date(); today2.setHours(0,0,0,0);
-    const home48Count = records.filter(r => { const d = parseNextDate(r.notes, 'return date'); return d && isWithin48h(d); }).length;
+    const home48Count = records.filter(r => {
+      const dRet = parseNextDate(r.notes, 'return date');
+      const dFollow = parseFollowUpDate(r);
+      return (dRet && isWithin48h(dRet)) || (dFollow && isWithin48h(dFollow));
+    }).length;
     const rtg48Count = records.filter(r => { const d = parseNextDate(r.notes, 'rtg date'); return d && isWithin48h(d); }).length;
     const conflictCount = records.filter(r => /do not (pair|partner)|never (pair|partner|run with)|don.t (pair|partner)|(not (paired|run) with)/i.test(r.notes || '')).length;
     const restrictCount = records.filter(r => hasRouteRestriction(r)).length;
     const missingDatesCount = records.filter(r => !parseNextDate(r.notes, 'rtg date') || !parseNextDate(r.notes, 'return date')).length;
-    const offDutyCount = records.filter(r => { const p = (r.position||'').toLowerCase(); return p.includes('off duty') || p.includes('unresponsive'); }).length;
+    const offDutyCount = records.filter(r => isOffDutyPosition(r.position)).length;
     const dupCount = findDuplicates(records).length;
+    const pendingAcceptCount = records.filter(r => r._pendingAcceptance).length;
     const curSub = activeSubTabs['driversSep'] || 'all';
 
     // Lane counters: count by hiredCity + position category
@@ -967,9 +1164,21 @@ function renderPage(tab) {
       <button class="subtab-btn ${curSub==='offDuty'?'active offduty':''}" onclick="setSubTab('driversSep','offDuty')">
         🔴 Off Duty / Unresponsive <span class="subtab-badge offduty">${offDutyCount}</span>
       </button>
+      <button class="subtab-btn ${curSub==='pendingAccept'?'active rtg':''}" onclick="setSubTab('driversSep','pendingAccept')">
+        ✅ Pending Acceptance <span class="subtab-badge rtg">${pendingAcceptCount}</span>
+      </button>
       <button class="subtab-btn ${curSub==='duplicates'?'active dup':''}" onclick="setSubTab('driversSep','duplicates')">
         🔍 Dup Audit <span class="subtab-badge dup">${dupCount}</span>
       </button>
+    </div>`;
+  } else if (tab === 'terminatedRemovals') {
+    const pending = records.filter(r => getTerminationCompletionStatus(r) === 'pendingRemovalTasks').length;
+    const completed = records.filter(r => getTerminationCompletionStatus(r) === 'removalsCompleted').length;
+    const tSub = activeSubTabs[tab] || 'all';
+    statsHtml = `<div class="subtab-nav">
+      <button class="subtab-btn ${tSub==='all'?'active':''}" onclick="setSubTab('terminatedRemovals','all')">📁 All <span class="subtab-badge">${records.length}</span></button>
+      <button class="subtab-btn ${tSub==='pendingRemovalTasks'?'active conflict':''}" onclick="setSubTab('terminatedRemovals','pendingRemovalTasks')">🟠 Pending Removal Completion Tasks <span class="subtab-badge conflict">${pending}</span></button>
+      <button class="subtab-btn ${tSub==='removalsCompleted'?'active home':''}" onclick="setSubTab('terminatedRemovals','removalsCompleted')">✅ Removals Completed <span class="subtab-badge home">${completed}</span></button>
     </div>`;
   } else {
     statsHtml = `<div class="stats-bar"><div class="stat-item"><div class="stat-num">${records.length}</div><div class="stat-label">Total Records</div></div></div>`;
@@ -1003,8 +1212,10 @@ function renderPage(tab) {
       if (col === 'notes') {
         // Enhanced notes cell for driversSep sub-tabs
         if (tab === 'driversSep' && subTab === 'home48') {
-          const d = parseNextDate(r.notes, 'return date');
-          return `<td><div style="margin-bottom:6px">🏠 Return: ${d ? formatDateRelative(d) : '<span style="color:var(--text2)">—</span>'}</div>${truncateNotes(val)}</td>`;
+          const dRet = parseNextDate(r.notes, 'return date');
+          const dFollow = parseFollowUpDate(r);
+          const line = dFollow ? `📅 Follow Up: ${formatDateRelative(dFollow)}` : (dRet ? `🏠 Return: ${formatDateRelative(dRet)}` : '<span style="color:var(--text2)">—</span>');
+          return `<td><div style="margin-bottom:6px">${line}</div>${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'rtg48') {
           const d = parseNextDate(r.notes, 'rtg date');
@@ -1033,6 +1244,10 @@ function renderPage(tab) {
         return `<td>${truncateNotes(val)}</td>`;
       }
       if (col === 'name') return `<td class="name-cell">${escHtml(val.replace(/\n/g,' '))}</td>`;
+      if (col === 'completionStatus') {
+        const done = getTerminationCompletionStatus(r) === 'removalsCompleted';
+        return `<td>${done ? '<span class="badge badge-green">Completed</span>' : '<span class="badge badge-yellow">Pending Tasks</span>'}</td>`;
+      }
       if (col.includes('date') || col.includes('Date') || col === 'passed') return `<td style="font-family:var(--mono);font-size:12px;color:var(--text2)">${fmtDate(val)}</td>`;
       if (col === 'homeBase' || col === 'location') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
       if (col === 'hiredCity') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
@@ -1049,10 +1264,14 @@ function renderPage(tab) {
       }
       return `<td style="color:var(--text2);font-size:13px">${escHtml(val)}</td>`;
     }).join('');
+    const rowActions = [`<button class="action-btn" onclick="editRecord('${tab}','${r.id}')">✏️ Edit</button>`];
+    if (tab === 'driversSep' && r._pendingAcceptance) {
+      rowActions.push(`<button class="action-btn" onclick="acceptDriverSep('${r.id}')">✅ Accept</button>`);
+    }
     rows += `<tr>
       ${cells}
       <td><div class="row-actions">
-        <button class="action-btn" onclick="editRecord('${tab}','${r.id}')">✏️ Edit</button>
+        ${rowActions.join('')}
       </div></td>
     </tr>`;
   });
@@ -1068,7 +1287,10 @@ function renderPage(tab) {
                oninput="setSearch('${tab}', this.value)" />
       </div>
       <button class="btn-add" onclick="addRecord('${tab}')">
-        + Add Driver
+        + Add Record
+      </button>
+      <button class="btn-secondary" onclick="exportCurrentView('${tab}')">
+        Export View CSV
       </button>
     </div>
     ${statsHtml}
@@ -1094,6 +1316,7 @@ function switchTab(tab, el) {
   document.getElementById(`page-${tab}`).style.overflow = 'hidden';
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   el.classList.add('active');
+  sendPresenceHeartbeat();
   renderPage(tab);
 }
 
@@ -1126,7 +1349,9 @@ function rerenderTable(tab) {
   if (tab === 'driversSep' && rSubTabFilter !== 'all') {
     filtered = filtered.filter(r => {
       if (rSubTabFilter === 'home48') {
-        return parseNextDate(r.notes, 'return date') !== null && isWithin48h(parseNextDate(r.notes, 'return date'));
+        const dReturn = parseNextDate(r.notes, 'return date');
+        const dFollow = parseFollowUpDate(r);
+        return (dReturn && isWithin48h(dReturn)) || (dFollow && isWithin48h(dFollow));
       }
       if (rSubTabFilter === 'rtg48') {
         return parseNextDate(r.notes, 'rtg date') !== null && isWithin48h(parseNextDate(r.notes, 'rtg date'));
@@ -1143,8 +1368,10 @@ function rerenderTable(tab) {
         return !hasRtg || !hasReturn;
       }
       if (rSubTabFilter === 'offDuty') {
-        const pos = (r.position || '').toLowerCase();
-        return pos.includes('off duty') || pos.includes('unresponsive');
+        return isOffDutyPosition(r.position);
+      }
+      if (rSubTabFilter === 'pendingAccept') {
+        return !!r._pendingAcceptance;
       }
       if (rSubTabFilter === 'duplicates') {
         const dupIds = new Set(findDuplicates(records).map(x => x.id));
@@ -1155,7 +1382,7 @@ function rerenderTable(tab) {
         const hc = (r.hiredCity || r.homeBase || '').toLowerCase();
         const cityL = city.toLowerCase();
         const pos = (r.position || '').toLowerCase();
-        const cityMatch = hc.includes(cityL) || (cityL === 'san' && hc.includes('satx'));
+        const cityMatch = hc.includes(cityL) || (cityL.includes('san antonio') && hc.includes('satx'));
         if (!cityMatch) return false;
         if (posType === 'team') return pos.includes('team') || pos.includes('weekly');
         if (posType === 'solo') return pos.includes('solo') || pos.includes('regional');
@@ -1164,6 +1391,13 @@ function rerenderTable(tab) {
       }
       return true;
     });
+  }
+  if (tab === 'terminatedRemovals') {
+    const tSub = activeSubTabs[tab] || 'all';
+    if (tSub !== 'all') {
+      filtered = filtered.filter(r => getTerminationCompletionStatus(r) === tSub);
+    }
+    filtered.forEach(r => { r.completionStatus = getTerminationCompletionStatus(r); });
   }
   
   const ss = sortState[tab];
@@ -1192,8 +1426,10 @@ function rerenderTable(tab) {
       if (col === 'notes') {
         // Enhanced notes cell for driversSep sub-tabs
         if (tab === 'driversSep' && subTab === 'home48') {
-          const d = parseNextDate(r.notes, 'return date');
-          return `<td><div style="margin-bottom:6px">🏠 Return: ${d ? formatDateRelative(d) : '<span style="color:var(--text2)">—</span>'}</div>${truncateNotes(val)}</td>`;
+          const dRet = parseNextDate(r.notes, 'return date');
+          const dFollow = parseFollowUpDate(r);
+          const line = dFollow ? `📅 Follow Up: ${formatDateRelative(dFollow)}` : (dRet ? `🏠 Return: ${formatDateRelative(dRet)}` : '<span style="color:var(--text2)">—</span>');
+          return `<td><div style="margin-bottom:6px">${line}</div>${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'rtg48') {
           const d = parseNextDate(r.notes, 'rtg date');
@@ -1222,6 +1458,10 @@ function rerenderTable(tab) {
         return `<td>${truncateNotes(val)}</td>`;
       }
       if (col === 'name') return `<td class="name-cell">${escHtml(val.replace(/\n/g,' '))}</td>`;
+      if (col === 'completionStatus') {
+        const done = getTerminationCompletionStatus(r) === 'removalsCompleted';
+        return `<td>${done ? '<span class="badge badge-green">Completed</span>' : '<span class="badge badge-yellow">Pending Tasks</span>'}</td>`;
+      }
       if (col.includes('date') || col.includes('Date') || col === 'passed') return `<td style="font-family:var(--mono);font-size:12px;color:var(--text2)">${fmtDate(val)}</td>`;
       if (col === 'homeBase' || col === 'location') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
       if (col === 'hiredCity') return `<td><span class="badge badge-blue">${escHtml(val)}</span></td>`;
@@ -1238,10 +1478,14 @@ function rerenderTable(tab) {
       }
       return `<td style="color:var(--text2);font-size:13px">${escHtml(val)}</td>`;
     }).join('');
+    const rowActions = [`<button class="action-btn" onclick="editRecord('${tab}','${r.id}')">✏️ Edit</button>`];
+    if (tab === 'driversSep' && r._pendingAcceptance) {
+      rowActions.push(`<button class="action-btn" onclick="acceptDriverSep('${r.id}')">✅ Accept</button>`);
+    }
     rows += `<tr>
       ${cells}
       <td><div class="row-actions">
-        <button class="action-btn" onclick="editRecord('${tab}','${r.id}')">✏️ Edit</button>
+        ${rowActions.join('')}
       </div></td>
     </tr>`;
   });
@@ -1291,9 +1535,11 @@ function buildFormFields(tab, record) {
     if (f.type === 'textarea') {
       html += `<textarea id="field_${f.key}" rows="5">${escHtml(val)}</textarea>`;
     } else if (f.type === 'select' && f.options) {
-      html += `<select id="field_${f.key}">`;
-      f.options.forEach(opt => {
-        html += `<option value="${escHtml(opt)}" ${opt===val?'selected':''}>${opt||'(empty)'}</option>`;
+      const opts = getAugmentedOptions(tab, f.key, f.options);
+      html += `<select id="field_${f.key}" data-tab="${tab}" data-key="${f.key}" onchange="handleSelectOptionAdd('${tab}','${f.key}',this)">`;
+      opts.forEach(opt => {
+        const label = (opt === '__add_new_option__') ? '+ Add option...' : (opt || '(empty)');
+        html += `<option value="${escHtml(opt)}" ${opt===val?'selected':''}>${escHtml(label)}</option>`;
       });
       html += `</select>`;
     } else if (f.type === 'date') {
@@ -1306,6 +1552,17 @@ function buildFormFields(tab, record) {
   });
   html += '</div>';
   return html;
+}
+
+function toggleModalActionButtons() {
+  const set = (id, show) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = show ? '' : 'none';
+  };
+  set('sendToDriverSepBtn', editingTab === 'otrHires' && !!editingId);
+  set('sendToNmfBtn', (editingTab === 'otrHires' || editingTab === 'ag4Hires') && !!editingId);
+  set('sendRoadTestToOtrBtn', editingTab === 'roadTestScheduling' && !!editingId);
+  set('moveToTerminatedBtn', editingTab === 'driversSep' && !!editingId);
 }
 
 function editRecord(tab, id) {
@@ -1329,6 +1586,7 @@ function editRecord(tab, id) {
     </div>`;
   }
   document.getElementById('modalBody').innerHTML = auditHtml + terminateHtml + buildFormFields(tab, record) + buildTerminateSection(record);
+  toggleModalActionButtons();
   document.getElementById('editModal').classList.add('open');
 }
 
@@ -1339,6 +1597,7 @@ function addRecord(tab) {
   document.getElementById('deleteBtn').style.display = 'none';
   const extraHtml = (tab === 'driversSep') ? buildTerminateSection(null) : '';
   document.getElementById('modalBody').innerHTML = buildFormFields(tab, null) + extraHtml;
+  toggleModalActionButtons();
   document.getElementById('editModal').classList.add('open');
 }
 
@@ -1363,6 +1622,7 @@ function closeModal() {
   document.getElementById('editModal').classList.remove('open');
   editingId = null;
   editingTab = null;
+  toggleModalActionButtons();
 }
 
 async function saveRecord() {
@@ -1374,8 +1634,9 @@ async function saveRecord() {
   cfg.fields.forEach(f => {
     const el = document.getElementById('field_' + f.key);
     if (!el) return;
-    newData[f.key] = el.value;
-    if (f.required && !el.value.trim()) {
+    const rawVal = (el.value === '__add_new_option__') ? '' : el.value;
+    newData[f.key] = rawVal;
+    if (f.required && !rawVal.trim()) {
       el.style.borderColor = 'var(--red)';
       valid = false;
     } else {
@@ -1383,17 +1644,30 @@ async function saveRecord() {
     }
   });
 
+  if (tab === 'driversSep' && isOffDutyPosition(newData.position) && !newData.followUpDate) {
+    showToast('Follow Up Date is required for Off Duty / Unresponsive drivers', 'var(--red)');
+    return;
+  }
+
   if (!valid) { showToast('Please fill required fields', 'var(--red)'); return; }
 
   // Handle termination
   const terminateEl = document.getElementById('field__terminate');
   const terminateReasonEl = document.getElementById('field__terminateReason');
   if (terminateEl && terminateEl.checked) {
+    const reason = terminateReasonEl ? terminateReasonEl.value.trim() : '';
+    if (!reason) {
+      showToast('Termination reason is required', 'var(--red)');
+      return;
+    }
     newData._terminated = true;
-    newData._terminationReason = terminateReasonEl ? terminateReasonEl.value : '';
+    newData._terminationReason = reason;
     newData._terminationDate = new Date().toLocaleDateString();
     newData._terminationBy = getCurrentUser();
     newData.position = 'TERMINATED';
+  }
+  if (tab === 'terminatedRemovals') {
+    newData.completionStatus = getTerminationCompletionStatus(newData);
   }
 
   const now = new Date();
@@ -1445,12 +1719,170 @@ async function deleteRecord() {
   showToast('Record deleted', 'var(--yellow)');
 }
 
+function makeDriverSepCandidateFromHire(r) {
+  return {
+    id: 'sep_' + Date.now(),
+    name: r.name || '',
+    homeBase: r.location || '',
+    position: r.position || '',
+    notes: (r.notes || '') + '\n\n[Sent from OTR New Hires pending acceptance]',
+    twic: '',
+    hiredCity: '',
+    currentCity: '',
+    followUpDate: '',
+    preferredPartner: '',
+    routeRestrictions: '',
+    _pendingAcceptance: true,
+    _sourceTab: editingTab,
+    _sourceId: r.id,
+    _lastEditBy: getCurrentUser(),
+    _lastEditTime: new Date().toLocaleString(),
+  };
+}
+
+async function sendOtrToDriverSepPending() {
+  if (editingTab !== 'otrHires' || !editingId) return;
+  const rec = DB.otrHires.find(x => x.id === editingId);
+  if (!rec) return;
+  DB.driversSep.push(makeDriverSepCandidateFromHire(rec));
+  try { await queuePersistData(); } catch (_) {}
+  updateBadges();
+  closeModal();
+  renderPage('otrHires');
+  showToast('Sent to Driver Sep pending acceptance');
+}
+
+async function sendToNotMovingForward() {
+  if (!editingId || !editingTab) return;
+  const srcTab = editingTab;
+  if (!['otrHires','ag4Hires'].includes(srcTab)) return;
+  const src = DB[srcTab].find(x => x.id === editingId);
+  if (!src) return;
+  DB.notMovingForward.push({
+    id: 'nmf_' + Date.now(),
+    sourceFolder: srcTab,
+    name: src.name || '',
+    passed: src.passed || '',
+    position: src.position || '',
+    age: src.age || '',
+    yoe: src.yoe || '',
+    phone: src.phone || '',
+    location: src.location || '',
+    nhpw: src.nhpw || '',
+    i9: src.i9 || '',
+    ajgDT: src.ajgDT || '',
+    ghDT: src.ghDT || '',
+    ag4DT: src.ag4DT || '',
+    dotMedical: src.dotMedical || '',
+    onboarding: src.onboarding || '',
+    insurance: src.insurance || '',
+    gtg: src.gtg || '',
+    rtgDate: src.rtgDate || '',
+    notes: src.notes || '',
+    nmfReason: '',
+    _lastEditBy: getCurrentUser(),
+    _lastEditTime: new Date().toLocaleString(),
+  });
+  try { await queuePersistData(); } catch (_) {}
+  updateBadges();
+  closeModal();
+  renderPage(srcTab);
+  showToast('Sent to Not Moving Forward');
+}
+
+async function sendRoadTestToOtr() {
+  if (editingTab !== 'roadTestScheduling' || !editingId) return;
+  const src = DB.roadTestScheduling.find(x => x.id === editingId);
+  if (!src) return;
+  DB.otrHires.push({
+    id: 'otr_' + Date.now(),
+    passed: '',
+    name: src.name || '',
+    age: '',
+    position: src.position || '',
+    yoe: '',
+    phone: src.phone || '',
+    location: src.roadTestCity || '',
+    ajgCH: '',
+    ghCH: '',
+    i9: '',
+    nhpw: '',
+    ajgDT: '',
+    ghDT: '',
+    onboarding: '',
+    insurance: '',
+    gtg: 'NO',
+    rtgDate: '',
+    notes: `Road test scheduled: ${src.roadTestDate || ''} at ${src.roadTestCity || ''} with ${src.roadTester || ''}\n${src.notes || ''}`.trim(),
+    _lastEditBy: getCurrentUser(),
+    _lastEditTime: new Date().toLocaleString(),
+  });
+  try { await queuePersistData(); } catch (_) {}
+  updateBadges();
+  closeModal();
+  renderPage('roadTestScheduling');
+  showToast('Transferred to OTR New Hires');
+}
+
+async function moveToTerminatedFolder() {
+  if (editingTab !== 'driversSep' || !editingId) return;
+  const srcIdx = DB.driversSep.findIndex(x => x.id === editingId);
+  if (srcIdx < 0) return;
+  const src = DB.driversSep[srcIdx];
+  DB.terminatedRemovals.push({
+    id: 'term_' + Date.now(),
+    name: src.name || '',
+    position: src.position || '',
+    lastDateWorked: '',
+    rehirable: '',
+    terminationType: '',
+    terminationReason: src._terminationReason || '',
+    removedByName: '',
+    removedByTitle: '',
+    removedByPhone: '',
+    tenstreetRemoved: 'NO',
+    loadstopRemoved: 'NO',
+    samsaraRemoved: 'NO',
+    sambaSafetyRemoved: 'NO',
+    dialpadDnuMarked: 'NO',
+    insuranceRemoved: 'NO',
+    insuranceArchiveAdded: 'NO',
+    drivewyzeDeactivated: 'NO',
+    efsDeactivated: 'NO',
+    removalEmailSent: 'NO',
+    completionStatus: 'pendingRemovalTasks',
+    notes: src.notes || '',
+    _lastEditBy: getCurrentUser(),
+    _lastEditTime: new Date().toLocaleString(),
+  });
+  DB.driversSep.splice(srcIdx, 1);
+  try { await queuePersistData(); } catch (_) {}
+  updateBadges();
+  updateFleetBar();
+  closeModal();
+  renderPage('driversSep');
+  showToast('Moved to Terminated/Removals');
+}
+
+async function acceptDriverSep(id) {
+  const rec = DB.driversSep.find(x => x.id === id);
+  if (!rec) return;
+  rec._pendingAcceptance = false;
+  rec._acceptedBy = getCurrentUser();
+  rec._acceptedAt = new Date().toLocaleString();
+  rec._lastEditBy = rec._acceptedBy;
+  rec._lastEditTime = rec._acceptedAt;
+  try { await queuePersistData(); } catch (_) {}
+  renderPage('driversSep');
+  showToast('Driver accepted into Driver Sep');
+}
+
 function updateFleetBar() {
   const recs = DB['driversSep'] || [];
   const teams = recs.filter(r => { const p = (r.position||'').toLowerCase(); return (p.includes('team') || p.includes('weekly')) && !p.includes('terminated'); }).length;
   const solo = recs.filter(r => { const p = (r.position||'').toLowerCase(); return (p.includes('solo') || p.includes('regional')) && !p.includes('terminated'); }).length;
   const local = recs.filter(r => { const p = (r.position||'').toLowerCase(); return p.includes('local') && !p.includes('terminated'); }).length;
-  const offduty = recs.filter(r => { const p = (r.position||'').toLowerCase(); return p.includes('off duty') || p.includes('unresponsive'); }).length;
+  const offduty = recs.filter(r => isOffDutyPosition(r.position)).length;
   const terminated = recs.filter(r => r._terminated || (r.position||'').toLowerCase() === 'terminated').length;
   const total = recs.filter(r => !r._terminated && (r.position||'').toLowerCase() !== 'terminated').length;
   const setP = (id, val) => { const el = document.getElementById(id); if(el) el.querySelector('strong').textContent = val; };
@@ -1484,6 +1916,33 @@ function exportCSV(tab) {
   const a = document.createElement('a');
   a.href = url; a.download = `${tab}_export.csv`;
   a.click(); URL.revokeObjectURL(url);
+}
+
+function exportCurrentView(tab) {
+  const pageEl = document.getElementById(`page-${tab}`);
+  if (!pageEl) return;
+  const headCells = [...pageEl.querySelectorAll('thead th')];
+  const bodyRows = [...pageEl.querySelectorAll('tbody tr')];
+  if (!headCells.length || !bodyRows.length) {
+    showToast('No visible rows to export', 'var(--yellow)');
+    return;
+  }
+  const headers = headCells.slice(0, -1).map(th => th.textContent.replace(/[▲▼]/g, '').trim());
+  const csvRows = [headers.map(h => `"${h.replace(/"/g, '""')}"`).join(',')];
+  bodyRows.forEach(tr => {
+    const tds = [...tr.querySelectorAll('td')];
+    if (tds.length < 2) return;
+    if (tds.length === 1) return;
+    const vals = tds.slice(0, -1).map(td => (td.textContent || '').replace(/\s+/g, ' ').trim());
+    csvRows.push(vals.map(v => `"${v.replace(/"/g, '""')}"`).join(','));
+  });
+  const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${tab}_view_export.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 async function initApp() {
