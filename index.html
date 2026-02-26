@@ -189,6 +189,12 @@
   .fleet-pill.terminated { border-color:rgba(239,68,68,0.2); opacity:.7; }
   .fleet-pill.total { border-color:rgba(245,158,11,0.4); }
   .fleet-pill.total strong { color:var(--accent); }
+  .fleet-pill.live { border-color: rgba(16,185,129,0.45); color: var(--green); }
+  .fleet-pill.live strong { color: var(--green); }
+  .fleet-pill.syncing { border-color: rgba(245,158,11,0.45); color: var(--yellow); }
+  .fleet-pill.syncing strong { color: var(--yellow); }
+  .fleet-pill.offline { border-color: rgba(239,68,68,0.45); color: var(--red); }
+  .fleet-pill.offline strong { color: var(--red); }
 
   /* Audit banner */
   .audit-banner { display:flex; align-items:center; gap:8px; padding:8px 12px; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:6px; font-size:12px; color:var(--accent2); margin-bottom:10px; }
@@ -263,10 +269,12 @@
       <div id="fleet-teams" class="fleet-pill">👥 OTR Teams: <strong>—</strong></div>
       <div id="fleet-solo" class="fleet-pill">🧍 Solo: <strong>—</strong></div>
       <div id="fleet-local" class="fleet-pill">📍 Local: <strong>—</strong></div>
-      <div id="fleet-offduty" class="fleet-pill offduty">🔴 Off Duty: <strong>—</strong></div>
-      <div id="fleet-terminated" class="fleet-pill terminated">⛔ Terminated: <strong>—</strong></div>
-      <div id="fleet-total" class="fleet-pill total">Total: <strong>—</strong></div>
-    </div>
+    <div id="fleet-offduty" class="fleet-pill offduty">🔴 Off Duty: <strong>—</strong></div>
+    <div id="fleet-terminated" class="fleet-pill terminated">⛔ Terminated: <strong>—</strong></div>
+    <div id="fleet-total" class="fleet-pill total">Total: <strong>—</strong></div>
+    <div id="live-users" class="fleet-pill">👤 Online: <strong>—</strong></div>
+    <div id="live-sync" class="fleet-pill syncing">🟡 Sync: <strong>Connecting</strong></div>
+  </div>
     <div id="page-driversSep" class="page-content">
       <!-- content injected by JS -->
     </div>
@@ -322,8 +330,15 @@ function getCurrentUser() {
 }
 
 const DATA_API_URL = '/api/data';
+const PRESENCE_STATUS_URL = '/api/presence';
+const PRESENCE_HEARTBEAT_URL = '/api/presence/heartbeat';
 let persistQueue = Promise.resolve();
 const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
+const presenceSessionId = (window.crypto && crypto.randomUUID)
+  ? crypto.randomUUID()
+  : ('sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10));
+let presenceHeartbeatTimer = null;
+let presenceStatusTimer = null;
 
 function hasRequiredTabs(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
@@ -352,14 +367,77 @@ async function loadSharedData() {
 
 function queuePersistData() {
   persistQueue = persistQueue.then(async () => {
+    setLiveSyncState('syncing', 'Saving');
     const res = await fetch(DATA_API_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(DB),
     });
     if (!res.ok) throw new Error('save failed');
+    setLiveSyncState('live', 'Live');
   });
   return persistQueue;
+}
+
+function setLiveSyncState(state, text) {
+  const el = document.getElementById('live-sync');
+  if (!el) return;
+  el.classList.remove('syncing', 'live', 'offline');
+  if (state) el.classList.add(state);
+  const strong = el.querySelector('strong');
+  if (strong) strong.textContent = text;
+}
+
+function fmtTime(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+}
+
+async function sendPresenceHeartbeat() {
+  try {
+    await fetch(PRESENCE_HEARTBEAT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId: presenceSessionId, tab: currentTab }),
+    });
+  } catch (_) {
+    // Ignore network/transient failures; status poll updates UI.
+  }
+}
+
+async function refreshPresenceStatus() {
+  try {
+    const res = await fetch(PRESENCE_STATUS_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('presence failed');
+    const data = await res.json();
+    const users = Number(data.onlineUsers || 0);
+    const userEl = document.getElementById('live-users');
+    if (userEl) {
+      const strong = userEl.querySelector('strong');
+      if (strong) strong.textContent = users;
+    }
+    const t = fmtTime(data.lastSavedAt);
+    setLiveSyncState('live', t ? `Live ${t}` : 'Live');
+  } catch (_) {
+    setLiveSyncState('offline', 'Offline');
+  }
+}
+
+function startPresenceTracking() {
+  if (presenceHeartbeatTimer) clearInterval(presenceHeartbeatTimer);
+  if (presenceStatusTimer) clearInterval(presenceStatusTimer);
+  sendPresenceHeartbeat();
+  refreshPresenceStatus();
+  presenceHeartbeatTimer = setInterval(sendPresenceHeartbeat, 15000);
+  presenceStatusTimer = setInterval(refreshPresenceStatus, 10000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      sendPresenceHeartbeat();
+      refreshPresenceStatus();
+    }
+  });
 }
 
 // Date parsing helpers for notes field
@@ -1412,6 +1490,7 @@ async function initApp() {
   await loadSharedData();
   updateBadges();
   updateFleetBar();
+  startPresenceTracking();
   const firstPage = document.getElementById('page-driversSep');
   firstPage.style.display = 'flex';
   firstPage.style.flexDirection = 'column';

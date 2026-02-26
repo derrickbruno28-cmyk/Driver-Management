@@ -7,6 +7,7 @@ const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'db.json');
 const SEED_FILE = path.join(ROOT, 'seed-db.json');
+const PRESENCE_TTL_MS = 45 * 1000;
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -21,6 +22,7 @@ const MIME_TYPES = {
 };
 
 let writeQueue = Promise.resolve();
+const activeSessions = new Map();
 
 async function ensureDataFile() {
   await fs.mkdir(DATA_DIR, { recursive: true });
@@ -90,20 +92,74 @@ function readRequestBody(req) {
   });
 }
 
+function prunePresence(now = Date.now()) {
+  for (const [sessionId, session] of activeSessions.entries()) {
+    if (!session || session.expiresAt <= now) {
+      activeSessions.delete(sessionId);
+    }
+  }
+}
+
+function touchPresence(sessionId, tab = '') {
+  const now = Date.now();
+  if (!sessionId) return;
+  activeSessions.set(sessionId, { tab, updatedAt: now, expiresAt: now + PRESENCE_TTL_MS });
+  prunePresence(now);
+}
+
+async function getLastSavedAt() {
+  try {
+    const stat = await fs.stat(DATA_FILE);
+    return stat.mtime.toISOString();
+  } catch {
+    return null;
+  }
+}
+
 const server = http.createServer(async (req, res) => {
   try {
-    if (req.method === 'GET' && req.url === '/api/health') {
+    const requestUrl = new URL(req.url || '/', 'http://localhost');
+    const pathname = requestUrl.pathname;
+
+    if (req.method === 'GET' && pathname === '/api/health') {
       sendJson(res, 200, { ok: true, service: 'driver-management', now: new Date().toISOString() });
       return;
     }
 
-    if (req.method === 'GET' && req.url === '/api/data') {
+    if (req.method === 'GET' && pathname === '/api/data') {
       const data = await readData();
       sendJson(res, 200, data);
       return;
     }
 
-    if (req.method === 'PUT' && req.url === '/api/data') {
+    if (req.method === 'GET' && pathname === '/api/presence') {
+      prunePresence();
+      const lastSavedAt = await getLastSavedAt();
+      sendJson(res, 200, { onlineUsers: activeSessions.size, lastSavedAt, now: new Date().toISOString() });
+      return;
+    }
+
+    if (req.method === 'POST' && pathname === '/api/presence/heartbeat') {
+      const rawBody = await readRequestBody(req);
+      let incoming;
+      try {
+        incoming = JSON.parse(rawBody || '{}');
+      } catch {
+        sendJson(res, 400, { error: 'Invalid JSON payload' });
+        return;
+      }
+      const sessionId = typeof incoming.sessionId === 'string' ? incoming.sessionId.trim() : '';
+      const tab = typeof incoming.tab === 'string' ? incoming.tab.trim() : '';
+      if (!sessionId) {
+        sendJson(res, 400, { error: 'sessionId is required' });
+        return;
+      }
+      touchPresence(sessionId, tab);
+      sendJson(res, 200, { ok: true, onlineUsers: activeSessions.size, now: new Date().toISOString() });
+      return;
+    }
+
+    if (req.method === 'PUT' && pathname === '/api/data') {
       const rawBody = await readRequestBody(req);
       let incoming;
       try {
@@ -128,7 +184,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    const filePath = getSafePath(req.url || '/');
+    const filePath = getSafePath(pathname);
     if (!filePath.startsWith(ROOT)) {
       res.writeHead(403);
       res.end('Forbidden');
