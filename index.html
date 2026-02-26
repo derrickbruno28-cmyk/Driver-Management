@@ -699,8 +699,8 @@ const TABS = {
       { key: 'routeRestrictions', label: 'Route Restrictions', type: 'text', full: true },
       { key: 'notes', label: 'Notes / Availability & Constraints', type: 'textarea', full: true },
     ],
-    columns: ['name','homeBase','position','hiredCity','followUpDate','routeRestrictions','notes'],
-    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', hiredCity:'Hired City', followUpDate:'Follow Up', routeRestrictions:'Route Restrictions', notes:'Notes' },
+    columns: ['name','homeBase','position','hiredCity','followUpDate','preferredPartner','routeRestrictions','notes'],
+    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', hiredCity:'Hired City', followUpDate:'Follow Up', preferredPartner:'Preferred Partner', routeRestrictions:'Route Restrictions', notes:'Notes' },
     filterKey: 'position',
   },
   terminatedRemovals: {
@@ -1057,6 +1057,10 @@ function renderPage(tab) {
       return true;
     });
   }
+  if ((tab === 'otrHires' || tab === 'roadTestScheduling') && subTab === 'duplicates') {
+    const dupIds = new Set(findDuplicates(records).map(x => x.id));
+    filtered = filtered.filter(r => dupIds.has(r.id));
+  }
   if (tab === 'terminatedRemovals') {
     const tSub = activeSubTabs[tab] || 'all';
     if (tSub !== 'all') {
@@ -1071,10 +1075,16 @@ function renderPage(tab) {
     const gtgYes = records.filter(r => r.gtg === 'YES').length;
     const gtgNo = records.filter(r => r.gtg === 'NO').length;
     if (tab === 'otrHires') {
+      const curSub = activeSubTabs[tab] || 'all';
+      const dupCount = findDuplicates(records).length;
       statsHtml = `<div class="stats-bar">
         <div class="stat-item"><div class="stat-num">${records.length}</div><div class="stat-label">Total</div></div>
         <div class="stat-item"><div class="stat-num" style="color:var(--green)">${gtgYes}</div><div class="stat-label">GTG</div></div>
         <div class="stat-item"><div class="stat-num" style="color:var(--red)">${gtgNo}</div><div class="stat-label">Not GTG</div></div>
+      </div>
+      <div class="subtab-nav">
+        <button class="subtab-btn ${curSub==='all'?'active':''}" onclick="setSubTab('otrHires','all')">📋 All <span class="subtab-badge">${records.length}</span></button>
+        <button class="subtab-btn ${curSub==='duplicates'?'active dup':''}" onclick="setSubTab('otrHires','duplicates')">🔍 Dup Audit <span class="subtab-badge dup">${dupCount}</span></button>
       </div>`;
     } else {
       const dispatched = records.filter(r => r.dispatched === 'YES').length;
@@ -1201,6 +1211,13 @@ function renderPage(tab) {
       <button class="subtab-btn ${tSub==='pendingRemovalTasks'?'active conflict':''}" onclick="setSubTab('terminatedRemovals','pendingRemovalTasks')">🟠 Pending Removal Completion Tasks <span class="subtab-badge conflict">${pending}</span></button>
       <button class="subtab-btn ${tSub==='removalsCompleted'?'active home':''}" onclick="setSubTab('terminatedRemovals','removalsCompleted')">✅ Removals Completed <span class="subtab-badge home">${completed}</span></button>
     </div>`;
+  } else if (tab === 'roadTestScheduling') {
+    const curSub = activeSubTabs[tab] || 'all';
+    const dupCount = findDuplicates(records).length;
+    statsHtml = `<div class="subtab-nav">
+      <button class="subtab-btn ${curSub==='all'?'active':''}" onclick="setSubTab('roadTestScheduling','all')">📋 All <span class="subtab-badge">${records.length}</span></button>
+      <button class="subtab-btn ${curSub==='duplicates'?'active dup':''}" onclick="setSubTab('roadTestScheduling','duplicates')">🔍 Dup Audit <span class="subtab-badge dup">${dupCount}</span></button>
+    </div>`;
   } else {
     statsHtml = `<div class="stats-bar"><div class="stat-item"><div class="stat-num">${records.length}</div><div class="stat-label">Total Records</div></div></div>`;
   }
@@ -1260,6 +1277,9 @@ function renderPage(tab) {
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'duplicates') {
+          return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
+        }
+        if ((tab === 'otrHires' || tab === 'roadTestScheduling') && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
         return `<td>${truncateNotes(val)}</td>`;
@@ -1413,6 +1433,10 @@ function rerenderTable(tab) {
       return true;
     });
   }
+  if ((tab === 'otrHires' || tab === 'roadTestScheduling') && rSubTabFilter === 'duplicates') {
+    const dupIds = new Set(findDuplicates(records).map(x => x.id));
+    filtered = filtered.filter(r => dupIds.has(r.id));
+  }
   if (tab === 'terminatedRemovals') {
     const tSub = activeSubTabs[tab] || 'all';
     if (tSub !== 'all') {
@@ -1474,6 +1498,9 @@ function rerenderTable(tab) {
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'duplicates') {
+          return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
+        }
+        if ((tab === 'otrHires' || tab === 'roadTestScheduling') && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
         return `<td>${truncateNotes(val)}</td>`;
@@ -1763,14 +1790,16 @@ function makeDriverSepCandidateFromHire(r) {
 
 async function sendOtrToDriverSepPending() {
   if (editingTab !== 'otrHires' || !editingId) return;
-  const rec = DB.otrHires.find(x => x.id === editingId);
+  const srcIdx = DB.otrHires.findIndex(x => x.id === editingId);
+  const rec = srcIdx >= 0 ? DB.otrHires[srcIdx] : null;
   if (!rec) return;
   DB.driversSep.push(makeDriverSepCandidateFromHire(rec));
+  DB.otrHires.splice(srcIdx, 1);
   try { await queuePersistData(); } catch (_) {}
   updateBadges();
   closeModal();
   renderPage('otrHires');
-  showToast('Sent to Driver Sep pending acceptance');
+  showToast('Sent to Driver Sep pending acceptance and removed from OTR New Hires');
 }
 
 async function sendToNotMovingForward() {
@@ -1813,7 +1842,8 @@ async function sendToNotMovingForward() {
 
 async function sendRoadTestToOtr() {
   if (editingTab !== 'roadTestScheduling' || !editingId) return;
-  const src = DB.roadTestScheduling.find(x => x.id === editingId);
+  const srcIdx = DB.roadTestScheduling.findIndex(x => x.id === editingId);
+  const src = srcIdx >= 0 ? DB.roadTestScheduling[srcIdx] : null;
   if (!src) return;
   DB.otrHires.push({
     id: 'otr_' + Date.now(),
@@ -1838,11 +1868,12 @@ async function sendRoadTestToOtr() {
     _lastEditBy: getCurrentUser(),
     _lastEditTime: new Date().toLocaleString(),
   });
+  DB.roadTestScheduling.splice(srcIdx, 1);
   try { await queuePersistData(); } catch (_) {}
   updateBadges();
   closeModal();
   renderPage('roadTestScheduling');
-  showToast('Transferred to OTR New Hires');
+  showToast('Transferred to OTR New Hires and removed from Road Test Scheduling');
 }
 
 async function moveToTerminatedFolder() {
