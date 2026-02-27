@@ -6,6 +6,7 @@ const PORT = Number(process.env.PORT || 3000);
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'db.json');
+const BACKUP_DIR = path.join(DATA_DIR, 'backups');
 const SEED_FILE = path.join(ROOT, 'seed-db.json');
 const PRESENCE_TTL_MS = 45 * 1000;
 
@@ -26,6 +27,7 @@ const activeSessions = new Map();
 
 async function ensureDataFile() {
   await fs.mkdir(DATA_DIR, { recursive: true });
+  await fs.mkdir(BACKUP_DIR, { recursive: true });
   try {
     await fs.access(DATA_FILE);
     const raw = await fs.readFile(DATA_FILE, 'utf8');
@@ -57,8 +59,18 @@ async function readData() {
 function writeData(nextData) {
   writeQueue = writeQueue.then(async () => {
     await fs.mkdir(DATA_DIR, { recursive: true });
+    await fs.mkdir(BACKUP_DIR, { recursive: true });
     const tmpFile = `${DATA_FILE}.tmp`;
     const payload = JSON.stringify(nextData, null, 2);
+    // Best-effort backup of current dataset before overwrite.
+    try {
+      const current = await fs.readFile(DATA_FILE, 'utf8');
+      const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+      await fs.writeFile(path.join(BACKUP_DIR, `db-${stamp}.json`), current, 'utf8');
+      await fs.writeFile(path.join(BACKUP_DIR, 'latest.json'), current, 'utf8');
+    } catch (_) {
+      // No existing file to backup yet.
+    }
     try {
       await fs.writeFile(tmpFile, payload, 'utf8');
       await fs.rename(tmpFile, DATA_FILE);
@@ -123,6 +135,15 @@ async function getLastSavedAt() {
   }
 }
 
+async function readLatestBackup() {
+  const raw = await fs.readFile(path.join(BACKUP_DIR, 'latest.json'), 'utf8');
+  const parsed = JSON.parse(raw || '{}');
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new Error('Invalid backup format');
+  }
+  return parsed;
+}
+
 const server = http.createServer(async (req, res) => {
   try {
     const requestUrl = new URL(req.url || '/', 'http://localhost');
@@ -136,6 +157,16 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && pathname === '/api/data') {
       const data = await readData();
       sendJson(res, 200, data);
+      return;
+    }
+
+    if (req.method === 'GET' && pathname === '/api/data/backup-latest') {
+      try {
+        const data = await readLatestBackup();
+        sendJson(res, 200, data);
+      } catch (err) {
+        sendJson(res, 404, { error: 'No backup found', detail: err && err.message ? err.message : 'unknown' });
+      }
       return;
     }
 

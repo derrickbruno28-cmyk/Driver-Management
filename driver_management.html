@@ -404,16 +404,14 @@ async function loadSharedData() {
     const res = await fetch(DATA_API_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error('load failed');
     const remoteData = await res.json();
-    if (hasRequiredTabs(remoteData)) {
+    if (remoteData && typeof remoteData === 'object' && !Array.isArray(remoteData)) {
+      // Never auto-overwrite server data with RAW seed on load.
+      // If shape is partial, normalize missing tabs in-memory only.
       normalizeDatabaseShape(remoteData);
       DB = remoteData;
-      return true;
+      return hasRequiredTabs(remoteData);
     }
-    // If backend is empty/malformed, auto-heal by seeding from embedded RAW_DATA.
-    DB = JSON.parse(JSON.stringify(RAW_DATA));
-    normalizeDatabaseShape(DB);
-    await queuePersistData();
-    return true;
+    throw new Error('invalid remote payload');
   } catch (err) {
     console.warn('Using embedded data fallback:', err);
     DB = JSON.parse(JSON.stringify(RAW_DATA));
