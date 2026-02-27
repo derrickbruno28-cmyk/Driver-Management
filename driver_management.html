@@ -554,7 +554,7 @@ function getDriverDateObj(record, key) {
     if (explicit) return explicit;
   }
   if (key === 'rtgDate') return parseNextDate(record.notes || '', 'rtg date');
-  if (key === 'returnDate') return parseNextDate(record.notes || '', 'return date');
+  if (key === 'returnDate') return parseNextDate(record.notes || '', 'return date') || parseNextDate(record.notes || '', 'home date');
   return null;
 }
 
@@ -565,9 +565,22 @@ function toYmd(dateObj) {
   return `${y}-${m}-${d}`;
 }
 
-function getDriverDateDisplay(record, key) {
+function formatDriverDateLabel(dateObj) {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const day = days[dateObj.getDay()];
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const d = String(dateObj.getDate()).padStart(2, '0');
+  return `${day} - ${m}/${d}`;
+}
+
+function getDriverDateInputValue(record, key) {
   const d = getDriverDateObj(record, key);
   return d ? toYmd(d) : '';
+}
+
+function getDriverDateDisplay(record, key) {
+  const d = getDriverDateObj(record, key);
+  return d ? formatDriverDateLabel(d) : '';
 }
 
 function isOffDutyPosition(pos) {
@@ -1068,14 +1081,13 @@ function renderPage(tab) {
       const notes = (r.notes || '').toLowerCase();
       
       if (subTab === 'home48') {
-        const dReturn = parseNextDate(r.notes, 'return date');
+        const dReturn = getDriverDateObj(r, 'returnDate');
         const dFollow = parseFollowUpDate(r);
         return (dReturn && isWithin48h(dReturn)) || (dFollow && isWithin48h(dFollow));
       }
       if (subTab === 'rtg48') {
-        // Look for "rtg date:" in notes and check if within 48h
-        return parseNextDate(r.notes, 'rtg date') !== null && 
-               isWithin48h(parseNextDate(r.notes, 'rtg date'));
+        const dRtg = getDriverDateObj(r, 'rtgDate');
+        return dRtg !== null && isWithin48h(dRtg);
       }
       if (subTab === 'conflicts') {
         return /do not (pair|partner)|never (pair|partner|run with)|don.t (pair|partner)|(not (paired|run) with)/i.test(r.notes);
@@ -1084,8 +1096,8 @@ function renderPage(tab) {
         return hasRouteRestriction(r);
       }
       if (subTab === 'missingDates') {
-        const hasRtg = !!parseNextDate(r.notes, 'rtg date');
-        const hasReturn = !!parseNextDate(r.notes, 'return date');
+        const hasRtg = !!getDriverDateObj(r, 'rtgDate');
+        const hasReturn = !!getDriverDateObj(r, 'returnDate');
         return !hasRtg || !hasReturn;
       }
       if (subTab === 'offDuty') {
@@ -1180,14 +1192,14 @@ function renderPage(tab) {
   } else if (tab === 'driversSep') {
     const today2 = new Date(); today2.setHours(0,0,0,0);
     const home48Count = records.filter(r => {
-      const dRet = parseNextDate(r.notes, 'return date');
+      const dRet = getDriverDateObj(r, 'returnDate');
       const dFollow = parseFollowUpDate(r);
       return (dRet && isWithin48h(dRet)) || (dFollow && isWithin48h(dFollow));
     }).length;
-    const rtg48Count = records.filter(r => { const d = parseNextDate(r.notes, 'rtg date'); return d && isWithin48h(d); }).length;
+    const rtg48Count = records.filter(r => { const d = getDriverDateObj(r, 'rtgDate'); return d && isWithin48h(d); }).length;
     const conflictCount = records.filter(r => /do not (pair|partner)|never (pair|partner|run with)|don.t (pair|partner)|(not (paired|run) with)/i.test(r.notes || '')).length;
     const restrictCount = records.filter(r => hasRouteRestriction(r)).length;
-    const missingDatesCount = records.filter(r => !parseNextDate(r.notes, 'rtg date') || !parseNextDate(r.notes, 'return date')).length;
+    const missingDatesCount = records.filter(r => !getDriverDateObj(r, 'rtgDate') || !getDriverDateObj(r, 'returnDate')).length;
     const offDutyCount = records.filter(r => isOffDutyPosition(r.position)).length;
     const dupCount = findDuplicates(records).length;
     const pendingAcceptCount = records.filter(r => r._pendingAcceptance).length;
@@ -1328,13 +1340,13 @@ function renderPage(tab) {
       if (col === 'notes') {
         // Enhanced notes cell for driversSep sub-tabs
         if (tab === 'driversSep' && subTab === 'home48') {
-          const dRet = parseNextDate(r.notes, 'return date');
+          const dRet = getDriverDateObj(r, 'returnDate');
           const dFollow = parseFollowUpDate(r);
           const line = dFollow ? `📅 Follow Up: ${formatDateRelative(dFollow)}` : (dRet ? `🏠 Return: ${formatDateRelative(dRet)}` : '<span style="color:var(--text2)">—</span>');
           return `<td><div style="margin-bottom:6px">${line}</div>${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'rtg48') {
-          const d = parseNextDate(r.notes, 'rtg date');
+          const d = getDriverDateObj(r, 'rtgDate');
           return `<td><div style="margin-bottom:6px">🚦 RTG: ${d ? formatDateRelative(d) : '<span style="color:var(--text2)">—</span>'}</div>${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'conflicts') {
@@ -1348,8 +1360,8 @@ function renderPage(tab) {
           return `<td>${chipsHtml}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'missingDates') {
-          const hasRtg = !!parseNextDate(r.notes, 'rtg date');
-          const hasReturn = !!parseNextDate(r.notes, 'return date');
+          const hasRtg = !!getDriverDateObj(r, 'rtgDate');
+          const hasReturn = !!getDriverDateObj(r, 'returnDate');
           const badges = (!hasRtg ? '<span class="missing-badge">❌ RTG date missing</span>' : '') +
                          (!hasReturn ? '<span class="missing-badge">❌ Return date missing</span>' : '');
           return `<td>${badges}${truncateNotes(val)}</td>`;
@@ -1476,12 +1488,13 @@ function rerenderTable(tab) {
   if (tab === 'driversSep' && rSubTabFilter !== 'all') {
     filtered = filtered.filter(r => {
       if (rSubTabFilter === 'home48') {
-        const dReturn = parseNextDate(r.notes, 'return date');
+        const dReturn = getDriverDateObj(r, 'returnDate');
         const dFollow = parseFollowUpDate(r);
         return (dReturn && isWithin48h(dReturn)) || (dFollow && isWithin48h(dFollow));
       }
       if (rSubTabFilter === 'rtg48') {
-        return parseNextDate(r.notes, 'rtg date') !== null && isWithin48h(parseNextDate(r.notes, 'rtg date'));
+        const dRtg = getDriverDateObj(r, 'rtgDate');
+        return dRtg !== null && isWithin48h(dRtg);
       }
       if (rSubTabFilter === 'conflicts') {
         return /do not (pair|partner)|never (pair|partner|run with)|don.t (pair|partner)|(not (paired|run) with)/i.test(r.notes || '');
@@ -1490,8 +1503,8 @@ function rerenderTable(tab) {
         return hasRouteRestriction(r);
       }
       if (rSubTabFilter === 'missingDates') {
-        const hasRtg = !!parseNextDate(r.notes, 'rtg date');
-        const hasReturn = !!parseNextDate(r.notes, 'return date');
+        const hasRtg = !!getDriverDateObj(r, 'rtgDate');
+        const hasReturn = !!getDriverDateObj(r, 'returnDate');
         return !hasRtg || !hasReturn;
       }
       if (rSubTabFilter === 'offDuty') {
@@ -1561,13 +1574,13 @@ function rerenderTable(tab) {
       if (col === 'notes') {
         // Enhanced notes cell for driversSep sub-tabs
         if (tab === 'driversSep' && subTab === 'home48') {
-          const dRet = parseNextDate(r.notes, 'return date');
+          const dRet = getDriverDateObj(r, 'returnDate');
           const dFollow = parseFollowUpDate(r);
           const line = dFollow ? `📅 Follow Up: ${formatDateRelative(dFollow)}` : (dRet ? `🏠 Return: ${formatDateRelative(dRet)}` : '<span style="color:var(--text2)">—</span>');
           return `<td><div style="margin-bottom:6px">${line}</div>${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'rtg48') {
-          const d = parseNextDate(r.notes, 'rtg date');
+          const d = getDriverDateObj(r, 'rtgDate');
           return `<td><div style="margin-bottom:6px">🚦 RTG: ${d ? formatDateRelative(d) : '<span style="color:var(--text2)">—</span>'}</div>${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'conflicts') {
@@ -1581,8 +1594,8 @@ function rerenderTable(tab) {
           return `<td>${chipsHtml}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'missingDates') {
-          const hasRtg = !!parseNextDate(r.notes, 'rtg date');
-          const hasReturn = !!parseNextDate(r.notes, 'return date');
+          const hasRtg = !!getDriverDateObj(r, 'rtgDate');
+          const hasReturn = !!getDriverDateObj(r, 'returnDate');
           const badges = (!hasRtg ? '<span class="missing-badge">❌ RTG date missing</span>' : '') +
                          (!hasReturn ? '<span class="missing-badge">❌ Return date missing</span>' : '');
           return `<td>${badges}${truncateNotes(val)}</td>`;
@@ -1689,7 +1702,7 @@ function buildFormFields(tab, record) {
     } else if (f.type === 'date') {
       let dval = fmtDate(val);
       if (tab === 'driversSep' && !dval && (f.key === 'rtgDate' || f.key === 'returnDate') && record) {
-        dval = getDriverDateDisplay(record, f.key);
+        dval = getDriverDateInputValue(record, f.key);
       }
       html += `<input type="date" id="field_${f.key}" value="${escHtml(dval)}" />`;
     } else {
