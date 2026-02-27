@@ -2,6 +2,13 @@ const http = require('http');
 const fs = require('fs/promises');
 const path = require('path');
 
+let Pool = null;
+try {
+  ({ Pool } = require('pg'));
+} catch (_) {
+  // pg is optional at runtime unless DATABASE_URL is configured.
+}
+
 const PORT = Number(process.env.PORT || 3000);
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
@@ -9,6 +16,12 @@ const DATA_FILE = path.join(DATA_DIR, 'db.json');
 const BACKUP_DIR = path.join(DATA_DIR, 'backups');
 const SEED_FILE = path.join(ROOT, 'seed-db.json');
 const PRESENCE_TTL_MS = 45 * 1000;
+const USE_POSTGRES = !!process.env.DATABASE_URL;
+const PG_SSL_DISABLED = String(process.env.PGSSL_DISABLE || '').toLowerCase() === 'true';
+const STATE_KEY = 'main';
+
+const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
+const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling'];
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -23,59 +36,144 @@ const MIME_TYPES = {
 };
 
 let writeQueue = Promise.resolve();
+let pool = null;
 const activeSessions = new Map();
+
+function hasRequiredTabs(data) {
+  return !!data && typeof data === 'object' && !Array.isArray(data) && REQUIRED_TABS.every((tab) => Array.isArray(data[tab]));
+}
+
+function normalizeDatabaseShape(data) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return {};
+  [...REQUIRED_TABS, ...EXTRA_TABS].forEach((tab) => {
+    if (!Array.isArray(data[tab])) data[tab] = [];
+  });
+  return data;
+}
+
+async function readJsonFileSafe(filePath) {
+  try {
+    const raw = await fs.readFile(filePath, 'utf8');
+    const parsed = JSON.parse(raw || '{}');
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+async function loadInitialStateFromFiles() {
+  const fromDb = await readJsonFileSafe(DATA_FILE);
+  if (hasRequiredTabs(fromDb)) return normalizeDatabaseShape(fromDb);
+
+  const fromSeed = await readJsonFileSafe(SEED_FILE);
+  if (fromSeed) return normalizeDatabaseShape(fromSeed);
+
+  return normalizeDatabaseShape({});
+}
 
 async function ensureDataFile() {
   await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.mkdir(BACKUP_DIR, { recursive: true });
-  try {
-    await fs.access(DATA_FILE);
-    const raw = await fs.readFile(DATA_FILE, 'utf8');
-    const parsed = JSON.parse(raw || '{}');
-    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && Object.keys(parsed).length > 0) {
-      return;
-    }
-  } catch {
-    // Continue to seed write below.
+  const existing = await readJsonFileSafe(DATA_FILE);
+  if (hasRequiredTabs(existing)) return;
+  const initial = await loadInitialStateFromFiles();
+  await fs.writeFile(DATA_FILE, JSON.stringify(initial, null, 2), 'utf8');
+}
+
+function getPool() {
+  if (!pool) {
+    if (!Pool) throw new Error('pg package is not installed');
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: PG_SSL_DISABLED ? false : { rejectUnauthorized: false },
+    });
   }
-  try {
-    const seedRaw = await fs.readFile(SEED_FILE, 'utf8');
-    const seedParsed = JSON.parse(seedRaw || '{}');
-    await fs.writeFile(DATA_FILE, JSON.stringify(seedParsed, null, 2), 'utf8');
-  } catch {
-    await fs.writeFile(DATA_FILE, JSON.stringify({}, null, 2), 'utf8');
-  }
+  return pool;
+}
+
+async function ensurePostgres() {
+  const pg = getPool();
+  await pg.query(`
+    CREATE TABLE IF NOT EXISTS app_state (
+      id TEXT PRIMARY KEY,
+      payload JSONB NOT NULL,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+  await pg.query(`
+    CREATE TABLE IF NOT EXISTS app_snapshots (
+      id BIGSERIAL PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      source TEXT NOT NULL DEFAULT 'put',
+      payload JSONB NOT NULL
+    );
+  `);
+
+  const existing = await pg.query('SELECT id FROM app_state WHERE id = $1', [STATE_KEY]);
+  if (existing.rowCount > 0) return;
+
+  const initial = await loadInitialStateFromFiles();
+  await pg.query('INSERT INTO app_state (id, payload) VALUES ($1, $2::jsonb)', [STATE_KEY, JSON.stringify(initial)]);
+  await pg.query('INSERT INTO app_snapshots (source, payload) VALUES ($1, $2::jsonb)', ['bootstrap', JSON.stringify(initial)]);
 }
 
 async function readData() {
+  if (USE_POSTGRES) {
+    const pg = getPool();
+    const rs = await pg.query('SELECT payload FROM app_state WHERE id = $1', [STATE_KEY]);
+    if (!rs.rowCount) throw new Error('No app_state row found');
+    const payload = normalizeDatabaseShape(rs.rows[0].payload || {});
+    return payload;
+  }
+
   const raw = await fs.readFile(DATA_FILE, 'utf8');
   const parsed = JSON.parse(raw || '{}');
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error('Invalid data format');
   }
-  return parsed;
+  return normalizeDatabaseShape(parsed);
 }
 
 function writeData(nextData) {
   writeQueue = writeQueue.then(async () => {
+    const normalized = normalizeDatabaseShape(nextData);
+
+    if (USE_POSTGRES) {
+      const pg = getPool();
+      await pg.query('BEGIN');
+      try {
+        await pg.query('INSERT INTO app_snapshots (source, payload) VALUES ($1, $2::jsonb)', ['put', JSON.stringify(normalized)]);
+        await pg.query(
+          'INSERT INTO app_state (id, payload, updated_at) VALUES ($1, $2::jsonb, NOW()) ON CONFLICT (id) DO UPDATE SET payload = EXCLUDED.payload, updated_at = NOW()',
+          [STATE_KEY, JSON.stringify(normalized)]
+        );
+        await pg.query('COMMIT');
+      } catch (err) {
+        await pg.query('ROLLBACK');
+        throw err;
+      }
+      return;
+    }
+
     await fs.mkdir(DATA_DIR, { recursive: true });
     await fs.mkdir(BACKUP_DIR, { recursive: true });
     const tmpFile = `${DATA_FILE}.tmp`;
-    const payload = JSON.stringify(nextData, null, 2);
-    // Best-effort backup of current dataset before overwrite.
+    const payload = JSON.stringify(normalized, null, 2);
+
     try {
       const current = await fs.readFile(DATA_FILE, 'utf8');
       const stamp = new Date().toISOString().replace(/[:.]/g, '-');
       await fs.writeFile(path.join(BACKUP_DIR, `db-${stamp}.json`), current, 'utf8');
       await fs.writeFile(path.join(BACKUP_DIR, 'latest.json'), current, 'utf8');
     } catch (_) {
-      // No existing file to backup yet.
+      // No previous file to backup.
     }
+
     try {
       await fs.writeFile(tmpFile, payload, 'utf8');
       await fs.rename(tmpFile, DATA_FILE);
     } catch (err) {
-      // Fallback for environments where atomic rename may fail unexpectedly.
       await fs.writeFile(DATA_FILE, payload, 'utf8');
       console.warn('Atomic rename failed, fallback write used:', err && err.message ? err.message : err);
     }
@@ -83,8 +181,8 @@ function writeData(nextData) {
   return writeQueue;
 }
 
-function sendJson(res, statusCode, body) {
-  res.writeHead(statusCode, { 'Content-Type': MIME_TYPES['.json'] });
+function sendJson(res, statusCode, body, extraHeaders = {}) {
+  res.writeHead(statusCode, { 'Content-Type': MIME_TYPES['.json'], ...extraHeaders });
   res.end(JSON.stringify(body));
 }
 
@@ -127,6 +225,11 @@ function touchPresence(sessionId, tab = '') {
 }
 
 async function getLastSavedAt() {
+  if (USE_POSTGRES) {
+    const pg = getPool();
+    const rs = await pg.query('SELECT updated_at FROM app_state WHERE id = $1', [STATE_KEY]);
+    return rs.rowCount ? new Date(rs.rows[0].updated_at).toISOString() : null;
+  }
   try {
     const stat = await fs.stat(DATA_FILE);
     return stat.mtime.toISOString();
@@ -135,13 +238,34 @@ async function getLastSavedAt() {
   }
 }
 
+async function getDataVersion() {
+  if (USE_POSTGRES) {
+    const pg = getPool();
+    const rs = await pg.query('SELECT updated_at FROM app_state WHERE id = $1', [STATE_KEY]);
+    return rs.rowCount ? String(new Date(rs.rows[0].updated_at).toISOString()) : '0';
+  }
+  try {
+    const stat = await fs.stat(DATA_FILE);
+    return String(Math.floor(stat.mtimeMs));
+  } catch {
+    return '0';
+  }
+}
+
 async function readLatestBackup() {
+  if (USE_POSTGRES) {
+    const pg = getPool();
+    const rs = await pg.query('SELECT payload FROM app_snapshots ORDER BY id DESC LIMIT 1');
+    if (!rs.rowCount) throw new Error('No backup found');
+    return normalizeDatabaseShape(rs.rows[0].payload || {});
+  }
+
   const raw = await fs.readFile(path.join(BACKUP_DIR, 'latest.json'), 'utf8');
   const parsed = JSON.parse(raw || '{}');
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error('Invalid backup format');
   }
-  return parsed;
+  return normalizeDatabaseShape(parsed);
 }
 
 const server = http.createServer(async (req, res) => {
@@ -150,13 +274,19 @@ const server = http.createServer(async (req, res) => {
     const pathname = requestUrl.pathname;
 
     if (req.method === 'GET' && pathname === '/api/health') {
-      sendJson(res, 200, { ok: true, service: 'driver-management', now: new Date().toISOString() });
+      sendJson(res, 200, {
+        ok: true,
+        service: 'driver-management',
+        storage: USE_POSTGRES ? 'postgres' : 'json-file',
+        now: new Date().toISOString(),
+      });
       return;
     }
 
     if (req.method === 'GET' && pathname === '/api/data') {
       const data = await readData();
-      sendJson(res, 200, data);
+      const version = await getDataVersion();
+      sendJson(res, 200, data, { ETag: `"${version}"` });
       return;
     }
 
@@ -198,6 +328,21 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === 'PUT' && pathname === '/api/data') {
+      const currentVersion = await getDataVersion();
+      const ifMatchRaw = typeof req.headers['if-match'] === 'string' ? req.headers['if-match'] : '';
+      const ifMatch = ifMatchRaw.trim().replace(/^W\//, '').replace(/^"|"$/g, '');
+      if (!ifMatch) {
+        sendJson(res, 428, { error: 'Missing If-Match header. Please refresh and try again.' });
+        return;
+      }
+      if (ifMatch !== currentVersion) {
+        sendJson(res, 409, {
+          error: 'Data has changed on the server. Please refresh before saving.',
+          currentVersion,
+        });
+        return;
+      }
+
       const rawBody = await readRequestBody(req);
       let incoming;
       try {
@@ -213,7 +358,13 @@ const server = http.createServer(async (req, res) => {
       }
 
       await writeData(incoming);
-      sendJson(res, 200, { ok: true, savedAt: new Date().toISOString() });
+      const nextVersion = await getDataVersion();
+      sendJson(
+        res,
+        200,
+        { ok: true, savedAt: new Date().toISOString(), storage: USE_POSTGRES ? 'postgres' : 'json-file' },
+        { ETag: `"${nextVersion}"` }
+      );
       return;
     }
 
@@ -261,7 +412,17 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-ensureDataFile()
+async function initializeStorage() {
+  if (USE_POSTGRES) {
+    await ensurePostgres();
+    console.log('Storage mode: postgres');
+    return;
+  }
+  await ensureDataFile();
+  console.log('Storage mode: json-file');
+}
+
+initializeStorage()
   .then(() => {
     server.listen(PORT, () => {
       console.log(`Driver Management service listening on port ${PORT}`);

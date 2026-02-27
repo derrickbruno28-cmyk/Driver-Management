@@ -357,6 +357,7 @@ const DATA_API_URL = '/api/data';
 const PRESENCE_STATUS_URL = '/api/presence';
 const PRESENCE_HEARTBEAT_URL = '/api/presence/heartbeat';
 let persistQueue = Promise.resolve();
+let dataVersion = '';
 const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
 const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling'];
 const CUSTOM_SELECT_KEY = 'dms_custom_select_options';
@@ -403,6 +404,7 @@ async function loadSharedData() {
   try {
     const res = await fetch(DATA_API_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error('load failed');
+    dataVersion = (res.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '');
     const remoteData = await res.json();
     if (remoteData && typeof remoteData === 'object' && !Array.isArray(remoteData)) {
       // Never auto-overwrite server data with RAW seed on load.
@@ -426,9 +428,11 @@ function queuePersistData() {
     let lastErr = null;
     for (let attempt = 1; attempt <= 2; attempt++) {
       try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (dataVersion) headers['If-Match'] = `"${dataVersion}"`;
         const res = await fetch(DATA_API_URL, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify(DB),
         });
         if (!res.ok) {
@@ -439,6 +443,7 @@ function queuePersistData() {
           } catch (_) {}
           throw new Error(`HTTP ${res.status}${detail ? `: ${detail}` : ''}`);
         }
+        dataVersion = (res.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '') || dataVersion;
         setLiveSyncState('live', 'Live');
         return;
       } catch (err) {
