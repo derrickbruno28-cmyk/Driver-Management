@@ -202,6 +202,7 @@
   .status-tag { display:inline-flex; align-items:center; padding:4px 8px; border-radius:999px; border:1px solid var(--border); font-size:11px; font-family:var(--mono); font-weight:700; letter-spacing:.03em; text-transform:uppercase; }
   .status-tag.available { color: var(--green); border-color: rgba(16,185,129,0.45); background: rgba(16,185,129,0.12); }
   .status-tag.paired { color: var(--accent2); border-color: rgba(59,130,246,0.45); background: rgba(59,130,246,0.12); }
+  .status-tag.needconfirm { color: var(--yellow); border-color: rgba(245,158,11,0.45); background: rgba(245,158,11,0.12); }
   .status-tag.off { color: var(--red); border-color: rgba(239,68,68,0.45); background: rgba(239,68,68,0.12); }
 
   /* Audit banner */
@@ -618,16 +619,19 @@ function getDriverAvailabilityStatus(record) {
   const today = startOfToday();
   const rtg = getDriverDateObj(record, 'rtgDate');
   const ret = getDriverDateObj(record, 'returnDate');
+  const isRunWild = String((record && record.runWild) || '').toUpperCase() === 'YES';
 
   if (isOffDutyPosition(record && record.position)) return 'OFF';
   if (rtg && rtg > today) return 'OFF';
   if (!rtg && ret && ret >= today) return 'OFF';
   if (record && record.pairedWithId) return 'PAIRED';
+  if ((!rtg || (!ret && !isRunWild)) || (isRunWild && !rtg)) return 'NEED_CONFIRM';
   return 'AVAILABLE';
 }
 
 function availabilityStatusBadge(status) {
   if (status === 'PAIRED') return '<span class="status-tag paired">Paired</span>';
+  if (status === 'NEED_CONFIRM') return '<span class="status-tag needconfirm">Need to confirm availability</span>';
   if (status === 'OFF') return '<span class="status-tag off">Off</span>';
   return '<span class="status-tag available">Available</span>';
 }
@@ -819,6 +823,9 @@ const TABS = {
       { key: 'rtgDate', label: 'RTG Date', type: 'date' },
       { key: 'returnDate', label: 'Return Home Date', type: 'date' },
       { key: 'followUpDate', label: 'Follow Up Date', type: 'date' },
+      { key: 'runWild', label: 'Run Wild', type: 'select', options: ['NO','YES',''] },
+      { key: 'localTempActive', label: 'Temporarily Working Local', type: 'select', options: ['NO','YES',''] },
+      { key: 'localTempUntil', label: 'Working Local Until', type: 'date' },
       { key: 'pairedWithId', label: 'Paired With', type: 'driverPair' },
       { key: 'preferredPartner', label: 'Preferred Partner', type: 'text' },
       { key: 'routeRestrictions', label: 'Route Restrictions', type: 'text', full: true },
@@ -1076,7 +1083,7 @@ function sortRecordsForTab(tab, records, sortCfg) {
       return sortCfg.dir === 'asc' ? (da - db) : (db - da);
     }
     if (tab === 'driversSep' && sortCfg.col === 'availabilityStatus') {
-      const rank = { AVAILABLE: 0, PAIRED: 1, OFF: 2 };
+      const rank = { AVAILABLE: 0, PAIRED: 1, NEED_CONFIRM: 2, OFF: 3 };
       const ra = rank[getDriverAvailabilityStatus(a)] ?? 99;
       const rb = rank[getDriverAvailabilityStatus(b)] ?? 99;
       return sortCfg.dir === 'asc' ? (ra - rb) : (rb - ra);
@@ -1933,6 +1940,14 @@ async function saveRecord() {
 
   if (tab === 'driversSep' && isOffDutyPosition(newData.position) && !newData.followUpDate) {
     showToast('Follow Up Date is required for Off Duty / Unresponsive drivers', 'var(--red)');
+    return;
+  }
+  if (tab === 'driversSep' && String(newData.runWild || '').toUpperCase() === 'YES' && !newData.followUpDate) {
+    showToast('Follow Up Date is required when Run Wild is selected', 'var(--red)');
+    return;
+  }
+  if (tab === 'driversSep' && String(newData.localTempActive || '').toUpperCase() === 'YES' && !newData.localTempUntil) {
+    showToast('Working Local Until date is required when Temporarily Working Local is selected', 'var(--red)');
     return;
   }
 
