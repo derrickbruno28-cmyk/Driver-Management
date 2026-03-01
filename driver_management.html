@@ -1061,6 +1061,26 @@ const TABS = {
   }
 };
 
+const TEAM_OTR_MAIL_LABEL = 'Team OTR / Mail';
+
+function isTeamOtrMailPosition(pos) {
+  const p = String(pos || '').trim().toLowerCase();
+  return p === 'team otr' || p === 'team-mail' || p === TEAM_OTR_MAIL_LABEL.toLowerCase();
+}
+
+function displayPosition(pos) {
+  return isTeamOtrMailPosition(pos) ? TEAM_OTR_MAIL_LABEL : pos;
+}
+
+function recordMatchesMainFilter(tab, record, filter, key) {
+  if (filter === 'all' || !key) return true;
+  const raw = record[key];
+  if (tab === 'driversSep' && key === 'position' && filter === TEAM_OTR_MAIL_LABEL) {
+    return isTeamOtrMailPosition(raw);
+  }
+  return raw === filter;
+}
+
 function gtgBadge(val) {
   if (!val) return `<span class="badge badge-gray">—</span>`;
   const v = val.toUpperCase();
@@ -1072,12 +1092,13 @@ function gtgBadge(val) {
 
 function positionBadge(pos) {
   if (!pos) return '';
-  const p = pos.toLowerCase();
-  if (p.includes('team')) return `<span class="badge badge-blue">${pos}</span>`;
-  if (p.includes('solo') || p.includes('local')) return `<span class="badge badge-gray">${pos}</span>`;
-  if (p.includes('weekly')) return `<span class="badge badge-green">${pos}</span>`;
+  const display = displayPosition(pos);
+  const p = display.toLowerCase();
+  if (p.includes('team')) return `<span class="badge badge-blue">${display}</span>`;
+  if (p.includes('solo') || p.includes('local')) return `<span class="badge badge-gray">${display}</span>`;
+  if (p.includes('weekly')) return `<span class="badge badge-green">${display}</span>`;
   if (p.includes('unresponsive')) return `<span class="badge badge-red">${pos}</span>`;
-  return `<span class="badge badge-gray">${pos}</span>`;
+  return `<span class="badge badge-gray">${display}</span>`;
 }
 
 function truncateNotes(text, maxLines=3) {
@@ -1117,8 +1138,13 @@ function fmtDate(d) {
 function getFilterOptions(tab) {
   const key = TABS[tab].filterKey;
   if (!key) return [];
-  const vals = [...new Set(DB[tab].map(r => r[key]).filter(Boolean))].sort();
-  return vals;
+  let vals = [...new Set(DB[tab].map(r => r[key]).filter(Boolean))];
+  if (tab === 'driversSep' && key === 'position') {
+    const hasCombined = vals.some(v => isTeamOtrMailPosition(v));
+    vals = vals.filter(v => !isTeamOtrMailPosition(v));
+    if (hasCombined) vals.push(TEAM_OTR_MAIL_LABEL);
+  }
+  return vals.sort();
 }
 
 function sortRecordsForTab(tab, records, sortCfg) {
@@ -1206,8 +1232,8 @@ function renderPage(tab) {
   
   let filtered = records.filter(r => {
     // filter by key
-    if (filter !== 'all' && cfg.filterKey) {
-      if (r[cfg.filterKey] !== filter) return false;
+    if (!recordMatchesMainFilter(tab, r, filter, cfg.filterKey)) {
+      return false;
     }
     // search
     if (search) {
@@ -1650,8 +1676,8 @@ function rerenderTable(tab) {
   const filter = activeFilters[tab] || 'all';
   
   let filtered = records.filter(r => {
-    if (filter !== 'all' && cfg.filterKey) {
-      if (r[cfg.filterKey] !== filter) return false;
+    if (!recordMatchesMainFilter(tab, r, filter, cfg.filterKey)) {
+      return false;
     }
     if (search) {
       const allVals = Object.values(r).join(' ').toLowerCase();
