@@ -195,6 +195,14 @@
   .fleet-pill.syncing strong { color: var(--yellow); }
   .fleet-pill.offline { border-color: rgba(239,68,68,0.45); color: var(--red); }
   .fleet-pill.offline strong { color: var(--red); }
+  .fleet-pill.bell { cursor: pointer; border-color: rgba(59,130,246,0.35); color: var(--text); }
+  .fleet-pill.bell strong { color: var(--accent2); }
+  .fleet-pill.bell.has-alert { border-color: rgba(16,185,129,0.45); box-shadow: 0 0 0 1px rgba(16,185,129,0.2) inset; }
+  .fleet-pill.bell.has-alert strong { color: var(--green); }
+  .status-tag { display:inline-flex; align-items:center; padding:4px 8px; border-radius:999px; border:1px solid var(--border); font-size:11px; font-family:var(--mono); font-weight:700; letter-spacing:.03em; text-transform:uppercase; }
+  .status-tag.available { color: var(--green); border-color: rgba(16,185,129,0.45); background: rgba(16,185,129,0.12); }
+  .status-tag.paired { color: var(--accent2); border-color: rgba(59,130,246,0.45); background: rgba(59,130,246,0.12); }
+  .status-tag.off { color: var(--red); border-color: rgba(239,68,68,0.45); background: rgba(239,68,68,0.12); }
 
   /* Audit banner */
   .audit-banner { display:flex; align-items:center; gap:8px; padding:8px 12px; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:6px; font-size:12px; color:var(--accent2); margin-bottom:10px; }
@@ -285,6 +293,7 @@
     <div id="fleet-terminated" class="fleet-pill terminated">⛔ Terminated: <strong>—</strong></div>
     <div id="fleet-total" class="fleet-pill total">Total: <strong>—</strong></div>
     <div id="live-users" class="fleet-pill">👤 Online: <strong>—</strong></div>
+    <div id="fleet-available-alert" class="fleet-pill bell" onclick="openAvailabilityAlert()">🔔 Available Alerts: <strong>0</strong></div>
     <div id="live-sync" class="fleet-pill syncing">🟡 Sync: <strong>Connecting</strong></div>
   </div>
     <div id="page-driversSep" class="page-content">
@@ -358,6 +367,8 @@ const PRESENCE_STATUS_URL = '/api/presence';
 const PRESENCE_HEARTBEAT_URL = '/api/presence/heartbeat';
 let persistQueue = Promise.resolve();
 let dataVersion = '';
+const AVAILABILITY_ALERT_INTERVAL_MS = 2 * 60 * 60 * 1000;
+let availabilityAlertState = { lastShownAt: 0 };
 const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
 const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling'];
 const CUSTOM_SELECT_KEY = 'dms_custom_select_options';
@@ -591,6 +602,64 @@ function isOffDutyPosition(pos) {
   return p.includes('off duty') || p.includes('unresponsive');
 }
 
+function startOfToday() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function getPairedDriverName(record) {
+  if (!record || !record.pairedWithId) return '';
+  const partner = (DB.driversSep || []).find(r => r.id === record.pairedWithId);
+  return partner ? (partner.name || '') : (record.pairedWithName || '');
+}
+
+function getDriverAvailabilityStatus(record) {
+  const today = startOfToday();
+  const rtg = getDriverDateObj(record, 'rtgDate');
+  const ret = getDriverDateObj(record, 'returnDate');
+
+  if (isOffDutyPosition(record && record.position)) return 'OFF';
+  if (rtg && rtg > today) return 'OFF';
+  if (!rtg && ret && ret >= today) return 'OFF';
+  if (record && record.pairedWithId) return 'PAIRED';
+  return 'AVAILABLE';
+}
+
+function availabilityStatusBadge(status) {
+  if (status === 'PAIRED') return '<span class="status-tag paired">Paired</span>';
+  if (status === 'OFF') return '<span class="status-tag off">Off</span>';
+  return '<span class="status-tag available">Available</span>';
+}
+
+function getAvailableDriverCount() {
+  return (DB.driversSep || []).filter(r => getDriverAvailabilityStatus(r) === 'AVAILABLE').length;
+}
+
+function updateAvailabilityAlertUI() {
+  const bell = document.getElementById('fleet-available-alert');
+  if (!bell) return;
+  const count = getAvailableDriverCount();
+  const strong = bell.querySelector('strong');
+  if (strong) strong.textContent = String(count);
+  bell.classList.toggle('has-alert', count > 0);
+}
+
+function checkAvailabilityAlerts(force = false) {
+  updateAvailabilityAlertUI();
+  const count = getAvailableDriverCount();
+  if (!count) return;
+  const now = Date.now();
+  if (force || !availabilityAlertState.lastShownAt || (now - availabilityAlertState.lastShownAt) >= AVAILABILITY_ALERT_INTERVAL_MS) {
+    availabilityAlertState.lastShownAt = now;
+    showToast(`Alert: You have ${count} drivers available.`, 'var(--green)');
+  }
+}
+
+function openAvailabilityAlert() {
+  checkAvailabilityAlerts(true);
+}
+
 function getTerminationCompletionStatus(rec) {
   const checks = [
     rec.tenstreetRemoved, rec.loadstopRemoved, rec.samsaraRemoved, rec.sambaSafetyRemoved,
@@ -750,12 +819,13 @@ const TABS = {
       { key: 'rtgDate', label: 'RTG Date', type: 'date' },
       { key: 'returnDate', label: 'Return Home Date', type: 'date' },
       { key: 'followUpDate', label: 'Follow Up Date', type: 'date' },
+      { key: 'pairedWithId', label: 'Paired With', type: 'driverPair' },
       { key: 'preferredPartner', label: 'Preferred Partner', type: 'text' },
       { key: 'routeRestrictions', label: 'Route Restrictions', type: 'text', full: true },
       { key: 'notes', label: 'Notes / Availability & Constraints', type: 'textarea', full: true },
     ],
-    columns: ['name','homeBase','position','hiredCity','rtgDate','returnDate','followUpDate','preferredPartner','routeRestrictions','notes'],
-    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', hiredCity:'Hired City', rtgDate:'RTG Date', returnDate:'Return Home Date', followUpDate:'Follow Up', preferredPartner:'Preferred Partner', routeRestrictions:'Route Restrictions', notes:'Notes' },
+    columns: ['name','homeBase','position','availabilityStatus','hiredCity','rtgDate','returnDate','followUpDate','pairedWithName','preferredPartner','routeRestrictions','notes'],
+    colLabels: { name:'Driver Name', homeBase:'Home Base', position:'Position', availabilityStatus:'Status', hiredCity:'Hired City', rtgDate:'RTG Date', returnDate:'Return Home Date', followUpDate:'Follow Up', pairedWithName:'Paired With', preferredPartner:'Preferred Partner', routeRestrictions:'Route Restrictions', notes:'Notes' },
     filterKey: 'position',
   },
   terminatedRemovals: {
@@ -1005,6 +1075,12 @@ function sortRecordsForTab(tab, records, sortCfg) {
       if (!db) return -1;
       return sortCfg.dir === 'asc' ? (da - db) : (db - da);
     }
+    if (tab === 'driversSep' && sortCfg.col === 'availabilityStatus') {
+      const rank = { AVAILABLE: 0, PAIRED: 1, OFF: 2 };
+      const ra = rank[getDriverAvailabilityStatus(a)] ?? 99;
+      const rb = rank[getDriverAvailabilityStatus(b)] ?? 99;
+      return sortCfg.dir === 'asc' ? (ra - rb) : (rb - ra);
+    }
     const av = (a[sortCfg.col] || '').toString().toLowerCase();
     const bv = (b[sortCfg.col] || '').toString().toLowerCase();
     return sortCfg.dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
@@ -1019,6 +1095,26 @@ function getAugmentedOptions(tab, key, baseOptions = []) {
   if (!merged.includes('')) merged.push('');
   merged.push('__add_new_option__');
   return merged;
+}
+
+function getPairingOptionsForRecord(record) {
+  const selfId = record && record.id ? record.id : editingId;
+  if (!selfId) return [];
+  return (DB.driversSep || [])
+    .filter(r => r.id !== selfId)
+    .filter(r => !r.pairedWithId || r.pairedWithId === selfId)
+    .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+}
+
+function clearPairingForDriver(driverId, stampUser = '') {
+  const partner = (DB.driversSep || []).find(r => r.pairedWithId === driverId);
+  if (!partner) return;
+  partner.pairedWithId = '';
+  partner.pairedWithName = '';
+  if (stampUser) {
+    partner._lastEditBy = stampUser;
+    partner._lastEditTime = new Date().toLocaleString();
+  }
 }
 
 function handleSelectOptionAdd(tab, key, selectEl) {
@@ -1335,9 +1431,16 @@ function renderPage(tab) {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
       if (col === 'position' && (tab==='driversSep')) return `<td>${positionBadge(val)}</td>`;
+      if (tab === 'driversSep' && col === 'availabilityStatus') {
+        return `<td>${availabilityStatusBadge(getDriverAvailabilityStatus(r))}</td>`;
+      }
       if (tab === 'driversSep' && (col === 'rtgDate' || col === 'returnDate')) {
         const disp = getDriverDateDisplay(r, col);
         return `<td style="font-family:var(--mono);font-size:12px;color:${disp?'var(--text)':'var(--text2)'}">${disp || '—'}</td>`;
+      }
+      if (tab === 'driversSep' && col === 'pairedWithName') {
+        const partner = getPairedDriverName(r);
+        return `<td>${partner ? `<span class="partner-chip">🔗 ${escHtml(partner)}</span>` : '<span style="color:var(--text2)">—</span>'}</td>`;
       }
       if ((col === 'ajgDT' || col === 'ghDT' || col === 'ag4DT') && val) return `<td>${dtResult(val)}</td>`;
       if (col === 'notes') {
@@ -1569,9 +1672,16 @@ function rerenderTable(tab) {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
       if (col === 'position' && (tab==='driversSep')) return `<td>${positionBadge(val)}</td>`;
+      if (tab === 'driversSep' && col === 'availabilityStatus') {
+        return `<td>${availabilityStatusBadge(getDriverAvailabilityStatus(r))}</td>`;
+      }
       if (tab === 'driversSep' && (col === 'rtgDate' || col === 'returnDate')) {
         const disp = getDriverDateDisplay(r, col);
         return `<td style="font-family:var(--mono);font-size:12px;color:${disp?'var(--text)':'var(--text2)'}">${disp || '—'}</td>`;
+      }
+      if (tab === 'driversSep' && col === 'pairedWithName') {
+        const partner = getPairedDriverName(r);
+        return `<td>${partner ? `<span class="partner-chip">🔗 ${escHtml(partner)}</span>` : '<span style="color:var(--text2)">—</span>'}</td>`;
       }
       if ((col === 'ajgDT' || col === 'ghDT' || col === 'ag4DT') && val) return `<td>${dtResult(val)}</td>`;
       if (col === 'notes') {
@@ -1694,6 +1804,18 @@ function buildFormFields(tab, record) {
     html += `<label for="field_${f.key}">${f.label}${f.required?' *':''}</label>`;
     if (f.type === 'textarea') {
       html += `<textarea id="field_${f.key}" rows="5">${escHtml(val)}</textarea>`;
+    } else if (f.type === 'driverPair') {
+      const pairOpts = getPairingOptionsForRecord(record);
+      if (!editingId) {
+        html += `<input type="text" value="Save driver first, then select a partner." disabled />`;
+      } else {
+        html += `<select id="field_${f.key}">`;
+        html += `<option value="" ${!val ? 'selected' : ''}>(none)</option>`;
+        pairOpts.forEach(opt => {
+          html += `<option value="${escHtml(opt.id)}" ${opt.id===val?'selected':''}>${escHtml(opt.name || '(unnamed)')}</option>`;
+        });
+        html += `</select>`;
+      }
     } else if (f.type === 'select' && f.options) {
       const opts = getAugmentedOptions(tab, f.key, f.options);
       html += `<select id="field_${f.key}" data-tab="${tab}" data-key="${f.key}" onchange="handleSelectOptionAdd('${tab}','${f.key}',this)">`;
@@ -1816,6 +1938,34 @@ async function saveRecord() {
 
   if (!valid) { showToast('Please fill required fields', 'var(--red)'); return; }
 
+  const now = new Date();
+  const auditUser = getCurrentUser();
+  const auditTime = now.toLocaleString();
+
+  let selectedPartnerId = '';
+  if (tab === 'driversSep') {
+    selectedPartnerId = (newData.pairedWithId || '').trim();
+    if (!editingId && selectedPartnerId) {
+      showToast('Save this driver first, then add partner pairing.', 'var(--yellow)');
+      return;
+    }
+    if (editingId && selectedPartnerId === editingId) {
+      showToast('A driver cannot be paired with themselves.', 'var(--red)');
+      return;
+    }
+    if (editingId && selectedPartnerId) {
+      const partner = DB.driversSep.find(r => r.id === selectedPartnerId);
+      if (!partner) {
+        showToast('Selected partner record no longer exists.', 'var(--red)');
+        return;
+      }
+      if (partner.pairedWithId && partner.pairedWithId !== editingId) {
+        showToast(`${partner.name || 'Driver'} is already paired with another driver.`, 'var(--red)');
+        return;
+      }
+    }
+  }
+
   // Handle termination
   const terminateEl = document.getElementById('field__terminate');
   const terminateReasonEl = document.getElementById('field__terminateReason');
@@ -1835,21 +1985,49 @@ async function saveRecord() {
     newData.completionStatus = getTerminationCompletionStatus(newData);
   }
 
-  const now = new Date();
   const auditEntry = {
-    user: getCurrentUser(),
-    timestamp: now.toLocaleString(),
+    user: auditUser,
+    timestamp: auditTime,
     isoTime: now.toISOString(),
   };
 
   if (editingId) {
+    if (tab === 'driversSep') {
+      const current = DB.driversSep.find(r => r.id === editingId);
+      const oldPartnerId = current ? (current.pairedWithId || '') : '';
+      if (oldPartnerId && oldPartnerId !== selectedPartnerId) {
+        const oldPartner = DB.driversSep.find(r => r.id === oldPartnerId);
+        if (oldPartner && oldPartner.pairedWithId === editingId) {
+          oldPartner.pairedWithId = '';
+          oldPartner.pairedWithName = '';
+          oldPartner._lastEditBy = auditUser;
+          oldPartner._lastEditTime = auditTime;
+        }
+      }
+      if (selectedPartnerId) {
+        const selectedPartner = DB.driversSep.find(r => r.id === selectedPartnerId);
+        newData.pairedWithName = selectedPartner ? (selectedPartner.name || '') : '';
+      } else {
+        newData.pairedWithName = '';
+      }
+    }
     const idx = DB[tab].findIndex(r => r.id === editingId);
     DB[tab][idx] = { ...DB[tab][idx], ...newData, _lastEditBy: auditEntry.user, _lastEditTime: auditEntry.timestamp };
+    if (tab === 'driversSep' && selectedPartnerId) {
+      const selfRec = DB.driversSep[idx];
+      const partner = DB.driversSep.find(r => r.id === selectedPartnerId);
+      if (partner) {
+        partner.pairedWithId = selfRec.id;
+        partner.pairedWithName = selfRec.name || '';
+        partner._lastEditBy = auditUser;
+        partner._lastEditTime = auditTime;
+      }
+    }
     editLog[editingId] = auditEntry;
     showToast('✓ Record updated');
   } else {
     const newId = tab + '_' + Date.now();
-    const record = { id: newId, ...newData, _lastEditBy: auditEntry.user, _lastEditTime: auditEntry.timestamp };
+    const record = { id: newId, ...newData, pairedWithId: '', pairedWithName: '', _lastEditBy: auditEntry.user, _lastEditTime: auditEntry.timestamp };
     DB[tab].push(record);
     editLog[newId] = auditEntry;
     showToast('✓ Record added');
@@ -1871,6 +2049,9 @@ async function saveRecord() {
 async function deleteRecord() {
   if (!editingId || !editingTab) return;
   if (!confirm('Delete this record?')) return;
+  if (editingTab === 'driversSep') {
+    clearPairingForDriver(editingId, getCurrentUser());
+  }
   DB[editingTab] = DB[editingTab].filter(r => r.id !== editingId);
   try {
     await queuePersistData();
@@ -2033,6 +2214,7 @@ async function moveToTerminatedFolder() {
   const srcIdx = DB.driversSep.findIndex(x => x.id === editingId);
   if (srcIdx < 0) return;
   const src = DB.driversSep[srcIdx];
+  clearPairingForDriver(editingId, getCurrentUser());
   DB.terminatedRemovals.push({
     id: 'term_' + Date.now(),
     name: src.name || '',
@@ -2145,6 +2327,7 @@ function updateFleetBar() {
   setP('fleet-offduty', offduty);
   setP('fleet-terminated', terminated);
   setP('fleet-total', total);
+  updateAvailabilityAlertUI();
 }
 
 function updateBadges() {
@@ -2203,6 +2386,8 @@ async function initApp() {
   updateBadges();
   updateFleetBar();
   startPresenceTracking();
+  checkAvailabilityAlerts(true);
+  setInterval(() => checkAvailabilityAlerts(false), AVAILABILITY_ALERT_INTERVAL_MS);
   const firstPage = document.getElementById('page-driversSep');
   firstPage.style.display = 'flex';
   firstPage.style.flexDirection = 'column';
