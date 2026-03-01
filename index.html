@@ -867,7 +867,7 @@ const TABS = {
     fields: [
       { key: 'name', label: 'Driver Name', type: 'text', required: true },
       { key: 'homeBase', label: 'Home Base', type: 'select', options: ['SATX','Dallas','Houston','Memphis','Austin','Laredo','El Paso',''] },
-      { key: 'position', label: 'Position', type: 'select', options: ['Team OTR','Solo OTR','Weekly Team','Local','Regional','Long OTR SOLO','Short OTR Team','OFF DUTY','Unresponsive over 2 weeks',''] },
+      { key: 'position', label: 'Position', type: 'select', options: ['Team OTR / Mail','Solo OTR','Weekly Team','Local','Regional','Long OTR SOLO','Short OTR Team','OFF DUTY','Unresponsive over 2 weeks',''] },
       { key: 'twic', label: 'TWIC Card', type: 'text' },
       { key: 'hiredCity', label: 'Hired Departure City', type: 'select', options: ['San Antonio','Dallas','Houston','Memphis','Austin','El Paso','Laredo','Other',''] },
       { key: 'currentCity', label: 'Current Home City / Location', type: 'text' },
@@ -1064,8 +1064,13 @@ const TABS = {
 const TEAM_OTR_MAIL_LABEL = 'Team OTR / Mail';
 
 function isTeamOtrMailPosition(pos) {
-  const p = String(pos || '').trim().toLowerCase();
-  return p === 'team otr' || p === 'team-mail' || p === TEAM_OTR_MAIL_LABEL.toLowerCase();
+  const normalized = String(pos || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (!normalized) return false;
+  return (
+    normalized.startsWith('teamotrmail') ||
+    normalized.startsWith('teamotr') ||
+    normalized.startsWith('teammail')
+  );
 }
 
 function displayPosition(pos) {
