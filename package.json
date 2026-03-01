@@ -5,9 +5,15 @@
   "description": "Driver Management team web service",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "migrate:postgres": "node scripts/migrate-json-to-postgres.js",
+    "backup:sheets": "node scripts/backup-to-sheets.js"
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "pg": "^8.13.1"
   }
 }
