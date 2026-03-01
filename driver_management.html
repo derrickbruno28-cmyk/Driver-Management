@@ -1382,21 +1382,33 @@ function renderPage(tab) {
     
     const lanes = [
       { city: 'Dallas', label: 'DAL', types: [
-        { type: 'team', icon: '👥', label: 'Teams' },
+        { type: 'team', icon: '👥', label: 'Drivers' },
         { type: 'solo', icon: '🧍', label: 'Solo' },
         { type: 'local', icon: '📍', label: 'Local' },
       ]},
       { city: 'San Antonio', label: 'SATX', types: [
-        { type: 'team', icon: '👥', label: 'Teams' },
+        { type: 'team', icon: '👥', label: 'Drivers' },
         { type: 'solo', icon: '🧍', label: 'Solo' },
         { type: 'local', icon: '📍', label: 'Local' },
       ]},
       { city: 'Memphis', label: 'MEM', types: [
-        { type: 'team', icon: '👥', label: 'Teams' },
+        { type: 'team', icon: '👥', label: 'Drivers' },
         { type: 'solo', icon: '🧍', label: 'Solo' },
         { type: 'local', icon: '📍', label: 'Local' },
       ]},
     ];
+
+    const pairedTeamCount = (() => {
+      const pairSet = new Set();
+      records.forEach(r => {
+        if (!r.pairedWithId) return;
+        const pos = (r.position || '').toLowerCase();
+        if (!pos.includes('team') && !pos.includes('weekly')) return;
+        const pairKey = [String(r.id || ''), String(r.pairedWithId || '')].sort().join('::');
+        if (pairKey !== '::') pairSet.add(pairKey);
+      });
+      return pairSet.size;
+    })();
 
     const laneHtml = lanes.map(lane => {
       const cells = lane.types.map(t => {
@@ -1440,6 +1452,9 @@ function renderPage(tab) {
       </button>
       <button class="subtab-btn ${curSub==='pendingAccept'?'active rtg':''}" onclick="setSubTab('driversSep','pendingAccept')">
         ✅ Pending Acceptance <span class="subtab-badge rtg">${pendingAcceptCount}</span>
+      </button>
+      <button class="subtab-btn ${curSub==='pairedTeams'?'active home':''}" onclick="setSubTab('driversSep','pairedTeams')">
+        🔗 Paired Teams <span class="subtab-badge home">${pairedTeamCount}</span>
       </button>
       <button class="subtab-btn ${curSub==='duplicates'?'active dup':''}" onclick="setSubTab('driversSep','duplicates')">
         🔍 Dup Audit <span class="subtab-badge dup">${dupCount}</span>
@@ -1677,6 +1692,10 @@ function rerenderTable(tab) {
       if (rSubTabFilter === 'pendingAccept') {
         return !!r._pendingAcceptance;
       }
+      if (rSubTabFilter === 'pairedTeams') {
+        const pos = (r.position || '').toLowerCase();
+        return !!r.pairedWithId && (pos.includes('team') || pos.includes('weekly'));
+      }
       if (rSubTabFilter === 'duplicates') {
         const dupIds = new Set(findDuplicates(records).map(x => x.id));
         return dupIds.has(r.id);
@@ -1773,6 +1792,13 @@ function rerenderTable(tab) {
         }
         if (tab === 'driversSep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
+        }
+        if (tab === 'driversSep' && subTab === 'pairedTeams') {
+          const partner = getPairedDriverName(r);
+          const pairLine = partner
+            ? `<div style="margin-bottom:6px"><span class="partner-chip">🔗 Paired with ${escHtml(partner)}</span></div>`
+            : '';
+          return `<td>${pairLine}${truncateNotes(val)}</td>`;
         }
         if (tab === 'ag4Sep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
