@@ -83,6 +83,10 @@
   .modal-close:hover { background: var(--surface2); color: var(--text); }
   .modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
   .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+  .avail-list { max-height: 340px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface2); }
+  .avail-row { display:flex; justify-content:space-between; gap:10px; align-items:center; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.06); font-size:13px; }
+  .avail-row:last-child { border-bottom:none; }
+  .avail-meta { font-size:12px; color:var(--text2); font-family:var(--mono); }
 
   /* Form elements */
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -337,6 +341,19 @@
       <button class="btn btn-danger" onclick="deleteRecord()" id="deleteBtn">Delete</button>
       <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
       <button class="btn btn-primary" onclick="saveRecord()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="availabilityModal">
+  <div class="modal" style="max-width:760px">
+    <div class="modal-header">
+      <span class="modal-title">Available Drivers</span>
+      <button class="modal-close" onclick="closeAvailabilityModal()">✕</button>
+    </div>
+    <div class="modal-body" id="availabilityBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAvailabilityModal()">Close</button>
     </div>
   </div>
 </div>
@@ -603,6 +620,10 @@ function isOffDutyPosition(pos) {
   return p.includes('off duty') || p.includes('unresponsive');
 }
 
+function isLocalPosition(pos) {
+  return (pos || '').toLowerCase().includes('local');
+}
+
 function startOfToday() {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
@@ -620,12 +641,13 @@ function getDriverAvailabilityStatus(record) {
   const rtg = getDriverDateObj(record, 'rtgDate');
   const ret = getDriverDateObj(record, 'returnDate');
   const isRunWild = String((record && record.runWild) || '').toUpperCase() === 'YES';
+  const isLocal = isLocalPosition(record && record.position);
 
   if (isOffDutyPosition(record && record.position)) return 'OFF';
   if (rtg && rtg > today) return 'OFF';
   if (!rtg && ret && ret >= today) return 'OFF';
   if (record && record.pairedWithId) return 'PAIRED';
-  if ((!rtg || (!ret && !isRunWild)) || (isRunWild && !rtg)) return 'NEED_CONFIRM';
+  if (!isLocal && ((!rtg || (!ret && !isRunWild)) || (isRunWild && !rtg))) return 'NEED_CONFIRM';
   return 'AVAILABLE';
 }
 
@@ -638,6 +660,12 @@ function availabilityStatusBadge(status) {
 
 function getAvailableDriverCount() {
   return (DB.driversSep || []).filter(r => getDriverAvailabilityStatus(r) === 'AVAILABLE').length;
+}
+
+function getAvailableDrivers() {
+  return (DB.driversSep || [])
+    .filter(r => getDriverAvailabilityStatus(r) === 'AVAILABLE')
+    .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
 }
 
 function updateAvailabilityAlertUI() {
@@ -661,7 +689,30 @@ function checkAvailabilityAlerts(force = false) {
 }
 
 function openAvailabilityAlert() {
-  checkAvailabilityAlerts(true);
+  const drivers = getAvailableDrivers();
+  const body = document.getElementById('availabilityBody');
+  if (!body) return;
+  if (!drivers.length) {
+    body.innerHTML = '<div style="color:var(--text2);font-family:var(--mono)">No currently available drivers.</div>';
+  } else {
+    body.innerHTML = `<div style="margin-bottom:10px;color:var(--text2);font-family:var(--mono)">Available now: <strong style="color:var(--green)">${drivers.length}</strong></div>
+      <div class="avail-list">
+        ${drivers.map(d => `
+          <div class="avail-row">
+            <div>
+              <div style="font-weight:700">${escHtml(d.name || '(unnamed)')}</div>
+              <div class="avail-meta">${escHtml(d.position || '')} ${d.homeBase ? `• ${escHtml(d.homeBase)}` : ''}</div>
+            </div>
+            <div>${availabilityStatusBadge('AVAILABLE')}</div>
+          </div>
+        `).join('')}
+      </div>`;
+  }
+  document.getElementById('availabilityModal').classList.add('open');
+}
+
+function closeAvailabilityModal() {
+  document.getElementById('availabilityModal').classList.remove('open');
 }
 
 function getTerminationCompletionStatus(rec) {
@@ -2416,6 +2467,9 @@ initApp();
 // Close modal on overlay click
 document.getElementById('editModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
+});
+document.getElementById('availabilityModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAvailabilityModal();
 });
 </script>
 </body>
