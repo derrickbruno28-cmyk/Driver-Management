@@ -1824,13 +1824,6 @@ function rerenderTable(tab) {
         if (tab === 'driversSep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
-        if (tab === 'driversSep' && subTab === 'pairedTeams') {
-          const partner = getPairedDriverName(r);
-          const pairLine = partner
-            ? `<div style="margin-bottom:6px"><span class="partner-chip">🔗 Paired with ${escHtml(partner)}</span></div>`
-            : '';
-          return `<td>${pairLine}${truncateNotes(val)}</td>`;
-        }
         if (tab === 'ag4Sep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
