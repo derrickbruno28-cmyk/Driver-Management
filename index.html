@@ -1215,6 +1215,8 @@ const TABS = {
       { key: 'name', label: 'Driver Name', type: 'text', required: true },
       { key: 'passed', label: 'Date Passed RT', type: 'date' },
       { key: 'position', label: 'Position', type: 'text' },
+      { key: 'hiredWithPartner', label: 'Hired With Partner?', type: 'select', options: ['NO','YES',''] },
+      { key: 'preferredPartner', label: 'Preferred Partner', type: 'text' },
       { key: 'age', label: 'Age', type: 'text' },
       { key: 'yoe', label: 'Years of Experience', type: 'text' },
       { key: 'phone', label: 'Phone', type: 'text' },
@@ -1231,8 +1233,8 @@ const TABS = {
       { key: 'rtgDate', label: 'RTG Date', type: 'text' },
       { key: 'notes', label: 'Notes', type: 'textarea', full: true },
     ],
-    columns: ['name','phone','position','location','ajgDT','ghDT','i9','gtg','rtgDate','notes'],
-    colLabels: { name:'Driver',phone:'Phone',position:'Position',location:'Location',ajgDT:'AJG DT',ghDT:'GH DT',i9:'I9',gtg:'GTG',rtgDate:'RTG Date',notes:'Notes' },
+    columns: ['name','phone','position','hiredWithPartner','preferredPartner','location','ajgDT','ghDT','i9','gtg','rtgDate','notes'],
+    colLabels: { name:'Driver',phone:'Phone',position:'Position',hiredWithPartner:'With Partner',preferredPartner:'Preferred Partner',location:'Location',ajgDT:'AJG DT',ghDT:'GH DT',i9:'I9',gtg:'GTG',rtgDate:'RTG Date',notes:'Notes' },
     filterKey: 'gtg',
   },
   ag4Hires: {
@@ -1241,6 +1243,8 @@ const TABS = {
       { key: 'name', label: 'Driver Name', type: 'text', required: true },
       { key: 'passed', label: 'Date Passed RT', type: 'date' },
       { key: 'position', label: 'Position', type: 'select', options: ['AG4-ED','AG4-BD',''] },
+      { key: 'hiredWithPartner', label: 'Hired With Partner?', type: 'select', options: ['NO','YES',''] },
+      { key: 'preferredPartner', label: 'Preferred Partner', type: 'text' },
       { key: 'age', label: 'Age', type: 'text' },
       { key: 'yoe', label: 'Years of Experience', type: 'text' },
       { key: 'phone', label: 'Phone', type: 'text' },
@@ -1256,8 +1260,8 @@ const TABS = {
       { key: 'dispatched', label: 'Dispatched', type: 'select', options: ['YES','NO',''] },
       { key: 'notes', label: 'Notes', type: 'textarea', full: true },
     ],
-    columns: ['name','phone','position','ag4DT','dotMedical','gtg','dispatched','rtgDate','notes'],
-    colLabels: { name:'Driver',phone:'Phone',position:'Position',ag4DT:'AG4 DT',dotMedical:'DOT Medical',gtg:'GTG',dispatched:'Dispatched',rtgDate:'RTG Date',notes:'Notes' },
+    columns: ['name','phone','position','hiredWithPartner','preferredPartner','ag4DT','dotMedical','gtg','dispatched','rtgDate','notes'],
+    colLabels: { name:'Driver',phone:'Phone',position:'Position',hiredWithPartner:'With Partner',preferredPartner:'Preferred Partner',ag4DT:'AG4 DT',dotMedical:'DOT Medical',gtg:'GTG',dispatched:'Dispatched',rtgDate:'RTG Date',notes:'Notes' },
     filterKey: 'gtg',
   },
   roadTestScheduling: {
@@ -2352,6 +2356,10 @@ async function saveRecord() {
     showToast('Working Local Until date is required when Temporarily Working Local is selected', 'var(--red)');
     return;
   }
+  if ((tab === 'otrHires' || tab === 'ag4Hires') && String(newData.hiredWithPartner || '').toUpperCase() === 'YES' && !(newData.preferredPartner || '').trim()) {
+    showToast('Preferred Partner name is required when Hired With Partner is YES', 'var(--red)');
+    return;
+  }
 
   if (!valid) { showToast('Please fill required fields', 'var(--red)'); return; }
 
@@ -2494,7 +2502,7 @@ function makeDriverSepCandidateFromHire(r) {
     hiredCity: '',
     currentCity: '',
     followUpDate: '',
-    preferredPartner: '',
+    preferredPartner: r.preferredPartner || '',
     routeRestrictions: '',
     _pendingAcceptance: true,
     _sourceTab: editingTab,
@@ -2551,6 +2559,8 @@ async function sendToNotMovingForward() {
     insurance: src.insurance || '',
     gtg: src.gtg || '',
     rtgDate: src.rtgDate || '',
+    hiredWithPartner: src.hiredWithPartner || '',
+    preferredPartner: src.preferredPartner || '',
     notes: src.notes || '',
     nmfReason: '',
     _lastEditBy: getCurrentUser(),
@@ -2577,6 +2587,8 @@ async function sendRoadTestToOtr() {
     yoe: '',
     phone: src.phone || '',
     location: src.roadTestCity || '',
+    hiredWithPartner: 'NO',
+    preferredPartner: '',
     ajgCH: '',
     ghCH: '',
     i9: '',
@@ -2613,6 +2625,8 @@ async function sendRoadTestToAg4() {
     yoe: '',
     phone: src.phone || '',
     location: src.roadTestCity || '',
+    hiredWithPartner: 'NO',
+    preferredPartner: '',
     rtgDate: '',
     nhpw: '',
     i9: '',
