@@ -522,6 +522,17 @@ function queuePersistData() {
   return persistQueue;
 }
 
+function cloneDbSnapshot() {
+  return JSON.stringify(DB);
+}
+
+function restoreDbSnapshot(snapshot) {
+  try {
+    DB = JSON.parse(snapshot);
+    normalizeDatabaseShape(DB);
+  } catch (_) {}
+}
+
 function setLiveSyncState(state, text) {
   const el = document.getElementById('live-sync');
   if (!el) return;
@@ -926,6 +937,7 @@ function severityClass(sev) {
 }
 
 async function addOverviewPost() {
+  const dbSnapshot = cloneDbSnapshot();
   const subject = String(overviewPostDraft.subject || '').trim();
   const body = String(overviewPostDraft.body || '').trim();
   const severity = overviewPostDraft.severity || 'General Post';
@@ -943,7 +955,14 @@ async function addOverviewPost() {
     replies: [],
   });
   overviewPostDraft = { subject: '', severity: 'General Post', body: '' };
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    showToast(`Post failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   const subjectEl = document.getElementById('overview-post-subject');
   const bodyEl = document.getElementById('overview-post-body');
   const sevEl = document.getElementById('overview-post-severity');
@@ -955,6 +974,7 @@ async function addOverviewPost() {
 }
 
 async function addOverviewReply(postId) {
+  const dbSnapshot = cloneDbSnapshot();
   const post = getOverviewPosts().find(p => p.id === postId);
   if (!post) return;
   const text = (prompt('Reply message:') || '').trim();
@@ -966,7 +986,15 @@ async function addOverviewReply(postId) {
     body: text,
     createdAt: new Date().toISOString(),
   });
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    renderOverviewPostsList();
+    showToast(`Reply failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   renderOverviewPostsList();
 }
 
@@ -2375,6 +2403,7 @@ async function saveRecord() {
     timestamp: auditTime,
     isoTime: now.toISOString(),
   };
+  const dbSnapshot = cloneDbSnapshot();
 
   if (editingId) {
     if (tab === 'driversSep') {
@@ -2421,8 +2450,13 @@ async function saveRecord() {
   try {
     await queuePersistData();
   } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage(tab);
     showToast(`Save failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
     console.error(err);
+    return;
   }
 
   updateBadges();
@@ -2434,6 +2468,8 @@ async function saveRecord() {
 async function deleteRecord() {
   if (!editingId || !editingTab) return;
   if (!confirm('Delete this record?')) return;
+  const tab = editingTab;
+  const dbSnapshot = cloneDbSnapshot();
   if (editingTab === 'driversSep') {
     clearPairingForDriver(editingId, getCurrentUser());
   }
@@ -2441,12 +2477,18 @@ async function deleteRecord() {
   try {
     await queuePersistData();
   } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage(tab);
     showToast(`Delete failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
     console.error(err);
+    return;
   }
   updateBadges();
+  updateFleetBar();
   closeModal();
-  renderPage(editingTab);
+  renderPage(tab);
   showToast('Record deleted', 'var(--yellow)');
 }
 
@@ -2474,6 +2516,7 @@ function makeDriverSepCandidateFromHire(r) {
 
 async function sendOtrToDriverSepPending() {
   if (editingTab !== 'otrHires' || !editingId) return;
+  const dbSnapshot = cloneDbSnapshot();
   const srcIdx = DB.otrHires.findIndex(x => x.id === editingId);
   const rec = srcIdx >= 0 ? DB.otrHires[srcIdx] : null;
   if (!rec) return;
@@ -2486,8 +2529,19 @@ async function sendOtrToDriverSepPending() {
   rec._sentToDriverSepAt = new Date().toLocaleString();
   rec._lastEditBy = getCurrentUser();
   rec._lastEditTime = rec._sentToDriverSepAt;
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage('otrHires');
+    showToast(`Send failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   updateBadges();
+  updateFleetBar();
   closeModal();
   renderPage('otrHires');
   showToast('Sent to Driver Sep pending acceptance (kept in OTR New Hires)');
@@ -2497,6 +2551,7 @@ async function sendToNotMovingForward() {
   if (!editingId || !editingTab) return;
   const srcTab = editingTab;
   if (!['otrHires','ag4Hires'].includes(srcTab)) return;
+  const dbSnapshot = cloneDbSnapshot();
   const src = DB[srcTab].find(x => x.id === editingId);
   if (!src) return;
   DB.notMovingForward.push({
@@ -2526,8 +2581,19 @@ async function sendToNotMovingForward() {
     _lastEditBy: getCurrentUser(),
     _lastEditTime: new Date().toLocaleString(),
   });
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage(srcTab);
+    showToast(`Send failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   updateBadges();
+  updateFleetBar();
   closeModal();
   renderPage(srcTab);
   showToast('Sent to Not Moving Forward');
@@ -2535,6 +2601,7 @@ async function sendToNotMovingForward() {
 
 async function sendRoadTestToOtr() {
   if (editingTab !== 'roadTestScheduling' || !editingId) return;
+  const dbSnapshot = cloneDbSnapshot();
   const srcIdx = DB.roadTestScheduling.findIndex(x => x.id === editingId);
   const src = srcIdx >= 0 ? DB.roadTestScheduling[srcIdx] : null;
   if (!src) return;
@@ -2564,8 +2631,19 @@ async function sendRoadTestToOtr() {
     _lastEditTime: new Date().toLocaleString(),
   });
   DB.roadTestScheduling.splice(srcIdx, 1);
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage('roadTestScheduling');
+    showToast(`Transfer failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   updateBadges();
+  updateFleetBar();
   closeModal();
   renderPage('roadTestScheduling');
   showToast('Transferred to OTR New Hires and removed from Road Test Scheduling');
@@ -2573,6 +2651,7 @@ async function sendRoadTestToOtr() {
 
 async function sendRoadTestToAg4() {
   if (editingTab !== 'roadTestScheduling' || !editingId) return;
+  const dbSnapshot = cloneDbSnapshot();
   const srcIdx = DB.roadTestScheduling.findIndex(x => x.id === editingId);
   const src = srcIdx >= 0 ? DB.roadTestScheduling[srcIdx] : null;
   if (!src) return;
@@ -2601,8 +2680,19 @@ async function sendRoadTestToAg4() {
     _lastEditTime: new Date().toLocaleString(),
   });
   DB.roadTestScheduling.splice(srcIdx, 1);
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage('roadTestScheduling');
+    showToast(`Transfer failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   updateBadges();
+  updateFleetBar();
   closeModal();
   renderPage('roadTestScheduling');
   showToast('Transferred to AG4 New Hires and removed from Road Test Scheduling');
@@ -2610,6 +2700,7 @@ async function sendRoadTestToAg4() {
 
 async function moveToTerminatedFolder() {
   if (editingTab !== 'driversSep' || !editingId) return;
+  const dbSnapshot = cloneDbSnapshot();
   const srcIdx = DB.driversSep.findIndex(x => x.id === editingId);
   if (srcIdx < 0) return;
   const src = DB.driversSep[srcIdx];
@@ -2643,7 +2734,17 @@ async function moveToTerminatedFolder() {
     _lastEditTime: new Date().toLocaleString(),
   });
   DB.driversSep.splice(srcIdx, 1);
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage('driversSep');
+    showToast(`Move failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   updateBadges();
   updateFleetBar();
   closeModal();
@@ -2653,6 +2754,7 @@ async function moveToTerminatedFolder() {
 
 async function reactivateTerminatedDriver() {
   if (editingTab !== 'terminatedRemovals' || !editingId) return;
+  const dbSnapshot = cloneDbSnapshot();
   const srcIdx = DB.terminatedRemovals.findIndex(x => x.id === editingId);
   if (srcIdx < 0) return;
   const src = DB.terminatedRemovals[srcIdx];
@@ -2692,7 +2794,17 @@ async function reactivateTerminatedDriver() {
   });
 
   DB.terminatedRemovals.splice(srcIdx, 1);
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage('terminatedRemovals');
+    showToast(`Reactivation failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
   updateBadges();
   updateFleetBar();
   closeModal();
@@ -2701,6 +2813,7 @@ async function reactivateTerminatedDriver() {
 }
 
 async function acceptDriverSep(id) {
+  const dbSnapshot = cloneDbSnapshot();
   const rec = DB.driversSep.find(x => x.id === id);
   if (!rec) return;
   rec._pendingAcceptance = false;
@@ -2708,7 +2821,19 @@ async function acceptDriverSep(id) {
   rec._acceptedAt = new Date().toLocaleString();
   rec._lastEditBy = rec._acceptedBy;
   rec._lastEditTime = rec._acceptedAt;
-  try { await queuePersistData(); } catch (_) {}
+  try {
+    await queuePersistData();
+  } catch (err) {
+    restoreDbSnapshot(dbSnapshot);
+    updateBadges();
+    updateFleetBar();
+    renderPage('driversSep');
+    showToast(`Accept failed to sync (${err && err.message ? err.message : 'network/server error'})`, 'var(--red)');
+    console.error(err);
+    return;
+  }
+  updateBadges();
+  updateFleetBar();
   renderPage('driversSep');
   showToast('Driver accepted into Driver Sep');
 }
