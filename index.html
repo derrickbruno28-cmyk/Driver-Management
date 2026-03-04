@@ -332,7 +332,6 @@
     <div id="fleet-terminated" class="fleet-pill terminated">⛔ Terminated: <strong>—</strong></div>
     <div id="fleet-total" class="fleet-pill total">Total: <strong>—</strong></div>
     <div id="live-users" class="fleet-pill">👤 Online: <strong>—</strong></div>
-    <div id="fleet-available-alert" class="fleet-pill bell" onclick="openAvailabilityAlert()">🔔 Available Alerts: <strong>0</strong></div>
     <div id="live-sync" class="fleet-pill syncing">🟡 Sync: <strong>Connecting</strong></div>
     <button id="theme-toggle" class="fleet-pill" onclick="toggleTheme()">☀️ Light Mode</button>
   </div>
@@ -383,19 +382,6 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="availabilityModal">
-  <div class="modal" style="max-width:760px">
-    <div class="modal-header">
-      <span class="modal-title">Available Drivers</span>
-      <button class="modal-close" onclick="closeAvailabilityModal()">✕</button>
-    </div>
-    <div class="modal-body" id="availabilityBody"></div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeAvailabilityModal()">Close</button>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
@@ -423,8 +409,6 @@ const PRESENCE_STATUS_URL = '/api/presence';
 const PRESENCE_HEARTBEAT_URL = '/api/presence/heartbeat';
 let persistQueue = Promise.resolve();
 let dataVersion = '';
-const AVAILABILITY_ALERT_INTERVAL_MS = 2 * 60 * 60 * 1000;
-let availabilityAlertState = { lastShownAt: 0 };
 const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
 const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling', 'overviewPosts'];
 const CUSTOM_SELECT_KEY = 'dms_custom_select_options';
@@ -725,63 +709,6 @@ function availabilityStatusBadge(status) {
   if (status === 'NEED_CONFIRM') return '<span class="status-tag needconfirm">Need to confirm availability</span>';
   if (status === 'OFF') return '<span class="status-tag off">Off</span>';
   return '<span class="status-tag available">Available</span>';
-}
-
-function getAvailableDriverCount() {
-  return (DB.driversSep || []).filter(r => getDriverAvailabilityStatus(r) === 'AVAILABLE').length;
-}
-
-function getAvailableDrivers() {
-  return (DB.driversSep || [])
-    .filter(r => getDriverAvailabilityStatus(r) === 'AVAILABLE')
-    .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-}
-
-function updateAvailabilityAlertUI() {
-  const bell = document.getElementById('fleet-available-alert');
-  if (!bell) return;
-  const count = getAvailableDriverCount();
-  const strong = bell.querySelector('strong');
-  if (strong) strong.textContent = String(count);
-  bell.classList.toggle('has-alert', count > 0);
-}
-
-function checkAvailabilityAlerts(force = false) {
-  updateAvailabilityAlertUI();
-  const count = getAvailableDriverCount();
-  if (!count) return;
-  const now = Date.now();
-  if (force || !availabilityAlertState.lastShownAt || (now - availabilityAlertState.lastShownAt) >= AVAILABILITY_ALERT_INTERVAL_MS) {
-    availabilityAlertState.lastShownAt = now;
-    showToast(`Alert: You have ${count} drivers available.`, 'var(--green)');
-  }
-}
-
-function openAvailabilityAlert() {
-  const drivers = getAvailableDrivers();
-  const body = document.getElementById('availabilityBody');
-  if (!body) return;
-  if (!drivers.length) {
-    body.innerHTML = '<div style="color:var(--text2);font-family:var(--mono)">No currently available drivers.</div>';
-  } else {
-    body.innerHTML = `<div style="margin-bottom:10px;color:var(--text2);font-family:var(--mono)">Available now: <strong style="color:var(--green)">${drivers.length}</strong></div>
-      <div class="avail-list">
-        ${drivers.map(d => `
-          <div class="avail-row">
-            <div>
-              <div style="font-weight:700">${escHtml(d.name || '(unnamed)')}</div>
-              <div class="avail-meta">${escHtml(d.position || '')} ${d.homeBase ? `• ${escHtml(d.homeBase)}` : ''}</div>
-            </div>
-            <div>${availabilityStatusBadge('AVAILABLE')}</div>
-          </div>
-        `).join('')}
-      </div>`;
-  }
-  document.getElementById('availabilityModal').classList.add('open');
-}
-
-function closeAvailabilityModal() {
-  document.getElementById('availabilityModal').classList.remove('open');
 }
 
 function getTerminationCompletionStatus(rec) {
@@ -2783,7 +2710,6 @@ function updateFleetBar() {
   setP('fleet-offduty', offduty);
   setP('fleet-terminated', terminated);
   setP('fleet-total', total);
-  updateAvailabilityAlertUI();
 }
 
 function updateBadges() {
@@ -2845,8 +2771,6 @@ async function initApp() {
   updateBadges();
   updateFleetBar();
   startPresenceTracking();
-  checkAvailabilityAlerts(true);
-  setInterval(() => checkAvailabilityAlerts(false), AVAILABILITY_ALERT_INTERVAL_MS);
   const firstPage = document.getElementById('page-overview');
   firstPage.style.display = 'flex';
   firstPage.style.flexDirection = 'column';
@@ -2860,9 +2784,6 @@ initApp();
 // Close modal on overlay click
 document.getElementById('editModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
-});
-document.getElementById('availabilityModal').addEventListener('click', function(e) {
-  if (e.target === this) closeAvailabilityModal();
 });
 </script>
 </body>
