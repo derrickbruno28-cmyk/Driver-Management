@@ -434,6 +434,42 @@ function normalizeDatabaseShape(data) {
   [...REQUIRED_TABS, ...EXTRA_TABS].forEach(tab => {
     if (!Array.isArray(data[tab])) data[tab] = [];
   });
+  normalizeDriversSepRecords(data);
+}
+
+function normalizeDriverPosition(position) {
+  const p = String(position || '').trim().toLowerCase();
+  if (!p) return '';
+  if (p.includes('local')) return 'Local Only';
+  if (p.includes('solo') || p.includes('regional')) return p.includes('regional') ? 'Regional' : 'SOLO OTR';
+  if (p.includes('team') || p.includes('weekly') || p.includes('mail')) return 'Team Driver';
+  if (p.includes('off duty') || p.includes('unresponsive')) return 'SOLO OTR';
+  return position;
+}
+
+function normalizeDriverStatus(record) {
+  const explicit = String(record && record.driverStatus || '').trim();
+  if (explicit) {
+    const e = explicit.toLowerCase();
+    if (e.includes('off')) return 'OFF Duty';
+    if (e.includes('unresponsive')) return 'Unresponsive 2+ weeks';
+    return 'Active';
+  }
+  const legacyPos = String(record && record.position || '').toLowerCase();
+  if (legacyPos.includes('unresponsive')) return 'Unresponsive 2+ weeks';
+  if (legacyPos.includes('off duty')) return 'OFF Duty';
+  return 'Active';
+}
+
+function normalizeDriversSepRecords(dataObj) {
+  const list = (dataObj && Array.isArray(dataObj.driversSep)) ? dataObj.driversSep : [];
+  list.forEach((r) => {
+    r.position = normalizeDriverPosition(r.position);
+    r.driverStatus = normalizeDriverStatus(r);
+    if (r.position === 'Local Only' && !r.localSchedule) {
+      r.localSchedule = '';
+    }
+  });
 }
 
 function loadCustomSelectOptions() {
@@ -684,8 +720,24 @@ function isOffDutyPosition(pos) {
   return p.includes('off duty') || p.includes('unresponsive');
 }
 
+function isOffDutyStatus(status) {
+  const s = String(status || '').toLowerCase();
+  return s.includes('off duty') || s.includes('unresponsive');
+}
+
 function isLocalPosition(pos) {
-  return (pos || '').toLowerCase().includes('local');
+  const p = String(pos || '').toLowerCase();
+  return p.includes('local');
+}
+
+function isTeamPosition(pos) {
+  const p = String(pos || '').toLowerCase();
+  return p.includes('team');
+}
+
+function isSoloOrRegionalPosition(pos) {
+  const p = String(pos || '').toLowerCase();
+  return p.includes('solo') || p.includes('regional');
 }
 
 function startOfToday() {
@@ -707,7 +759,7 @@ function getDriverAvailabilityStatus(record) {
   const isRunWild = String((record && record.runWild) || '').toUpperCase() === 'YES';
   const isLocal = isLocalPosition(record && record.position);
 
-  if (isOffDutyPosition(record && record.position)) return 'OFF';
+  if (isOffDutyStatus(record && record.driverStatus) || isOffDutyPosition(record && record.position)) return 'OFF';
   if (rtg && rtg > today) return 'OFF';
   if (!rtg && ret && ret >= today) return 'OFF';
   if (record && record.pairedWithId) return 'PAIRED';
@@ -1148,7 +1200,9 @@ const TABS = {
       { key: 'name', label: 'Driver Name', type: 'text', required: true },
       { key: 'phone', label: 'Phone', type: 'text' },
       { key: 'homeBase', label: 'Home Base', type: 'select', options: ['SATX','Dallas','Houston','Memphis','Austin','Laredo','El Paso',''] },
-      { key: 'position', label: 'Position', type: 'select', options: ['Team OTR / Mail','Solo OTR','Weekly Team','Local','Regional','Long OTR SOLO','Short OTR Team','OFF DUTY','Unresponsive over 2 weeks',''] },
+      { key: 'position', label: 'Driver Position', type: 'select', options: ['Team Driver','SOLO OTR','Regional','Local Only',''] },
+      { key: 'driverStatus', label: 'Driver Status', type: 'select', options: ['Active','OFF Duty','Unresponsive 2+ weeks',''] },
+      { key: 'localSchedule', label: 'Local Schedule (Days / Time)', type: 'text' },
       { key: 'twic', label: 'TWIC Card', type: 'text' },
       { key: 'hiredCity', label: 'Hired Departure City', type: 'select', options: ['San Antonio','Dallas','Houston','Memphis','Austin','El Paso','Laredo','Other',''] },
       { key: 'currentCity', label: 'Current Home City / Location', type: 'text' },
@@ -1163,8 +1217,8 @@ const TABS = {
       { key: 'routeRestrictions', label: 'Route Restrictions', type: 'text', full: true },
       { key: 'notes', label: 'Notes / Availability & Constraints', type: 'textarea', full: true },
     ],
-    columns: ['name','phone','homeBase','position','availabilityStatus','hiredCity','rtgDate','returnDate','followUpDate','pairedWithName','preferredPartner','routeRestrictions','notes'],
-    colLabels: { name:'Driver Name', phone:'Phone', homeBase:'Home Base', position:'Position', availabilityStatus:'Status', hiredCity:'Hired City', rtgDate:'RTG Date', returnDate:'Return Home Date', followUpDate:'Follow Up', pairedWithName:'Paired With', preferredPartner:'Preferred Partner', routeRestrictions:'Route Restrictions', notes:'Notes' },
+    columns: ['name','phone','homeBase','position','driverStatus','availabilityStatus','localSchedule','hiredCity','rtgDate','returnDate','followUpDate','pairedWithName','preferredPartner','routeRestrictions','notes'],
+    colLabels: { name:'Driver Name', phone:'Phone', homeBase:'Home Base', position:'Driver Position', driverStatus:'Driver Status', availabilityStatus:'Availability', localSchedule:'Local Schedule', hiredCity:'Hired City', rtgDate:'RTG Date', returnDate:'Return Home Date', followUpDate:'Follow Up', pairedWithName:'Paired With', preferredPartner:'Preferred Partner', routeRestrictions:'Route Restrictions', notes:'Notes' },
     filterKey: 'position',
   },
   terminatedRemovals: {
@@ -1385,13 +1439,18 @@ function gtgBadge(val) {
 
 function positionBadge(pos) {
   if (!pos) return '';
-  const display = displayPosition(pos);
+  const display = normalizeDriverPosition(displayPosition(pos));
   const p = display.toLowerCase();
   if (p.includes('team')) return `<span class="badge badge-blue">${display}</span>`;
-  if (p.includes('solo') || p.includes('local')) return `<span class="badge badge-gray">${display}</span>`;
-  if (p.includes('weekly')) return `<span class="badge badge-green">${display}</span>`;
-  if (p.includes('unresponsive')) return `<span class="badge badge-red">${pos}</span>`;
+  if (p.includes('solo') || p.includes('regional')) return `<span class="badge badge-gray">${display}</span>`;
+  if (p.includes('local')) return `<span class="badge badge-green">${display}</span>`;
   return `<span class="badge badge-gray">${display}</span>`;
+}
+
+function driverStatusBadge(status) {
+  const s = String(status || 'Active');
+  if (isOffDutyStatus(s)) return `<span class="badge badge-red">${escHtml(s)}</span>`;
+  return `<span class="badge badge-green">${escHtml(s || 'Active')}</span>`;
 }
 
 function truncateNotes(text, maxLines=3) {
@@ -1581,7 +1640,7 @@ function renderPage(tab) {
         return !hasRtg || !hasReturn;
       }
       if (subTab === 'offDuty') {
-        return isOffDutyPosition(r.position);
+        return isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position);
       }
       if (subTab === 'pendingAccept') {
         return !!r._pendingAcceptance;
@@ -1594,10 +1653,10 @@ function renderPage(tab) {
         const [, city, posType] = subTab.split('_');
         const hc = (r.hiredCity || r.homeBase || '').toLowerCase();
         const cityL = city.toLowerCase();
-        const pos = (r.position || '').toLowerCase();
+        const pos = normalizeDriverPosition(r.position || '').toLowerCase();
         const cityMatch = hc.includes(cityL) || (cityL.includes('san antonio') && hc.includes('satx'));
         if (!cityMatch) return false;
-        if (posType === 'team') return pos.includes('team') || pos.includes('weekly');
+        if (posType === 'team') return pos.includes('team');
         if (posType === 'solo') return pos.includes('solo') || pos.includes('regional');
         if (posType === 'local') return pos.includes('local');
         return false;
@@ -1680,7 +1739,7 @@ function renderPage(tab) {
     const conflictCount = records.filter(r => /do not (pair|partner)|never (pair|partner|run with)|don.t (pair|partner)|(not (paired|run) with)/i.test(r.notes || '')).length;
     const restrictCount = records.filter(r => hasRouteRestriction(r)).length;
     const missingDatesCount = records.filter(r => !getDriverDateObj(r, 'rtgDate') || !getDriverDateObj(r, 'returnDate')).length;
-    const offDutyCount = records.filter(r => isOffDutyPosition(r.position)).length;
+    const offDutyCount = records.filter(r => isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position)).length;
     const dupCount = findDuplicates(records).length;
     const pendingAcceptCount = records.filter(r => r._pendingAcceptance).length;
     const curSub = activeSubTabs['driversSep'] || 'all';
@@ -1690,13 +1749,13 @@ function renderPage(tab) {
       return records.filter(r => {
         const hc = (r.hiredCity || r.homeBase || '').toLowerCase();
         const cityL = city.toLowerCase();
-        const pos = (r.position || '').toLowerCase();
+        const pos = normalizeDriverPosition(r.position || '').toLowerCase();
         // match city
         const cityMatch = hc.includes(cityL) || 
           (cityL === 'san antonio' && (hc.includes('satx') || hc.includes('san antonio')));
         if (!cityMatch) return false;
         // match pos type
-        if (posType === 'team') return pos.includes('team') || pos.includes('weekly');
+        if (posType === 'team') return pos.includes('team');
         if (posType === 'solo') return pos.includes('solo') || pos.includes('regional');
         if (posType === 'local') return pos.includes('local');
         return false;
@@ -1725,8 +1784,8 @@ function renderPage(tab) {
       const pairSet = new Set();
       records.forEach(r => {
         if (!r.pairedWithId) return;
-        const pos = (r.position || '').toLowerCase();
-        if (!pos.includes('team') && !pos.includes('weekly')) return;
+        const pos = normalizeDriverPosition(r.position || '').toLowerCase();
+        if (!pos.includes('team')) return;
         const pairKey = [String(r.id || ''), String(r.pairedWithId || '')].sort().join('::');
         if (pairKey !== '::') pairSet.add(pairKey);
       });
@@ -1827,6 +1886,9 @@ function renderPage(tab) {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
       if (col === 'position' && (tab==='driversSep')) return `<td>${positionBadge(val)}</td>`;
+      if (tab === 'driversSep' && col === 'driverStatus') {
+        return `<td>${driverStatusBadge(r.driverStatus || 'Active')}</td>`;
+      }
       if (tab === 'driversSep' && col === 'availabilityStatus') {
         return `<td>${availabilityStatusBadge(getDriverAvailabilityStatus(r))}</td>`;
       }
@@ -2011,14 +2073,14 @@ function rerenderTable(tab) {
         return !hasRtg || !hasReturn;
       }
       if (rSubTabFilter === 'offDuty') {
-        return isOffDutyPosition(r.position);
+        return isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position);
       }
       if (rSubTabFilter === 'pendingAccept') {
         return !!r._pendingAcceptance;
       }
       if (rSubTabFilter === 'pairedTeams') {
-        const pos = (r.position || '').toLowerCase();
-        return !!r.pairedWithId && (pos.includes('team') || pos.includes('weekly'));
+        const pos = normalizeDriverPosition(r.position || '').toLowerCase();
+        return !!r.pairedWithId && pos.includes('team');
       }
       if (rSubTabFilter === 'duplicates') {
         const dupIds = new Set(findDuplicates(records).map(x => x.id));
@@ -2028,10 +2090,10 @@ function rerenderTable(tab) {
         const [, city, posType] = rSubTabFilter.split('_');
         const hc = (r.hiredCity || r.homeBase || '').toLowerCase();
         const cityL = city.toLowerCase();
-        const pos = (r.position || '').toLowerCase();
+        const pos = normalizeDriverPosition(r.position || '').toLowerCase();
         const cityMatch = hc.includes(cityL) || (cityL.includes('san antonio') && hc.includes('satx'));
         if (!cityMatch) return false;
-        if (posType === 'team') return pos.includes('team') || pos.includes('weekly');
+        if (posType === 'team') return pos.includes('team');
         if (posType === 'solo') return pos.includes('solo') || pos.includes('regional');
         if (posType === 'local') return pos.includes('local');
         return false;
@@ -2073,6 +2135,9 @@ function rerenderTable(tab) {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
       if (col === 'position' && (tab==='driversSep')) return `<td>${positionBadge(val)}</td>`;
+      if (tab === 'driversSep' && col === 'driverStatus') {
+        return `<td>${driverStatusBadge(r.driverStatus || 'Active')}</td>`;
+      }
       if (tab === 'driversSep' && col === 'availabilityStatus') {
         return `<td>${availabilityStatusBadge(getDriverAvailabilityStatus(r))}</td>`;
       }
@@ -2332,8 +2397,17 @@ async function saveRecord() {
     }
   });
 
-  if (tab === 'driversSep' && isOffDutyPosition(newData.position) && !newData.followUpDate) {
+  if (tab === 'driversSep') {
+    newData.position = normalizeDriverPosition(newData.position);
+    newData.driverStatus = normalizeDriverStatus(newData);
+  }
+
+  if (tab === 'driversSep' && isOffDutyStatus(newData.driverStatus) && !newData.followUpDate) {
     showToast('Follow Up Date is required for Off Duty / Unresponsive drivers', 'var(--red)');
+    return;
+  }
+  if (tab === 'driversSep' && isLocalPosition(newData.position) && !(newData.localSchedule || '').trim()) {
+    showToast('Local Schedule is required for Local Only drivers', 'var(--red)');
     return;
   }
   if (tab === 'driversSep' && String(newData.runWild || '').toUpperCase() === 'YES' && !newData.followUpDate) {
@@ -2493,12 +2567,15 @@ async function deleteRecord() {
 }
 
 function makeDriverSepCandidateFromHire(r) {
+  const normalizedPos = normalizeDriverPosition(r.position || '');
   return {
     id: 'sep_' + Date.now(),
     name: r.name || '',
     phone: r.phone || '',
     homeBase: r.location || '',
-    position: r.position || '',
+    position: normalizedPos,
+    driverStatus: 'Active',
+    localSchedule: '',
     notes: (r.notes || '') + '\n\n[Sent from OTR New Hires pending acceptance]',
     twic: '',
     hiredCity: '',
@@ -2778,7 +2855,9 @@ async function reactivateTerminatedDriver() {
     name: src.name || '',
     phone: src.driverPhone || '',
     homeBase: '',
-    position: src.position || '',
+    position: normalizeDriverPosition(src.position || ''),
+    driverStatus: 'Active',
+    localSchedule: '',
     twic: '',
     hiredCity: '',
     currentCity: '',
@@ -2840,10 +2919,10 @@ async function acceptDriverSep(id) {
 
 function updateFleetBar() {
   const recs = DB['driversSep'] || [];
-  const teams = recs.filter(r => { const p = (r.position||'').toLowerCase(); return (p.includes('team') || p.includes('weekly')) && !p.includes('terminated'); }).length;
-  const solo = recs.filter(r => { const p = (r.position||'').toLowerCase(); return (p.includes('solo') || p.includes('regional')) && !p.includes('terminated'); }).length;
-  const local = recs.filter(r => { const p = (r.position||'').toLowerCase(); return p.includes('local') && !p.includes('terminated'); }).length;
-  const offduty = recs.filter(r => isOffDutyPosition(r.position)).length;
+  const teams = recs.filter(r => isTeamPosition(r.position)).length;
+  const solo = recs.filter(r => isSoloOrRegionalPosition(r.position)).length;
+  const local = recs.filter(r => isLocalPosition(r.position)).length;
+  const offduty = recs.filter(r => isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position)).length;
   const terminated = recs.filter(r => r._terminated || (r.position||'').toLowerCase() === 'terminated').length;
   const total = recs.filter(r => !r._terminated && (r.position||'').toLowerCase() !== 'terminated').length;
   const setP = (id, val) => { const el = document.getElementById(id); if(el) el.querySelector('strong').textContent = val; };
