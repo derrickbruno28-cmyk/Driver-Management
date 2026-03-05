@@ -925,6 +925,17 @@ function isLocalPosition(pos) {
   return p.includes('local');
 }
 
+function requiresRtgReturnDates(record) {
+  return !isLocalPosition(record && record.position);
+}
+
+function hasMissingRequiredDates(record) {
+  if (!requiresRtgReturnDates(record)) return false;
+  const hasRtg = !!getDriverDateObj(record, 'rtgDate');
+  const hasReturn = !!getDriverDateObj(record, 'returnDate');
+  return !hasRtg || !hasReturn;
+}
+
 function isTeamPosition(pos) {
   const p = String(pos || '').toLowerCase();
   return p.includes('team');
@@ -1846,9 +1857,7 @@ function renderPage(tab) {
         return hasRouteRestriction(r);
       }
       if (subTab === 'missingDates') {
-        const hasRtg = !!getDriverDateObj(r, 'rtgDate');
-        const hasReturn = !!getDriverDateObj(r, 'returnDate');
-        return !hasRtg || !hasReturn;
+        return hasMissingRequiredDates(r);
       }
       if (subTab === 'offDuty') {
         return isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position);
@@ -1949,7 +1958,7 @@ function renderPage(tab) {
     const rtg48Count = records.filter(r => { const d = getDriverDateObj(r, 'rtgDate'); return d && isWithin48h(d); }).length;
     const conflictCount = records.filter(r => /do not (pair|partner)|never (pair|partner|run with)|don.t (pair|partner)|(not (paired|run) with)/i.test(r.notes || '')).length;
     const restrictCount = records.filter(r => hasRouteRestriction(r)).length;
-    const missingDatesCount = records.filter(r => !getDriverDateObj(r, 'rtgDate') || !getDriverDateObj(r, 'returnDate')).length;
+    const missingDatesCount = records.filter(r => hasMissingRequiredDates(r)).length;
     const offDutyCount = records.filter(r => isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position)).length;
     const dupCount = findDuplicates(records).length;
     const pendingAcceptCount = records.filter(r => r._pendingAcceptance).length;
@@ -2279,9 +2288,7 @@ function rerenderTable(tab) {
         return hasRouteRestriction(r);
       }
       if (rSubTabFilter === 'missingDates') {
-        const hasRtg = !!getDriverDateObj(r, 'rtgDate');
-        const hasReturn = !!getDriverDateObj(r, 'returnDate');
-        return !hasRtg || !hasReturn;
+        return hasMissingRequiredDates(r);
       }
       if (rSubTabFilter === 'offDuty') {
         return isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position);
