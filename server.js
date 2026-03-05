@@ -21,7 +21,8 @@ const PG_SSL_DISABLED = String(process.env.PGSSL_DISABLE || '').toLowerCase() ==
 const STATE_KEY = 'main';
 
 const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
-const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling'];
+const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling', 'overviewPosts'];
+const RECORD_TABS = [...REQUIRED_TABS, ...EXTRA_TABS];
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -45,10 +46,35 @@ function hasRequiredTabs(data) {
 
 function normalizeDatabaseShape(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return {};
-  [...REQUIRED_TABS, ...EXTRA_TABS].forEach((tab) => {
-    if (!Array.isArray(data[tab])) data[tab] = [];
+  RECORD_TABS.forEach((tab) => {
+    if (!Array.isArray(data[tab])) {
+      data[tab] = [];
+      return;
+    }
+    data[tab] = data[tab].map((record) => {
+      const out = (record && typeof record === 'object' && !Array.isArray(record)) ? { ...record } : {};
+      const v = Number(out._version);
+      out._version = Number.isFinite(v) && v >= 1 ? Math.floor(v) : 1;
+      return out;
+    });
   });
   return data;
+}
+
+function parseRecordVersion(req) {
+  const rawHeader = typeof req.headers['if-match-record'] === 'string' ? req.headers['if-match-record'] : '';
+  const h = Number(String(rawHeader || '').trim().replace(/^"|"$/g, ''));
+  if (Number.isFinite(h)) return Math.floor(h);
+  return null;
+}
+
+function parseRecordRoute(pathname) {
+  const m = pathname.match(/^\/api\/records\/([^/]+)(?:\/([^/]+))?$/);
+  if (!m) return null;
+  return {
+    tab: decodeURIComponent(m[1] || ''),
+    id: m[2] ? decodeURIComponent(m[2]) : '',
+  };
 }
 
 async function readJsonFileSafe(filePath) {
@@ -366,6 +392,114 @@ const server = http.createServer(async (req, res) => {
         { ETag: `"${nextVersion}"` }
       );
       return;
+    }
+
+    const recordRoute = parseRecordRoute(pathname);
+    if (recordRoute) {
+      const { tab, id } = recordRoute;
+      if (!RECORD_TABS.includes(tab)) {
+        sendJson(res, 404, { error: `Unknown tab '${tab}'` });
+        return;
+      }
+
+      if (req.method === 'POST' && !id) {
+        const rawBody = await readRequestBody(req);
+        let incoming;
+        try {
+          incoming = JSON.parse(rawBody || '{}');
+        } catch {
+          sendJson(res, 400, { error: 'Invalid JSON payload' });
+          return;
+        }
+        if (!incoming || typeof incoming !== 'object' || Array.isArray(incoming)) {
+          sendJson(res, 400, { error: 'Payload must be a record object' });
+          return;
+        }
+
+        const state = await readData();
+        if (!Array.isArray(state[tab])) state[tab] = [];
+        const requestedId = incoming.id != null ? String(incoming.id).trim() : '';
+        const newId = requestedId || `${tab}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+        if (state[tab].some((r) => String(r.id || '') === newId)) {
+          sendJson(res, 409, { error: `Record id '${newId}' already exists` });
+          return;
+        }
+        const record = { ...incoming, id: newId, _version: 1 };
+        state[tab].push(record);
+        await writeData(state);
+        const nextVersion = await getDataVersion();
+        sendJson(res, 201, { ok: true, tab, record }, { ETag: `"${nextVersion}"` });
+        return;
+      }
+
+      if (req.method === 'PATCH' && id) {
+        const rawBody = await readRequestBody(req);
+        let incoming;
+        try {
+          incoming = JSON.parse(rawBody || '{}');
+        } catch {
+          sendJson(res, 400, { error: 'Invalid JSON payload' });
+          return;
+        }
+        if (!incoming || typeof incoming !== 'object' || Array.isArray(incoming)) {
+          sendJson(res, 400, { error: 'Payload must be a record object' });
+          return;
+        }
+
+        const state = await readData();
+        if (!Array.isArray(state[tab])) state[tab] = [];
+        const idx = state[tab].findIndex((r) => String(r.id || '') === id);
+        if (idx < 0) {
+          sendJson(res, 404, { error: `Record '${id}' not found in '${tab}'` });
+          return;
+        }
+        const current = state[tab][idx] || {};
+        const expected = parseRecordVersion(req);
+        const expectedBodyVersion = Number(incoming._version);
+        const expectedVersion = Number.isFinite(expected) ? expected : (Number.isFinite(expectedBodyVersion) ? Math.floor(expectedBodyVersion) : null);
+        const currentVersion = Number(current._version || 1);
+        if (expectedVersion !== null && expectedVersion !== currentVersion) {
+          sendJson(res, 409, {
+            error: 'Record has changed on the server',
+            record: current,
+            currentVersion,
+          });
+          return;
+        }
+
+        const next = { ...current, ...incoming, id, _version: currentVersion + 1 };
+        state[tab][idx] = next;
+        await writeData(state);
+        const nextVersion = await getDataVersion();
+        sendJson(res, 200, { ok: true, tab, record: next }, { ETag: `"${nextVersion}"` });
+        return;
+      }
+
+      if (req.method === 'DELETE' && id) {
+        const state = await readData();
+        if (!Array.isArray(state[tab])) state[tab] = [];
+        const idx = state[tab].findIndex((r) => String(r.id || '') === id);
+        if (idx < 0) {
+          sendJson(res, 404, { error: `Record '${id}' not found in '${tab}'` });
+          return;
+        }
+        const current = state[tab][idx] || {};
+        const expected = parseRecordVersion(req);
+        const currentVersion = Number(current._version || 1);
+        if (expected !== null && expected !== currentVersion) {
+          sendJson(res, 409, {
+            error: 'Record has changed on the server',
+            record: current,
+            currentVersion,
+          });
+          return;
+        }
+        state[tab].splice(idx, 1);
+        await writeData(state);
+        const nextVersion = await getDataVersion();
+        sendJson(res, 200, { ok: true, tab, id }, { ETag: `"${nextVersion}"` });
+        return;
+      }
     }
 
     if (req.method !== 'GET' && req.method !== 'HEAD') {

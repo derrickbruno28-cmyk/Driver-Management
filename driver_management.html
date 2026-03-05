@@ -693,6 +693,56 @@ function queuePersistData() {
   return persistQueue;
 }
 
+async function apiCreateRecord(tab, record) {
+  const res = await fetch(`/api/records/${encodeURIComponent(tab)}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(record),
+  });
+  let body = {};
+  try { body = await res.json(); } catch (_) {}
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}${body && (body.detail || body.error) ? `: ${body.detail || body.error}` : ''}`);
+  }
+  dataVersion = (res.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '') || dataVersion;
+  return body.record;
+}
+
+async function apiUpdateRecord(tab, id, record) {
+  const headers = { 'Content-Type': 'application/json' };
+  const v = Number(record && record._version);
+  if (Number.isFinite(v) && v >= 1) headers['If-Match-Record'] = String(Math.floor(v));
+  const res = await fetch(`/api/records/${encodeURIComponent(tab)}/${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify(record),
+  });
+  let body = {};
+  try { body = await res.json(); } catch (_) {}
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}${body && (body.detail || body.error) ? `: ${body.detail || body.error}` : ''}`);
+  }
+  dataVersion = (res.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '') || dataVersion;
+  return body.record;
+}
+
+async function apiDeleteRecord(tab, id, recordVersion) {
+  const headers = {};
+  const v = Number(recordVersion);
+  if (Number.isFinite(v) && v >= 1) headers['If-Match-Record'] = String(Math.floor(v));
+  const res = await fetch(`/api/records/${encodeURIComponent(tab)}/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+    headers,
+  });
+  let body = {};
+  try { body = await res.json(); } catch (_) {}
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}${body && (body.detail || body.error) ? `: ${body.detail || body.error}` : ''}`);
+  }
+  dataVersion = (res.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '') || dataVersion;
+  return body;
+}
+
 function cloneDbSnapshot() {
   return JSON.stringify(DB);
 }
@@ -2641,6 +2691,9 @@ async function saveRecord() {
     isoTime: now.toISOString(),
   };
   const dbSnapshot = cloneDbSnapshot();
+  const baseDb = JSON.parse(dbSnapshot);
+  const touchedDriverSepIds = new Set();
+  let createdId = null;
 
   if (editingId) {
     if (tab === 'driversSep') {
@@ -2653,6 +2706,7 @@ async function saveRecord() {
           oldPartner.pairedWithName = '';
           oldPartner._lastEditBy = auditUser;
           oldPartner._lastEditTime = auditTime;
+          touchedDriverSepIds.add(oldPartner.id);
         }
       }
       if (selectedPartnerId) {
@@ -2672,20 +2726,52 @@ async function saveRecord() {
         partner.pairedWithName = selfRec.name || '';
         partner._lastEditBy = auditUser;
         partner._lastEditTime = auditTime;
+        touchedDriverSepIds.add(partner.id);
       }
     }
+    if (tab === 'driversSep') touchedDriverSepIds.add(editingId);
     editLog[editingId] = auditEntry;
     showToast('✓ Record updated');
   } else {
     const newId = tab + '_' + Date.now();
     const record = { id: newId, ...newData, pairedWithId: '', pairedWithName: '', _lastEditBy: auditEntry.user, _lastEditTime: auditEntry.timestamp };
     DB[tab].push(record);
+    createdId = newId;
+    if (tab === 'driversSep') touchedDriverSepIds.add(newId);
     editLog[newId] = auditEntry;
     showToast('✓ Record added');
   }
 
   try {
-    await queuePersistData();
+    if (tab === 'driversSep' && touchedDriverSepIds.size > 0) {
+      for (const id of touchedDriverSepIds) {
+        const rec = DB.driversSep.find(r => r.id === id);
+        if (!rec) continue;
+        const existed = !!((baseDb.driversSep || []).find(r => r.id === id));
+        const saved = existed
+          ? await apiUpdateRecord('driversSep', id, rec)
+          : await apiCreateRecord('driversSep', rec);
+        const idx = DB.driversSep.findIndex(r => r.id === id);
+        if (idx >= 0) DB.driversSep[idx] = saved;
+      }
+    } else if (editingId) {
+      const rec = (DB[tab] || []).find(r => r.id === editingId);
+      if (rec) {
+        const saved = await apiUpdateRecord(tab, editingId, rec);
+        const idx = DB[tab].findIndex(r => r.id === editingId);
+        if (idx >= 0) DB[tab][idx] = saved;
+      }
+    } else if (createdId) {
+      const rec = (DB[tab] || []).find(r => r.id === createdId);
+      if (rec) {
+        const created = await apiCreateRecord(tab, rec);
+        const idx = DB[tab].findIndex(r => r.id === createdId);
+        if (idx >= 0) DB[tab][idx] = created;
+      }
+    } else {
+      await queuePersistData();
+    }
+    lastSyncedDB = cloneJson(DB);
   } catch (err) {
     restoreDbSnapshot(dbSnapshot);
     updateBadges();
@@ -2707,12 +2793,18 @@ async function deleteRecord() {
   if (!confirm('Delete this record?')) return;
   const tab = editingTab;
   const dbSnapshot = cloneDbSnapshot();
+  const recBeforeDelete = (DB[editingTab] || []).find(r => r.id === editingId);
   if (editingTab === 'driversSep') {
     clearPairingForDriver(editingId, getCurrentUser());
   }
   DB[editingTab] = DB[editingTab].filter(r => r.id !== editingId);
   try {
-    await queuePersistData();
+    if (editingTab === 'driversSep') {
+      await queuePersistData();
+    } else {
+      await apiDeleteRecord(editingTab, editingId, recBeforeDelete && recBeforeDelete._version);
+      lastSyncedDB = cloneJson(DB);
+    }
   } catch (err) {
     restoreDbSnapshot(dbSnapshot);
     updateBadges();
