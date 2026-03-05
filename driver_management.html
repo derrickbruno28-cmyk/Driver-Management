@@ -409,6 +409,7 @@ const PRESENCE_STATUS_URL = '/api/presence';
 const PRESENCE_HEARTBEAT_URL = '/api/presence/heartbeat';
 let persistQueue = Promise.resolve();
 let dataVersion = '';
+let lastSyncedDB = null;
 const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 'historical'];
 const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling', 'overviewPosts'];
 const CUSTOM_SELECT_KEY = 'dms_custom_select_options';
@@ -428,6 +429,97 @@ function hasRequiredTabs(data) {
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function cloneJson(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function recordsById(arr) {
+  const m = new Map();
+  (arr || []).forEach((r) => {
+    if (r && typeof r === 'object' && r.id != null) m.set(String(r.id), r);
+  });
+  return m;
+}
+
+function mergeTabFromBase(baseArr, localArr, remoteArr) {
+  const base = Array.isArray(baseArr) ? baseArr : [];
+  const local = Array.isArray(localArr) ? localArr : [];
+  const remote = Array.isArray(remoteArr) ? remoteArr : [];
+  const baseMap = recordsById(base);
+  const localMap = recordsById(local);
+  const remoteMap = recordsById(remote);
+  const merged = remote.map((r) => cloneJson(r));
+
+  // Apply deletes: present in base, removed in local.
+  const deletedIds = [];
+  baseMap.forEach((_, id) => {
+    if (!localMap.has(id)) deletedIds.push(id);
+  });
+  const kept = merged.filter((r) => !deletedIds.includes(String(r.id)));
+
+  // Apply local updates/additions against remote set.
+  const resultMap = recordsById(kept);
+  local.forEach((rec) => {
+    const id = rec && rec.id != null ? String(rec.id) : '';
+    if (!id) return;
+    const baseRec = baseMap.get(id);
+    const localRec = localMap.get(id);
+    const remoteRec = remoteMap.get(id);
+    const changedFromBase = JSON.stringify(baseRec || null) !== JSON.stringify(localRec || null);
+    if (!baseRec) {
+      // Added in local.
+      resultMap.set(id, cloneJson(localRec));
+      return;
+    }
+    if (changedFromBase) {
+      // Updated in local. Local wins for this record only.
+      resultMap.set(id, cloneJson(localRec));
+      return;
+    }
+    // Unchanged in local, keep remote.
+    if (remoteRec) resultMap.set(id, cloneJson(remoteRec));
+  });
+
+  // Rebuild with local ordering for records local touched, then append untouched remote.
+  const out = [];
+  const seen = new Set();
+  local.forEach((rec) => {
+    const id = rec && rec.id != null ? String(rec.id) : '';
+    if (!id) return;
+    if (resultMap.has(id)) {
+      out.push(resultMap.get(id));
+      seen.add(id);
+    }
+  });
+  Array.from(resultMap.entries()).forEach(([id, rec]) => {
+    if (seen.has(id)) return;
+    out.push(rec);
+  });
+  return out;
+}
+
+function mergeDbFromBase(baseDb, localDb, remoteDb) {
+  const base = baseDb && typeof baseDb === 'object' ? baseDb : {};
+  const local = localDb && typeof localDb === 'object' ? localDb : {};
+  const remote = remoteDb && typeof remoteDb === 'object' ? remoteDb : {};
+  const merged = cloneJson(remote);
+  const allKeys = new Set([...Object.keys(base), ...Object.keys(local), ...Object.keys(remote)]);
+  allKeys.forEach((k) => {
+    const b = base[k];
+    const l = local[k];
+    const r = remote[k];
+    if (Array.isArray(b) || Array.isArray(l) || Array.isArray(r)) {
+      merged[k] = mergeTabFromBase(b, l, r);
+      return;
+    }
+    // Non-array keys: local wins only if changed from base.
+    if (JSON.stringify(b) !== JSON.stringify(l)) merged[k] = cloneJson(l);
+    else merged[k] = cloneJson(r);
+  });
+  normalizeDatabaseShape(merged);
+  return merged;
 }
 
 function normalizeDatabaseShape(data) {
@@ -514,6 +606,7 @@ async function loadSharedData() {
       // If shape is partial, normalize missing tabs in-memory only.
       normalizeDatabaseShape(remoteData);
       DB = remoteData;
+      lastSyncedDB = cloneJson(DB);
       return hasRequiredTabs(remoteData);
     }
     throw new Error('invalid remote payload');
@@ -521,6 +614,7 @@ async function loadSharedData() {
     console.warn('Using embedded data fallback:', err);
     DB = JSON.parse(JSON.stringify(RAW_DATA));
     normalizeDatabaseShape(DB);
+    lastSyncedDB = cloneJson(DB);
   }
   return false;
 }
@@ -528,30 +622,70 @@ async function loadSharedData() {
 function queuePersistData() {
   persistQueue = persistQueue.then(async () => {
     setLiveSyncState('syncing', 'Saving');
+    const localSnapshot = cloneJson(DB);
     let lastErr = null;
-    for (let attempt = 1; attempt <= 2; attempt++) {
+    for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         const headers = { 'Content-Type': 'application/json' };
         if (dataVersion) headers['If-Match'] = `"${dataVersion}"`;
         const res = await fetch(DATA_API_URL, {
           method: 'PUT',
           headers,
-          body: JSON.stringify(DB),
+          body: JSON.stringify(localSnapshot),
         });
         if (!res.ok) {
           let detail = '';
+          let body = null;
           try {
-            const body = await res.json();
+            body = await res.json();
             detail = body.detail || body.error || '';
           } catch (_) {}
+          if (res.status === 409 && attempt < 3) {
+            // Auto-rebase local changes onto latest server data to avoid manual refresh.
+            try {
+              const latestRes = await fetch(DATA_API_URL, { cache: 'no-store' });
+              if (latestRes.ok) {
+                const latestVersion = (latestRes.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '');
+                const remoteData = await latestRes.json();
+                const base = lastSyncedDB ? cloneJson(lastSyncedDB) : cloneJson(remoteData);
+                const rebased = mergeDbFromBase(base, localSnapshot, remoteData);
+                const retryHeaders = { 'Content-Type': 'application/json' };
+                if (latestVersion) retryHeaders['If-Match'] = `"${latestVersion}"`;
+                const retryRes = await fetch(DATA_API_URL, {
+                  method: 'PUT',
+                  headers: retryHeaders,
+                  body: JSON.stringify(rebased),
+                });
+                if (retryRes.ok) {
+                  DB = rebased;
+                  dataVersion = (retryRes.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '') || latestVersion || dataVersion;
+                  lastSyncedDB = cloneJson(DB);
+                  setLiveSyncState('live', 'Live');
+                  return;
+                }
+                let retryDetail = '';
+                try {
+                  const retryBody = await retryRes.json();
+                  retryDetail = retryBody.detail || retryBody.error || '';
+                } catch (_) {}
+                throw new Error(`HTTP ${retryRes.status}${retryDetail ? `: ${retryDetail}` : ''}`);
+              }
+            } catch (rebaseErr) {
+              lastErr = rebaseErr;
+              if (attempt < 2) await sleep(600);
+              continue;
+            }
+          }
           throw new Error(`HTTP ${res.status}${detail ? `: ${detail}` : ''}`);
         }
         dataVersion = (res.headers.get('etag') || '').replace(/^W\//, '').replace(/^"|"$/g, '') || dataVersion;
+        DB = cloneJson(localSnapshot);
+        lastSyncedDB = cloneJson(DB);
         setLiveSyncState('live', 'Live');
         return;
       } catch (err) {
         lastErr = err;
-        if (attempt < 2) await sleep(600);
+        if (attempt < 3) await sleep(600);
       }
     }
     throw lastErr || new Error('save failed');
@@ -686,6 +820,12 @@ function parseFollowUpDate(record) {
 
 function getDriverDateObj(record, key) {
   if (!record) return null;
+  if (key === 'rtgDate' && record._manualRtgDate) {
+    return record[key] ? parseFlexDate(record[key]) : null;
+  }
+  if (key === 'returnDate' && record._manualReturnDate) {
+    return record[key] ? parseFlexDate(record[key]) : null;
+  }
   if (record[key]) {
     const explicit = parseFlexDate(record[key]);
     if (explicit) return explicit;
@@ -2421,6 +2561,8 @@ async function saveRecord() {
   if (tab === 'driversSep') {
     newData.position = normalizeDriverPosition(newData.position);
     newData.driverStatus = normalizeDriverStatus(newData);
+    newData._manualRtgDate = true;
+    newData._manualReturnDate = true;
   }
 
   if (tab === 'driversSep' && isOffDutyStatus(newData.driverStatus) && !newData.followUpDate) {
@@ -2604,6 +2746,8 @@ function makeDriverSepCandidateFromHire(r) {
     followUpDate: '',
     preferredPartner: r.preferredPartner || '',
     routeRestrictions: '',
+    _manualRtgDate: false,
+    _manualReturnDate: false,
     _pendingAcceptance: true,
     _sourceTab: editingTab,
     _sourceId: r.id,
@@ -2886,6 +3030,8 @@ async function reactivateTerminatedDriver() {
     preferredPartner: '',
     routeRestrictions: '',
     notes: addedNotes,
+    _manualRtgDate: false,
+    _manualReturnDate: false,
     _pendingAcceptance: false,
     _rehireDrugScreenRequired: needsScreen,
     _reactivatedFromTermination: true,
