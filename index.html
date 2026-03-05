@@ -413,6 +413,7 @@ const REQUIRED_TABS = ['driversSep', 'leads', 'otrHires', 'ag4Hires', 'ag4Sep', 
 const EXTRA_TABS = ['terminatedRemovals', 'notMovingForward', 'roadTestScheduling', 'overviewPosts'];
 const CUSTOM_SELECT_KEY = 'dms_custom_select_options';
 const THEME_KEY = 'dms_theme';
+const OVERVIEW_POST_TTL_MS = 24 * 60 * 60 * 1000;
 const presenceSessionId = (window.crypto && crypto.randomUUID)
   ? crypto.randomUUID()
   : ('sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10));
@@ -588,6 +589,10 @@ async function refreshOverviewBoardFromServer(force = false) {
     const remote = await res.json();
     if (remote && Array.isArray(remote.overviewPosts)) {
       DB.overviewPosts = remote.overviewPosts;
+      const removedCount = pruneOverviewPosts();
+      if (removedCount > 0) {
+        try { await queuePersistData(); } catch (_) {}
+      }
       if (currentTab === 'overview') renderOverviewPostsList();
     }
   } catch (_) {}
@@ -978,7 +983,23 @@ function getOverviewTotals() {
 
 function getOverviewPosts() {
   if (!Array.isArray(DB.overviewPosts)) DB.overviewPosts = [];
+  pruneOverviewPosts();
   return DB.overviewPosts;
+}
+
+function pruneOverviewPosts() {
+  if (!Array.isArray(DB.overviewPosts)) {
+    DB.overviewPosts = [];
+    return 0;
+  }
+  const cutoff = Date.now() - OVERVIEW_POST_TTL_MS;
+  const before = DB.overviewPosts.length;
+  DB.overviewPosts = DB.overviewPosts.filter((post) => {
+    const ts = post && post.createdAt ? Date.parse(post.createdAt) : NaN;
+    if (!Number.isFinite(ts)) return true;
+    return ts >= cutoff;
+  });
+  return before - DB.overviewPosts.length;
 }
 
 function severityClass(sev) {
