@@ -2487,7 +2487,7 @@ function buildFormFields(tab, record) {
     const val = record ? (record[f.key] || '') : '';
     const cls = f.full ? 'form-group full' : 'form-group';
     html += `<div class="${cls}">`;
-    html += `<label for="field_${f.key}">${f.label}${f.required?' *':''}</label>`;
+    html += `<label for="field_${f.key}">${f.label}</label>`;
     if (f.type === 'textarea') {
       html += `<textarea id="field_${f.key}" rows="5">${escHtml(val)}</textarea>`;
     } else if (f.type === 'driverPair') {
@@ -2602,19 +2602,13 @@ async function saveRecord() {
   const tab = editingTab;
   const cfg = TABS[tab];
   const newData = {};
-  let valid = true;
   
   cfg.fields.forEach(f => {
     const el = document.getElementById('field_' + f.key);
     if (!el) return;
     const rawVal = (el.value === '__add_new_option__') ? '' : el.value;
     newData[f.key] = rawVal;
-    if (f.required && !rawVal.trim()) {
-      el.style.borderColor = 'var(--red)';
-      valid = false;
-    } else {
-      el.style.borderColor = '';
-    }
+    el.style.borderColor = '';
   });
 
   if (tab === 'driversSep') {
@@ -2623,29 +2617,6 @@ async function saveRecord() {
     newData._manualRtgDate = true;
     newData._manualReturnDate = true;
   }
-
-  if (tab === 'driversSep' && isOffDutyStatus(newData.driverStatus) && !newData.followUpDate) {
-    showToast('Follow Up Date is required for Off Duty / Unresponsive drivers', 'var(--red)');
-    return;
-  }
-  if (tab === 'driversSep' && isLocalPosition(newData.position) && !(newData.localSchedule || '').trim()) {
-    showToast('Local Schedule is required for Local Only drivers', 'var(--red)');
-    return;
-  }
-  if (tab === 'driversSep' && String(newData.runWild || '').toUpperCase() === 'YES' && !newData.followUpDate) {
-    showToast('Follow Up Date is required when Run Wild is selected', 'var(--red)');
-    return;
-  }
-  if (tab === 'driversSep' && String(newData.localTempActive || '').toUpperCase() === 'YES' && !newData.localTempUntil) {
-    showToast('Working Local Until date is required when Temporarily Working Local is selected', 'var(--red)');
-    return;
-  }
-  if ((tab === 'otrHires' || tab === 'ag4Hires') && String(newData.hiredWithPartner || '').toUpperCase() === 'YES' && !(newData.preferredPartner || '').trim()) {
-    showToast('Preferred Partner name is required when Hired With Partner is YES', 'var(--red)');
-    return;
-  }
-
-  if (!valid) { showToast('Please fill required fields', 'var(--red)'); return; }
 
   const now = new Date();
   const auditUser = getCurrentUser();
@@ -2680,10 +2651,6 @@ async function saveRecord() {
   const terminateReasonEl = document.getElementById('field__terminateReason');
   if (terminateEl && terminateEl.checked) {
     const reason = terminateReasonEl ? terminateReasonEl.value.trim() : '';
-    if (!reason) {
-      showToast('Termination reason is required', 'var(--red)');
-      return;
-    }
     newData._terminated = true;
     newData._terminationReason = reason;
     newData._terminationDate = new Date().toLocaleDateString();
