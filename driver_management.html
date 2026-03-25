@@ -709,16 +709,36 @@ async function apiCreateRecord(tab, record) {
 }
 
 async function apiUpdateRecord(tab, id, record) {
-  const headers = { 'Content-Type': 'application/json' };
-  const v = Number(record && record._version);
-  if (Number.isFinite(v) && v >= 1) headers['If-Match-Record'] = String(Math.floor(v));
-  const res = await fetch(`/api/records/${encodeURIComponent(tab)}/${encodeURIComponent(id)}`, {
-    method: 'PATCH',
-    headers,
-    body: JSON.stringify(record),
-  });
-  let body = {};
-  try { body = await res.json(); } catch (_) {}
+  const doPatch = async (payload, versionHint = null) => {
+    const headers = { 'Content-Type': 'application/json' };
+    const v = Number(versionHint != null ? versionHint : (payload && payload._version));
+    if (Number.isFinite(v) && v >= 1) headers['If-Match-Record'] = String(Math.floor(v));
+    const res = await fetch(`/api/records/${encodeURIComponent(tab)}/${encodeURIComponent(id)}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(payload),
+    });
+    let body = {};
+    try { body = await res.json(); } catch (_) {}
+    return { res, body };
+  };
+
+  let { res, body } = await doPatch(record);
+
+  // Record disappeared server-side (e.g., stale local id). Recreate with same id.
+  if (res.status === 404) {
+    return apiCreateRecord(tab, { ...record, id });
+  }
+
+  // Optimistic retry on record version conflict to avoid forced refresh.
+  if (res.status === 409 && body && body.record) {
+    const current = body.record;
+    const merged = { ...current, ...record, id, _version: current._version };
+    const retry = await doPatch(merged, current._version);
+    res = retry.res;
+    body = retry.body;
+  }
+
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}${body && (body.detail || body.error) ? `: ${body.detail || body.error}` : ''}`);
   }
@@ -3237,11 +3257,6 @@ async function initApp() {
 }
 
 initApp();
-
-// Close modal on overlay click
-document.getElementById('editModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
 </script>
 </body>
 </html>
