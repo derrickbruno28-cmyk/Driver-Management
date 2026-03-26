@@ -535,7 +535,8 @@ function normalizeDriverPosition(position) {
   if (!p) return '';
   if (p.includes('local')) return 'Local Only';
   if (p.includes('solo') || p.includes('regional')) return p.includes('regional') ? 'Regional' : 'SOLO OTR';
-  if (p.includes('team') || p.includes('weekly') || p.includes('mail')) return 'Team Driver';
+  if (p.includes('weekly')) return 'Team-Weekly';
+  if (p.includes('team') || p.includes('mail')) return 'Team-OTR';
   if (p.includes('off duty') || p.includes('unresponsive')) return 'SOLO OTR';
   return position;
 }
@@ -559,7 +560,7 @@ function normalizeDriversSepRecords(dataObj) {
   list.forEach((r) => {
     r.position = normalizeDriverPosition(r.position);
     r.driverStatus = normalizeDriverStatus(r);
-    if (r.position === 'Local Only' && !r.localSchedule) {
+    if ((r.position === 'Local Only' || r.position === 'Team-Weekly') && !r.localSchedule) {
       r.localSchedule = '';
     }
   });
@@ -945,8 +946,17 @@ function isLocalPosition(pos) {
   return p.includes('local');
 }
 
+function isTeamWeeklyPosition(pos) {
+  const p = String(pos || '').toLowerCase().replace(/\s+/g, '');
+  return p.includes('team-weekly') || p.includes('teamweekly') || p.includes('weeklyteam');
+}
+
+function isScheduleBasedPosition(pos) {
+  return isLocalPosition(pos) || isTeamWeeklyPosition(pos);
+}
+
 function requiresRtgReturnDates(record) {
-  return !isLocalPosition(record && record.position);
+  return !isScheduleBasedPosition(record && record.position);
 }
 
 function hasMissingRequiredDates(record) {
@@ -988,13 +998,13 @@ function getDriverAvailabilityStatus(record) {
   const rtg = getDriverDateObj(record, 'rtgDate');
   const ret = getDriverDateObj(record, 'returnDate');
   const isRunWild = String((record && record.runWild) || '').toUpperCase() === 'YES';
-  const isLocal = isLocalPosition(record && record.position);
+  const isScheduleBased = isScheduleBasedPosition(record && record.position);
 
   if (isOffDutyStatus(record && record.driverStatus) || isOffDutyPosition(record && record.position)) return 'OFF';
   if (rtg && rtg > today) return 'OFF';
   if (!rtg && ret && ret >= today) return 'OFF';
   if (record && record.pairedWithId) return 'PAIRED';
-  if (!isLocal && ((!rtg || (!ret && !isRunWild)) || (isRunWild && !rtg))) return 'NEED_CONFIRM';
+  if (!isScheduleBased && ((!rtg || (!ret && !isRunWild)) || (isRunWild && !rtg))) return 'NEED_CONFIRM';
   return 'AVAILABLE';
 }
 
@@ -1457,7 +1467,7 @@ const TABS = {
       { key: 'name', label: 'Driver Name', type: 'text', required: true },
       { key: 'phone', label: 'Phone', type: 'text' },
       { key: 'homeBase', label: 'Home Base', type: 'select', options: ['SATX','Dallas','Houston','Memphis','Austin','Laredo','El Paso',''] },
-      { key: 'position', label: 'Driver Position', type: 'select', options: ['Team Driver','SOLO OTR','Regional','Local Only',''] },
+      { key: 'position', label: 'Driver Position', type: 'select', options: ['Team-OTR','Team-Weekly','SOLO OTR','Regional','Local Only',''] },
       { key: 'driverStatus', label: 'Driver Status', type: 'select', options: ['Active','OFF Duty','Unresponsive 2+ weeks',''] },
       { key: 'localSchedule', label: 'Local Schedule (Days / Time)', type: 'text' },
       { key: 'twic', label: 'TWIC Card', type: 'text' },
@@ -1662,7 +1672,7 @@ const TABS = {
   }
 };
 
-const TEAM_OTR_MAIL_LABEL = 'Team OTR / Mail';
+const TEAM_OTR_MAIL_LABEL = 'Team-OTR';
 
 function isTeamOtrMailPosition(pos) {
   const normalized = String(pos || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -2645,8 +2655,8 @@ async function saveRecord() {
     newData.driverStatus = normalizeDriverStatus(newData);
     newData._manualRtgDate = true;
     newData._manualReturnDate = true;
-    if (isLocalPosition(newData.position) && !(newData.localSchedule || '').trim()) {
-      showToast('Local Schedule is required when Driver Position is Local ONLY', 'var(--red)');
+    if (isScheduleBasedPosition(newData.position) && !(newData.localSchedule || '').trim()) {
+      showToast('Local Schedule is required when Driver Position is Local ONLY or Team-Weekly', 'var(--red)');
       return;
     }
   }
