@@ -1469,7 +1469,7 @@ const TABS = {
       { key: 'homeBase', label: 'Home Base', type: 'select', options: ['SATX','Dallas','Houston','Memphis','Austin','Laredo','El Paso',''] },
       { key: 'position', label: 'Driver Position', type: 'select', options: ['Team-OTR','Team-Weekly','SOLO OTR','Regional','Local Only',''] },
       { key: 'driverStatus', label: 'Driver Status', type: 'select', options: ['Active','OFF Duty','Unresponsive 2+ weeks',''] },
-      { key: 'localSchedule', label: 'Local Schedule (Days / Time)', type: 'text' },
+      { key: 'localSchedule', label: 'Weekly Schedule', type: 'text' },
       { key: 'twic', label: 'TWIC Card', type: 'text' },
       { key: 'hiredCity', label: 'Hired Departure City', type: 'select', options: ['San Antonio','Dallas','Houston','Memphis','Austin','El Paso','Laredo','Other',''] },
       { key: 'currentCity', label: 'Current Home City / Location', type: 'text' },
@@ -1485,7 +1485,7 @@ const TABS = {
       { key: 'notes', label: 'Notes / Availability & Constraints', type: 'textarea', full: true },
     ],
     columns: ['name','routeRestrictions','phone','homeBase','position','driverStatus','availabilityStatus','localSchedule','hiredCity','rtgDate','returnDate','followUpDate','pairedWithName','preferredPartner','notes'],
-    colLabels: { name:'Driver Name', routeRestrictions:'Route Restrictions', phone:'Phone', homeBase:'Home Base', position:'Driver Position', driverStatus:'Driver Status', availabilityStatus:'Availability', localSchedule:'Local Schedule', hiredCity:'Hired City', rtgDate:'RTG Date', returnDate:'Return Home Date', followUpDate:'Follow Up', pairedWithName:'Paired With', preferredPartner:'Preferred Partner', notes:'Notes' },
+    colLabels: { name:'Driver Name', routeRestrictions:'Route Restrictions', phone:'Phone', homeBase:'Home Base', position:'Driver Position', driverStatus:'Driver Status', availabilityStatus:'Availability', localSchedule:'Weekly Schedule', hiredCity:'Hired City', rtgDate:'RTG Date', returnDate:'Return Home Date', followUpDate:'Follow Up', pairedWithName:'Paired With', preferredPartner:'Preferred Partner', notes:'Notes' },
     filterKey: 'position',
   },
   terminatedRemovals: {
@@ -2656,7 +2656,7 @@ async function saveRecord() {
     newData._manualRtgDate = true;
     newData._manualReturnDate = true;
     if (isScheduleBasedPosition(newData.position) && !(newData.localSchedule || '').trim()) {
-      showToast('Local Schedule is required when Driver Position is Local ONLY or Team-Weekly', 'var(--red)');
+      showToast('Weekly Schedule is required when Driver Position is Local ONLY or Team-Weekly', 'var(--red)');
       return;
     }
   }
