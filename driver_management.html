@@ -951,9 +951,11 @@ function requiresRtgReturnDates(record) {
 
 function hasMissingRequiredDates(record) {
   if (!requiresRtgReturnDates(record)) return false;
-  const hasRtg = !!getDriverDateObj(record, 'rtgDate');
-  const hasReturn = !!getDriverDateObj(record, 'returnDate');
-  return !hasRtg || !hasReturn;
+  const today = startOfToday();
+  const rtg = getDriverDateObj(record, 'rtgDate');
+  const ret = getDriverDateObj(record, 'returnDate');
+  if (!rtg || !ret) return true;
+  return rtg < today || ret < today;
 }
 
 function isTeamPosition(pos) {
@@ -1050,12 +1052,23 @@ function parseFlexDate(str) {
 
 function isWithin48h(date) {
   if (!date) return false;
-  const now = new Date();
-  now.setHours(0,0,0,0);
-  const cutoff = new Date(now.getTime() + 48*60*60*1000);
-  // Within 48h means: from yesterday through 48h from now (so we catch slightly past too)
-  const yesterday = new Date(now.getTime() - 24*60*60*1000);
-  return date >= yesterday && date <= cutoff;
+  const today = startOfToday();
+  const cutoff = new Date(today.getTime() + 48*60*60*1000);
+  // Only include day-of and upcoming dates (not past-due).
+  return date >= today && date <= cutoff;
+}
+
+function getMissingDateBadges(record) {
+  const badges = [];
+  if (!requiresRtgReturnDates(record)) return badges;
+  const today = startOfToday();
+  const rtg = getDriverDateObj(record, 'rtgDate');
+  const ret = getDriverDateObj(record, 'returnDate');
+  if (!rtg) badges.push('<span class="missing-badge">❌ RTG date missing</span>');
+  else if (rtg < today) badges.push('<span class="missing-badge">⚠️ RTG date past due</span>');
+  if (!ret) badges.push('<span class="missing-badge">❌ Return date missing</span>');
+  else if (ret < today) badges.push('<span class="missing-badge">⚠️ Return date past due</span>');
+  return badges;
 }
 
 function formatDateRelative(date) {
@@ -2166,10 +2179,7 @@ function renderPage(tab) {
           return `<td>${chipsHtml}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'missingDates') {
-          const hasRtg = !!getDriverDateObj(r, 'rtgDate');
-          const hasReturn = !!getDriverDateObj(r, 'returnDate');
-          const badges = (!hasRtg ? '<span class="missing-badge">❌ RTG date missing</span>' : '') +
-                         (!hasReturn ? '<span class="missing-badge">❌ Return date missing</span>' : '');
+          const badges = getMissingDateBadges(r).join('');
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'duplicates') {
@@ -2413,10 +2423,7 @@ function rerenderTable(tab) {
           return `<td>${chipsHtml}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'missingDates') {
-          const hasRtg = !!getDriverDateObj(r, 'rtgDate');
-          const hasReturn = !!getDriverDateObj(r, 'returnDate');
-          const badges = (!hasRtg ? '<span class="missing-badge">❌ RTG date missing</span>' : '') +
-                         (!hasReturn ? '<span class="missing-badge">❌ Return date missing</span>' : '');
+          const badges = getMissingDateBadges(r).join('');
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
         if (tab === 'driversSep' && subTab === 'duplicates') {
