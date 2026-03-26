@@ -956,8 +956,8 @@ function hasMissingRequiredDates(record) {
   const ret = getDriverDateObj(record, 'returnDate');
   // Missing Dates tab rules:
   // 1) Return Home date is past due, OR
-  // 2) BOTH RTG and Return Home dates are missing
-  if (!rtg && !ret) return true;
+  // 2) EITHER RTG or Return Home is missing
+  if (!rtg || !ret) return true;
   return !!ret && ret < today;
 }
 
@@ -1067,11 +1067,9 @@ function getMissingDateBadges(record) {
   const today = startOfToday();
   const rtg = getDriverDateObj(record, 'rtgDate');
   const ret = getDriverDateObj(record, 'returnDate');
-  if (!rtg && !ret) {
-    badges.push('<span class="missing-badge">❌ RTG + Return dates missing</span>');
-  } else if (ret && ret < today) {
-    badges.push('<span class="missing-badge">⚠️ Return date past due</span>');
-  }
+  if (!rtg) badges.push('<span class="missing-badge">❌ RTG date missing</span>');
+  if (!ret) badges.push('<span class="missing-badge">❌ Return date missing</span>');
+  if (ret && ret < today) badges.push('<span class="missing-badge">⚠️ Return date past due</span>');
   return badges;
 }
 
