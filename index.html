@@ -67,6 +67,9 @@
   th:hover { color: var(--text); }
   td { padding: 10px 12px; border-bottom: 1px solid rgba(30,45,66,0.6); vertical-align: top; }
   tr:hover td { background: rgba(255,255,255,0.02); }
+  tr.pair-group-start td { border-top: 2px solid rgba(59,130,246,0.45); }
+  tr.pair-group-start:hover td { background: rgba(59,130,246,0.06); }
+  .pair-group-label { font-size: 11px; font-family: var(--mono); color: var(--accent2); margin-bottom: 4px; }
   .name-cell { font-weight: 500; color: var(--text); }
   .sub-text { font-size: 11px; color: var(--text2); margin-top: 2px; }
   .notes-cell { max-width: 300px; font-size: 12px; color: var(--text2); line-height: 1.4; white-space: pre-line; }
@@ -547,6 +550,7 @@ function normalizeDriverStatus(record) {
     const e = explicit.toLowerCase();
     if (e.includes('off')) return 'OFF Duty';
     if (e.includes('unresponsive')) return 'Unresponsive 2+ weeks';
+    if (e.includes('hold')) return 'On HOLD per Ops';
     return 'Active';
   }
   const legacyPos = String(record && record.position || '').toLowerCase();
@@ -941,6 +945,10 @@ function isOffDutyStatus(status) {
   return s.includes('off duty') || s.includes('unresponsive');
 }
 
+function isOnHoldOpsStatus(status) {
+  return String(status || '').toLowerCase().includes('hold');
+}
+
 function isLocalPosition(pos) {
   const p = String(pos || '').toLowerCase();
   return p.includes('local');
@@ -991,6 +999,13 @@ function getPairedDriverName(record) {
   if (!record || !record.pairedWithId) return '';
   const partner = (DB.driversSep || []).find(r => r.id === record.pairedWithId);
   return partner ? (partner.name || '') : (record.pairedWithName || '');
+}
+
+function getPairTeamKey(record) {
+  if (!record || !record.pairedWithId || !record.id) return '';
+  const pos = normalizeDriverPosition(record.position || '').toLowerCase();
+  if (!pos.includes('team')) return '';
+  return [String(record.id), String(record.pairedWithId)].sort().join('::');
 }
 
 function getDriverAvailabilityStatus(record) {
@@ -1468,7 +1483,8 @@ const TABS = {
       { key: 'phone', label: 'Phone', type: 'text' },
       { key: 'homeBase', label: 'Home Base', type: 'select', options: ['SATX','Dallas','Houston','Memphis','Austin','Laredo','El Paso',''] },
       { key: 'position', label: 'Driver Position', type: 'select', options: ['Team-OTR','Team-Weekly','SOLO OTR','Regional','Local Only',''] },
-      { key: 'driverStatus', label: 'Driver Status', type: 'select', options: ['Active','OFF Duty','Unresponsive 2+ weeks',''] },
+      { key: 'driverStatus', label: 'Driver Status', type: 'select', options: ['Active','OFF Duty','Unresponsive 2+ weeks','On HOLD per Ops',''] },
+      { key: 'holdOpsReason', label: 'On HOLD Reason', type: 'text' },
       { key: 'localSchedule', label: 'Weekly Schedule', type: 'text' },
       { key: 'twic', label: 'TWIC Card', type: 'text' },
       { key: 'hiredCity', label: 'Hired Departure City', type: 'select', options: ['San Antonio','Dallas','Houston','Memphis','Austin','El Paso','Laredo','Other',''] },
@@ -1719,6 +1735,7 @@ function positionBadge(pos) {
 function driverStatusBadge(status) {
   const s = String(status || 'Active');
   if (isOffDutyStatus(s)) return `<span class="badge badge-red">${escHtml(s)}</span>`;
+  if (isOnHoldOpsStatus(s)) return `<span class="badge badge-yellow">${escHtml(s)}</span>`;
   return `<span class="badge badge-green">${escHtml(s || 'Active')}</span>`;
 }
 
@@ -1912,6 +1929,12 @@ function renderPage(tab) {
       if (subTab === 'pendingAccept') {
         return !!r._pendingAcceptance;
       }
+      if (subTab === 'pairedTeams') {
+        return !!getPairTeamKey(r);
+      }
+      if (subTab === 'holdOps') {
+        return isOnHoldOpsStatus(r.driverStatus);
+      }
       if (subTab === 'duplicates') {
         const dupIds = new Set(findDuplicates(records).map(x => x.id));
         return dupIds.has(r.id);
@@ -2007,6 +2030,7 @@ function renderPage(tab) {
     const restrictCount = records.filter(r => hasRouteRestriction(r)).length;
     const missingDatesCount = records.filter(r => hasMissingRequiredDates(r)).length;
     const offDutyCount = records.filter(r => isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position)).length;
+    const holdOpsCount = records.filter(r => isOnHoldOpsStatus(r.driverStatus)).length;
     const dupCount = findDuplicates(records).length;
     const pendingAcceptCount = records.filter(r => r._pendingAcceptance).length;
     const curSub = activeSubTabs['driversSep'] || 'all';
@@ -2099,6 +2123,9 @@ function renderPage(tab) {
       <button class="subtab-btn ${curSub==='offDuty'?'active offduty':''}" onclick="setSubTab('driversSep','offDuty')">
         🔴 Off Duty / Unresponsive <span class="subtab-badge offduty">${offDutyCount}</span>
       </button>
+      <button class="subtab-btn ${curSub==='holdOps'?'active restrict':''}" onclick="setSubTab('driversSep','holdOps')">
+        ⏸️ On HOLD per Ops <span class="subtab-badge restrict">${holdOpsCount}</span>
+      </button>
       <button class="subtab-btn ${curSub==='pendingAccept'?'active rtg':''}" onclick="setSubTab('driversSep','pendingAccept')">
         ✅ Pending Acceptance <span class="subtab-badge rtg">${pendingAcceptCount}</span>
       </button>
@@ -2144,11 +2171,23 @@ function renderPage(tab) {
   }).join('') + '<th>Actions</th>';
 
   // Table rows
+  let filteredForRows = filtered;
+  if (tab === 'driversSep' && subTab === 'pairedTeams') {
+    filteredForRows = [...filtered].sort((a, b) => {
+      const ka = getPairTeamKey(a) || '';
+      const kb = getPairTeamKey(b) || '';
+      if (ka !== kb) return ka.localeCompare(kb);
+      return String(a.name || '').localeCompare(String(b.name || ''));
+    });
+  }
   let rows = '';
-  if (filtered.length === 0) {
+  if (filteredForRows.length === 0) {
     rows = `<tr><td colspan="${cfg.columns.length+1}" style="padding:40px;text-align:center;color:var(--text2)">No records found</td></tr>`;
   }
-  filtered.forEach(r => {
+  let prevPairKey = '';
+  filteredForRows.forEach(r => {
+    const pairKey = (tab === 'driversSep' && subTab === 'pairedTeams') ? getPairTeamKey(r) : '';
+    const pairStartClass = pairKey && pairKey !== prevPairKey ? ' class="pair-group-start"' : '';
     let cells = cfg.columns.map(col => {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
@@ -2194,6 +2233,15 @@ function renderPage(tab) {
           const badges = getMissingDateBadges(r).join('');
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
+        if (tab === 'driversSep' && subTab === 'holdOps') {
+          const reason = (r.holdOpsReason || '').trim();
+          const follow = r.followUpDate ? fmtDate(r.followUpDate) : '';
+          const summary = [
+            reason ? `<span class="missing-badge">📝 ${escHtml(reason)}</span>` : '<span class="missing-badge">❌ Hold reason missing</span>',
+            follow ? `<span class="missing-badge">📅 Follow Up: ${escHtml(follow)}</span>` : '<span class="missing-badge">❌ Follow up missing</span>',
+          ].join('');
+          return `<td>${summary}${truncateNotes(val)}</td>`;
+        }
         if (tab === 'driversSep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
@@ -2233,12 +2281,13 @@ function renderPage(tab) {
     if (tab === 'driversSep' && r._pendingAcceptance) {
       rowActions.push(`<button class="action-btn" onclick="acceptDriverSep('${r.id}')">✅ Accept</button>`);
     }
-    rows += `<tr>
+    rows += `<tr${pairStartClass}>
       ${cells}
       <td><div class="row-actions">
         ${rowActions.join('')}
       </div></td>
     </tr>`;
+    if (pairKey) prevPairKey = pairKey;
   });
 
   const countLabel = filtered.length !== records.length ? `Showing ${filtered.length} of ${records.length}` : `${records.length} records`;
@@ -2337,6 +2386,9 @@ function rerenderTable(tab) {
       if (rSubTabFilter === 'offDuty') {
         return isOffDutyStatus(r.driverStatus) || isOffDutyPosition(r.position);
       }
+      if (rSubTabFilter === 'holdOps') {
+        return isOnHoldOpsStatus(r.driverStatus);
+      }
       if (rSubTabFilter === 'pendingAccept') {
         return !!r._pendingAcceptance;
       }
@@ -2389,10 +2441,22 @@ function rerenderTable(tab) {
   if (!tbody) { renderPage(tab); return; }
   
   let rows = '';
-  if (filtered.length === 0) {
+  let filteredForRows = filtered;
+  if (tab === 'driversSep' && subTab === 'pairedTeams') {
+    filteredForRows = [...filtered].sort((a, b) => {
+      const ka = getPairTeamKey(a) || '';
+      const kb = getPairTeamKey(b) || '';
+      if (ka !== kb) return ka.localeCompare(kb);
+      return String(a.name || '').localeCompare(String(b.name || ''));
+    });
+  }
+  if (filteredForRows.length === 0) {
     rows = `<tr><td colspan="${cfg.columns.length+1}" style="padding:40px;text-align:center;color:var(--text2)">No records found</td></tr>`;
   }
-  filtered.forEach(r => {
+  let prevPairKey = '';
+  filteredForRows.forEach(r => {
+    const pairKey = (tab === 'driversSep' && subTab === 'pairedTeams') ? getPairTeamKey(r) : '';
+    const pairStartClass = pairKey && pairKey !== prevPairKey ? ' class="pair-group-start"' : '';
     let cells = cfg.columns.map(col => {
       const val = r[col] || '';
       if (col === 'gtg' || col === 'dispatched') return `<td>${gtgBadge(val)}</td>`;
@@ -2438,6 +2502,15 @@ function rerenderTable(tab) {
           const badges = getMissingDateBadges(r).join('');
           return `<td>${badges}${truncateNotes(val)}</td>`;
         }
+        if (tab === 'driversSep' && subTab === 'holdOps') {
+          const reason = (r.holdOpsReason || '').trim();
+          const follow = r.followUpDate ? fmtDate(r.followUpDate) : '';
+          const summary = [
+            reason ? `<span class="missing-badge">📝 ${escHtml(reason)}</span>` : '<span class="missing-badge">❌ Hold reason missing</span>',
+            follow ? `<span class="missing-badge">📅 Follow Up: ${escHtml(follow)}</span>` : '<span class="missing-badge">❌ Follow up missing</span>',
+          ].join('');
+          return `<td>${summary}${truncateNotes(val)}</td>`;
+        }
         if (tab === 'driversSep' && subTab === 'duplicates') {
           return `<td><span class="dup-badge">⚠️ Possible duplicate</span>${truncateNotes(val)}</td>`;
         }
@@ -2477,12 +2550,13 @@ function rerenderTable(tab) {
     if (tab === 'driversSep' && r._pendingAcceptance) {
       rowActions.push(`<button class="action-btn" onclick="acceptDriverSep('${r.id}')">✅ Accept</button>`);
     }
-    rows += `<tr>
+    rows += `<tr${pairStartClass}>
       ${cells}
       <td><div class="row-actions">
         ${rowActions.join('')}
       </div></td>
     </tr>`;
+    if (pairKey) prevPairKey = pairKey;
   });
   tbody.innerHTML = rows;
   
@@ -2658,6 +2732,16 @@ async function saveRecord() {
     if (isScheduleBasedPosition(newData.position) && !(newData.localSchedule || '').trim()) {
       showToast('Weekly Schedule is required when Driver Position is Local ONLY or Team-Weekly', 'var(--red)');
       return;
+    }
+    if (isOnHoldOpsStatus(newData.driverStatus)) {
+      if (!(newData.holdOpsReason || '').trim()) {
+        showToast('On HOLD reason is required when Driver Status is On HOLD per Ops', 'var(--red)');
+        return;
+      }
+      if (!newData.followUpDate) {
+        showToast('Follow Up Date is required when Driver Status is On HOLD per Ops', 'var(--red)');
+        return;
+      }
     }
   }
 
